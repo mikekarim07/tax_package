@@ -8,13 +8,13 @@ from io import StringIO, BytesIO
 
 st.set_page_config(page_title='Tax Package')
 st.title('Tax Package 📈')
-st.subheader('Cargar archivo con el auxiliar FBL3N')
+st.subheader('Cargar los archivos FBL3N y Parametros')
 
 #df = pd.read_excel('https://github.com/mikekarim07/txpkg/blob/main/FBL3N-Q1_karim.xlsx')
 #st.dataframe(df)
 
 
-uploaded_file = st.file_uploader('Choose a XLSX file', type='xlsx')
+uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
 if uploaded_file:
     st.markdown('---')
     df_FBL3N = pd.read_excel(uploaded_file, engine='openpyxl')
