@@ -21,8 +21,8 @@ if uploaded_file:
     )
 
     # -- GROUP DATAFRAME
-    output_columns = ['Sales', 'Profit']
-    df_grouped = df.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
+    output_columns = ['Amount in local currency']
+    df_grouped_FBL3N = df.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
 
     # -- PLOT DATAFRAME
     fig = px.bar(
