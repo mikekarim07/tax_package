@@ -17,7 +17,7 @@ if uploaded_file:
     st.dataframe(df_FBL3N)
     groupby_column = st.selectbox(
         'What would you like to analyse?',
-        ('Company Code', 'Account', 'Category', 'Sub-Category'),
+        ('Company Code', 'Account', 'User Name', 'Tax Code'),
     )
 
     # -- GROUP DATAFRAME
@@ -29,8 +29,8 @@ if uploaded_file:
     fig = px.bar(
         df_grouped,
         x=groupby_column,
-        y='Sales',
-        color='Profit',
+        y='Amount in local currency',
+        color='Amount in local currency',
         color_continuous_scale=['yellow', 'green'],
         template='plotly_white',
         title=f'<b>Sales & Profit by {groupby_column}</b>'
