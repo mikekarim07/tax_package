@@ -14,10 +14,18 @@ st.subheader('Cargar los archivos FBL3N y Parametros')
 #st.dataframe(df)
 
 
-uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
-if uploaded_file:
+FBL3N_uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
+if FBL3N_uploaded_file:
     st.markdown('---')
-    df_FBL3N = pd.read_excel(uploaded_file, engine='openpyxl')
+    df_FBL3N = pd.read_excel(FBL3N_uploaded_file, engine='openpyxl')
+
+Parametros_uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
+if Parametros_uploaded_file:
+    st.markdown('---')
+    df_parametros = pd.read_excel(Parametros_uploaded_file, engine='openpyxl')
+    
+    
+    
     st.dataframe(df_FBL3N)
     groupby_column = st.selectbox(
         'What would you like to analyse?',
