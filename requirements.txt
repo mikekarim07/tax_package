@@ -4,4 +4,3 @@ openpyxl
 streamlit
 numpy
 matplotlib
-streamlit.scriptrunner
