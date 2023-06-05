@@ -26,24 +26,24 @@ st.dataframe(df)
 #    )
 
     # -- GROUP DATAFRAME
-    output_columns = ['Amount in local currency']
-    df_grouped_FBL3N = df.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
-    st.dataframe(df_grouped_FBL3N)
+#    output_columns = ['Amount in local currency']
+#    df_grouped_FBL3N = df.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
+#    st.dataframe(df_grouped_FBL3N)
 
     # -- PLOT DATAFRAME
-    fig = px.bar(
-        df_grouped,
-        x=groupby_column,
-        y='Amount in local currency',
-        color='Amount in local currency',
-        color_continuous_scale=['yellow', 'green'],
-        template='plotly_white',
-        title=f'<b>Sales & Profit by {groupby_column}</b>'
-    )
-    st.plotly_chart(fig)
+#    fig = px.bar(
+#        df_grouped,
+#        x=groupby_column,
+#        y='Amount in local currency',
+#        color='Amount in local currency',
+#        color_continuous_scale=['yellow', 'green'],
+#        template='plotly_white',
+#        title=f'<b>Sales & Profit by {groupby_column}</b>'
+#    )
+#    st.plotly_chart(fig)
 
     # -- DOWNLOAD SECTION
-    st.subheader('Downloads:')
-    generate_excel_download_link(df_grouped)
-    generate_html_download_link(fig)
+#    st.subheader('Downloads:')
+#    generate_excel_download_link(df_grouped)
+#    generate_html_download_link(fig)
 
