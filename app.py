@@ -17,7 +17,7 @@ if uploaded_file:
     st.dataframe(df_FBL3N)
     groupby_column = st.selectbox(
         'What would you like to analyse?',
-        ('CoCode', 'Account', 'Category', 'Sub-Category'),
+        ('Company Code', 'Account', 'Category', 'Sub-Category'),
     )
 
     # -- GROUP DATAFRAME
