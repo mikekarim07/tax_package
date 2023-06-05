@@ -15,15 +15,15 @@ df = pd.read_excel('https://github.com/mikekarim07/txpkg/blob/main/FBL3N-Q1_kari
 st.dataframe(df)
 
 
-uploaded_file = st.file_uploader('Choose a XLSX file', type='xlsx')
-if uploaded_file:
-    st.markdown('---')
-    df_FBL3N = pd.read_excel(uploaded_file, engine='openpyxl')
-    st.dataframe(df_FBL3N)
-    groupby_column = st.selectbox(
-        'What would you like to analyse?',
-        ('Company Code', 'Account', 'User Name', 'Tax Code'),
-    )
+#uploaded_file = st.file_uploader('Choose a XLSX file', type='xlsx')
+#if uploaded_file:
+#    st.markdown('---')
+#    df_FBL3N = pd.read_excel(uploaded_file, engine='openpyxl')
+#    st.dataframe(df_FBL3N)
+#    groupby_column = st.selectbox(
+#        'What would you like to analyse?',
+#        ('Company Code', 'Account', 'User Name', 'Tax Code'),
+#    )
 
     # -- GROUP DATAFRAME
     output_columns = ['Amount in local currency']
