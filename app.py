@@ -23,6 +23,7 @@ if uploaded_file:
     # -- GROUP DATAFRAME
     output_columns = ['Amount in local currency']
     df_grouped_FBL3N = df.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
+    st.dataframe(df_grouped_FBL3N)
 
     # -- PLOT DATAFRAME
     fig = px.bar(
@@ -30,7 +31,7 @@ if uploaded_file:
         x=groupby_column,
         y='Sales',
         color='Profit',
-        color_continuous_scale=['red', 'yellow', 'green'],
+        color_continuous_scale=['yellow', 'green'],
         template='plotly_white',
         title=f'<b>Sales & Profit by {groupby_column}</b>'
     )
