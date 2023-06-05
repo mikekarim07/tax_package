@@ -10,16 +10,12 @@ st.set_page_config(page_title='Tax Package')
 st.title('Tax Package 📈')
 st.subheader('Cargar los archivos FBL3N y Parametros')
 
-#df = pd.read_excel('https://github.com/mikekarim07/txpkg/blob/main/FBL3N-Q1_karim.xlsx')
-#st.dataframe(df)
-
-
 FBL3N_uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
 if FBL3N_uploaded_file:
     st.markdown('---')
     df_FBL3N = pd.read_excel(FBL3N_uploaded_file, engine='openpyxl')
 
-Parametros_uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
+Parametros_uploaded_file = st.file_uploader('Selecciona el Archivo Parametros', type='xlsx')
 if Parametros_uploaded_file:
     st.markdown('---')
     df_parametros = pd.read_excel(Parametros_uploaded_file, engine='openpyxl')
@@ -27,10 +23,11 @@ if Parametros_uploaded_file:
     
     
     st.dataframe(df_FBL3N)
-    groupby_column = st.selectbox(
-        'What would you like to analyse?',
-        ('Company Code', 'Account', 'User Name', 'Tax Code'),
-    )
+    st.dataframe(df_parametros)
+#    groupby_column = st.selectbox(
+#        'What would you like to analyse?',
+#        ('Company Code', 'Account', 'User Name', 'Tax Code'),
+#    )
 
     # -- GROUP DATAFRAME
     output_columns = ['Amount in local currency']
