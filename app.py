@@ -36,7 +36,7 @@ if Parametros_uploaded_file:
 
     # -- PLOT DATAFRAME
     fig = px.bar(
-        df_grouped,
+        df_grouped_FBL3N,
         x=groupby_column,
         y='Amount in local currency',
         color='Amount in local currency',
@@ -48,6 +48,6 @@ if Parametros_uploaded_file:
 
     # -- DOWNLOAD SECTION
     st.subheader('Downloads:')
-    generate_excel_download_link(df_grouped)
+    generate_excel_download_link(df_grouped_FBL3N)
     generate_html_download_link(fig)
 
