@@ -24,10 +24,10 @@ if Parametros_uploaded_file:
     
     st.dataframe(df_FBL3N)
     st.dataframe(df_parametros)
-#    groupby_column = st.selectbox(
-#        'What would you like to analyse?',
-#        ('Company Code', 'Account', 'User Name', 'Tax Code'),
-#    )
+    groupby_column = st.selectbox(
+        'What would you like to analyse?',
+        ('Company Code', 'Account', 'User Name', 'Tax Code'),
+    )
 
     # -- GROUP DATAFRAME
     output_columns = ['Amount in local currency']
