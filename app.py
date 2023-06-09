@@ -40,7 +40,7 @@ if Parametros_uploaded_file:
         x=groupby_column,
         y='Amount in local currency',
         color='Amount in local currency',
-        color_continuous_scale=['yellow', 'green'],
+        color_continuous_scale=['purple', 'green'],
         template='plotly_white',
         title=f'<b>Sales & Profit by {groupby_column}</b>'
     )
