@@ -60,8 +60,8 @@ if Parametros_uploaded_file:
     cocode = st.selectbox('Company Code',df2)
         
     st.subheader('Auxiliar FBL3n Filtrado por Company code')
-    df_FBL_filtered = df_FBL3N[df_FBL3N['Company Code' == cocode]
-    st.dataframe(df_FBL_filtered)
+    #df_FBL_filtered = df_FBL3N[df_FBL3N['Company Code' == cocode]
+    #st.dataframe(df_FBL_filtered)
     
     st.subheader('Gráfica')
     # -- PLOT DATAFRAME
