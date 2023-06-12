@@ -6,16 +6,16 @@ import plotly.express as px
 import base64
 from io import StringIO, BytesIO
 
-#with st.sidebar:
-#    selected = option_menu(
-#        menu_title = "Company Code",
-#        options = [df2],
-#    )
+with st.sidebar:
+    selected = option_menu(
+        menu_title = "Company Code",
+        options = [df2],
+    )
 
-tab_titles = [
-    'primera',
-    'segunda',]
-tabs = st.tabs(tab_titles)
+#tab_titles = [
+#    'primera',
+#    'segunda',]
+#tabs = st.tabs(tab_titles)
 
 
 
