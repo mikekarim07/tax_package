@@ -4,7 +4,17 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import plotly.express as px
 import base64
+from streamlit-option-menu import option_menu
 from io import StringIO, BytesIO
+
+with st.sidebar:
+    selected = option_menu(
+        menu_title = "Company Code",
+        options = [df2],
+    )
+
+
+
 
 st.set_page_config(page_title='Tax Package')
 st.title('Tax Package 📈')
