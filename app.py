@@ -45,8 +45,8 @@ if Parametros_uploaded_file:
     
     cocode = st.selectbox('Company Code',df2)
     
-    #df_FBL_filtered = df_FBL3N[df_FBL3N.Company Code == [cocode]]
-    df_FBL_filtered = df_FBL3N.query(Company Code == cocode)
+    df_FBL_filtered = df_FBL3N[df_FBL3N['Company Code' == [cocode]]
+    #df_FBL_filtered = df_FBL3N.query(Company Code == cocode)
     st.subheader('Auxiliar FBL3n Filtrado por Company code')
     st.dataframe(df_FBL_filtered)
     
