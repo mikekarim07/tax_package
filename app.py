@@ -7,12 +7,14 @@ import base64
 from streamlit_option_menu import option_menu
 from io import StringIO, BytesIO
 
-with st.sidebar:
-    selected = option_menu(
-        menu_title = "Company Code",
-        options = [df2],
-    )
+#with st.sidebar:
+#    selected = option_menu(
+#        menu_title = "Company Code",
+#        options = [df2],
+#    )
 
+tab_titles = [df2]
+tabs = st.tabs(tab_titles)
 
 
 
