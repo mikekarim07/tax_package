@@ -32,9 +32,9 @@ if Parametros_uploaded_file:
     )
 
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    st.dataframe([df2])
+    st.dataframe(df2)
     
-    cocode = st.selectbox(df2)
+    cocode = st.selectbox([df2])
     
     #df_FBL_filtered = df_FBL3N[[df_FBL3N]==[cocode]]
     #st.subheader('Auxiliar FBL3n Filtrado por Company code')
