@@ -13,7 +13,9 @@ from io import StringIO, BytesIO
 #        options = [df2],
 #    )
 
-tab_titles = [df2]
+tab_titles = [
+    'primera',
+    'segunda',]
 tabs = st.tabs(tab_titles)
 
 
