@@ -77,5 +77,5 @@ if Parametros_uploaded_file:
     
     st.subheader('Downloads:')
     generate_excel_download_link(df_grouped_FBL3N)
-    generate_html_download_link(fig)
+    #generate_html_download_link(fig)
 
