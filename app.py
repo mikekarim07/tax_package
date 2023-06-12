@@ -21,15 +21,21 @@ if Parametros_uploaded_file:
     df_parametros = pd.read_excel(Parametros_uploaded_file, engine='openpyxl')
     
     
-    
+    st.subheader('Auxiliar FBL3N')
     st.dataframe(df_FBL3N)
+    
+    st.subheader('Parametros de clasificación')
     st.dataframe(df_parametros)
     groupby_column = st.selectbox(
         'What would you like to analyse?',
         ('Company Code', 'Account', 'User Name', 'Tax Code'),
     )
 
-    df_FBL_filtered = df_FBL3N[[df_FBL3N]==[groupby_column]]
+    df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
+    cocode = st.selectbox(df2)
+    
+    df_FBL_filtered = df_FBL3N[[df_FBL3N]==[cocode]]
+    st.subheader('Auxiliar FBL3n Filtrado por Company code')
     st.dataframe(df_FBL_filtered)
     
     # -- GROUP DATAFRAME
