@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import plotly.express as px
 import base64
-from streamlit_option_menu import option_menu
 from io import StringIO, BytesIO
 
 #with st.sidebar:
