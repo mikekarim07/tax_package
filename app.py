@@ -34,7 +34,7 @@ if Parametros_uploaded_file:
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
     st.dataframe(df2)
     
-    #cocode = st.selectbox(df2)
+    cocode = st.selectbox(df2)
     
     #df_FBL_filtered = df_FBL3N[[df_FBL3N]==[cocode]]
     #st.subheader('Auxiliar FBL3n Filtrado por Company code')
@@ -59,10 +59,10 @@ if Parametros_uploaded_file:
 
     # -- DOWNLOAD SECTION
     
-    def generate_excel_download_link(df):
+    def generate_excel_download_link(df_grouped_FBL3N):
         # Credit Excel: https://discuss.streamlit.io/t/how-to-add-a-download-excel-csv-function-to-a-button/4474/5
         towrite = BytesIO()
-        df.to_excel(towrite, encoding="utf-8", index=False, header=True)  # write to BytesIO buffer
+        df_grouped_FBL3N.to_excel(towrite, encoding="utf-8", index=False, header=True)  # write to BytesIO buffer
         towrite.seek(0)  # reset pointer
         b64 = base64.b64encode(towrite.read()).decode()
         href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data_download.xlsx">Download Excel File</a>'
