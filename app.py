@@ -31,20 +31,25 @@ if Parametros_uploaded_file:
         ('Company Code', 'Account', 'User Name', 'Tax Code'),
     )
 
-    df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    st.dataframe(df2)
     
-    cocode = st.selectbox('Company Code',df2)
     
-    #df_FBL_filtered = df_FBL3N[[df_FBL3N]==[cocode]]
-    #st.subheader('Auxiliar FBL3n Filtrado por Company code')
-    #st.dataframe(df_FBL_filtered)
     
     # -- GROUP DATAFRAME
     output_columns = ['Amount in local currency']
     df_grouped_FBL3N = df_FBL3N.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
     st.dataframe(df_grouped_FBL3N)
 
+    # -- Información filtrada por company code y agrupada
+    df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
+    #st.dataframe(df2)
+    
+    cocode = st.selectbox('Company Code',df2)
+    
+    df_FBL_filtered = df_FBL3N[[df_FBL3N]==[cocode]]
+    st.subheader('Auxiliar FBL3n Filtrado por Company code')
+    st.dataframe(df_FBL_filtered)
+    
+    st.subheader('Gráfica')
     # -- PLOT DATAFRAME
     fig = px.bar(
         df_grouped_FBL3N,
