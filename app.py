@@ -32,7 +32,7 @@ if Parametros_uploaded_file:
     )
 
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    st.dataframe(df2)
+    st.dataframe([df2])
     
     cocode = st.selectbox(df2)
     
