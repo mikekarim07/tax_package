@@ -7,11 +7,7 @@ import base64
 from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 
-with st.sidebar:
-    selected = option_menu(
-        menu_title = "Company Code",
-        options = [df2],
-    )
+
 
 #tab_titles = [
 #    'primera',
@@ -56,6 +52,12 @@ if Parametros_uploaded_file:
     # -- Información filtrada por company code y agrupada
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
     #st.dataframe(df2)
+    
+    with st.sidebar:
+    selected = option_menu(
+        menu_title = "Company Code",
+        options = [df2],
+    )
     
     #cocode = st.selectbox('Company Code',df2)
     cocode = df_FBL3N['Company Code'] == st.selectbox('Company Code',df2)
