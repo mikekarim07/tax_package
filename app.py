@@ -5,12 +5,13 @@ import streamlit as st
 import plotly.express as px
 import base64
 from io import StringIO, BytesIO
+from streamlit_option_menu import option_menu
 
-#with st.sidebar:
-#    selected = option_menu(
-#        menu_title = "Company Code",
-#        options = [df2],
-#    )
+with st.sidebar:
+    selected = option_menu(
+        menu_title = "Company Code",
+        options = [df2],
+    )
 
 #tab_titles = [
 #    'primera',
@@ -56,11 +57,12 @@ if Parametros_uploaded_file:
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
     #st.dataframe(df2)
     
-    cocode = st.selectbox('Company Code',df2)
+    #cocode = st.selectbox('Company Code',df2)
+    cocode = df_FBL3N['Company Code'] == st.selectbox('Company Code',df2)
         
-    st.subheader('Auxiliar FBL3n Filtrado por Company code')
-    #df_FBL_filtered = df_FBL3N[df_FBL3N['Company Code' == cocode]
-    #st.dataframe(df_FBL_filtered)
+    st.subheader('Auxiliar FBL3N Filtrado por Company code')
+    df_FBL_filtered = df_FBL3N[cocode]
+    st.dataframe(df_FBL_filtered)
     
     st.subheader('Gráfica')
     # -- PLOT DATAFRAME
@@ -91,4 +93,3 @@ if Parametros_uploaded_file:
     st.subheader('Downloads:')
     generate_excel_download_link(df_grouped_FBL3N)
     #generate_html_download_link(fig)
-
