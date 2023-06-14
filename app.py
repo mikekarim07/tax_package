@@ -56,7 +56,7 @@ if Parametros_uploaded_file:
                 "Venta",
                 "Compra",
                 "Hedge",
-            ],,
+            ],
         ),
         "is_widget": "Widget ?",
     },
