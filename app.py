@@ -7,11 +7,11 @@ import base64
 from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 
-#with st.sidebar:
-#    selected = option_menu(
-#        menu_title = "Company Code",
-#        options = [df2],
-#    )
+with st.sidebar:
+    selected = option_menu(
+        menu_title = "HOME icon = 'https://icons8.com/icon/80319/home'",
+        options = [df2],
+    )
 
 #tab_titles = [
 #    'primera',
