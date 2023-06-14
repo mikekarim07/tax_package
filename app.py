@@ -42,6 +42,12 @@ if Parametros_uploaded_file:
     st.subheader('Parametros de clasificación')
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
+
+    # -- Información filtrada por company code y agrupada
+    df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
+    st.multiselect(df2)
+
+
     
     groupby_column = st.selectbox(
         'What would you like to analyse?',
@@ -56,9 +62,7 @@ if Parametros_uploaded_file:
     df_grouped_FBL3N = df_FBL3N.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
     #st.dataframe(df_grouped_FBL3N)
 
-    # -- Información filtrada por company code y agrupada
-    df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    st.dataframe(df2)
+   
     
     
     
