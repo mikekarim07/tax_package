@@ -41,6 +41,8 @@ if Parametros_uploaded_file:
     
     st.subheader('Parametros de clasificación')
     st.dataframe(df_parametros)
+    st.write(df_parametros.shape)
+    
     groupby_column = st.selectbox(
         'What would you like to analyse?',
         ('Company Code', 'Account', 'User Name', 'Tax Code'),
