@@ -43,8 +43,10 @@ if Parametros_uploaded_file:
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
     
-    Ctas_unicas = pd.unique(df_FBL3N[['Account']].values.ravel())
-    result = pd.merge(Ctas_unicas, df_parametros, left_on = 'Account', right_on = 'GL_Account', how = 'left')
+    FBL3N_ctas = df_FBL3N['Account'].astype(str)
+    Parametros_ctas = df_parametros['GL_Account'].astype(str)
+    Ctas_unicas = pd.unique(FBL3N_ctas[['Account']].values.ravel())
+    result = pd.merge(Ctas_unicas, Parametros_ctas, left_on = 'Account', right_on = 'GL_Account', how = 'left')
     st.dataframe('result')
 
 
