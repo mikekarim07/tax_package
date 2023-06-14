@@ -9,7 +9,7 @@ from streamlit_option_menu import option_menu
 
 with st.sidebar:
     selected = option_menu(
-        menu_title = "HOME icon = 'https://icons8.com/icon/80319/home'",
+        menu_title = "HOME",
         options = ['Parametros','Data'],
     )
 
