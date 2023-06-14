@@ -37,7 +37,7 @@ if Parametros_uploaded_file:
     
     st.subheader('Auxiliar FBL3N')
     st.dataframe(df_FBL3N)
-    st.write(df_FBL3N.info)
+    st.write(df_FBL3N.shape)
     
     st.subheader('Parametros de clasificación')
     st.dataframe(df_parametros)
