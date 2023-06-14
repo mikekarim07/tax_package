@@ -43,12 +43,6 @@ if Parametros_uploaded_file:
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
 
-    # -- Información filtrada por company code y agrupada
-    df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    options = st.multiselect([df2])
-
-
-    
     groupby_column = st.selectbox(
         'What would you like to analyse?',
         ('Company Code', 'Account', 'User Name', 'Tax Code'),
@@ -62,16 +56,19 @@ if Parametros_uploaded_file:
     df_grouped_FBL3N = df_FBL3N.groupby(by=[groupby_column], as_index=False)[output_columns].sum()
     #st.dataframe(df_grouped_FBL3N)
 
-   
+    # -- Información filtrada por company code y agrupada
+    df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
+    st.dataframe(df2)
     
     
     
     #cocode = st.selectbox('Company Code',df2)
-    cocode = df_FBL3N['Company Code'] == st.selectbox('Company Code',df2)
+    cocode = df_FBL3N['Company Code'] == st.multiselect('Company Code',[df2])
         
     st.subheader('Auxiliar FBL3N Filtrado por Company code')
     df_FBL_filtered = df_FBL3N[cocode]
     st.dataframe(df_FBL_filtered)
+    
     
     st.subheader('Gráfica')
     # -- PLOT DATAFRAME
