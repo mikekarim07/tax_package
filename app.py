@@ -7,11 +7,11 @@ import base64
 from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 
-with st.sidebar:
-    selected = option_menu(
-        menu_title = "HOME",
-        options = ['Parametros','Data'],
-    )
+#with st.sidebar:
+#    selected = option_menu(
+#        menu_title = "HOME",
+#        options = ['Parametros','Data'],
+#    )
 
 #tab_titles = [
 #    'primera',
