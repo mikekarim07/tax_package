@@ -66,7 +66,7 @@ if Parametros_uploaded_file:
     cocode = df_FBL3N['Company Code'] == st.multiselect('Choose all Company Codes', df2)
         
     st.subheader('Auxiliar FBL3N Filtrado por Company code')
-    df_FBL_filtered = df_FBL3N[cocode]
+    df_FBL_filtered = df_FBL3N[[cocode]]
     st.dataframe(df_FBL_filtered)
     
     
