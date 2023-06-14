@@ -45,7 +45,7 @@ if Parametros_uploaded_file:
 
     # -- Información filtrada por company code y agrupada
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    st.multiselect(df2)
+    options = st.multiselect([df2])
 
 
     
