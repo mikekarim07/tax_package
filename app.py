@@ -36,10 +36,10 @@ if Parametros_uploaded_file:
     
     
     st.subheader('Auxiliar FBL3N')
-    #st.dataframe(df_FBL3N)
+    st.dataframe(df_FBL3N)
     
     st.subheader('Parametros de clasificación')
-    #st.dataframe(df_parametros)
+    st.dataframe(df_parametros)
     groupby_column = st.selectbox(
         'What would you like to analyse?',
         ('Company Code', 'Account', 'User Name', 'Tax Code'),
@@ -55,7 +55,7 @@ if Parametros_uploaded_file:
 
     # -- Información filtrada por company code y agrupada
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    #st.dataframe(df2)
+    st.dataframe(df2)
     
     
     
