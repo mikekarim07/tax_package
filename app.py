@@ -42,27 +42,32 @@ if Parametros_uploaded_file:
     st.subheader('Parametros de clasificación')
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
+    
+    Ctas_unicas = pd.unique(df_FBL3N[['Account']].values.ravel())
+    Ctas_unicas.merge(Parametros, left_on = 'Account', right_on = 'GL_Account', how = 'left')
 
 
-    edited_df = st.data_editor(
-    df_FBL3N,
-    column_config={
-        "Company Code": "CoCode",
-        "Document Number": st.column_config.SelectboxColumn(
-            "Doc Number",
-            help="Clasifica el Num de documento",
-            width="medium",
-            options=[
-                "Venta",
-                "Compra",
-                "Hedge",
-            ],
-        ),
-        "is_widget": "Widget ?",
-    },
-    disabled=["command", "is_widget"],
-    hide_index=True,
-    )
+
+
+    #edited_df = st.data_editor(
+    #df_FBL3N,
+    #column_config={
+    #    "Company Code": "CoCode",
+    #    "Document Number": st.column_config.SelectboxColumn(
+    #        "Doc Number",
+    #        help="Clasifica el Num de documento",
+    #        width="medium",
+    #        options=[
+    #            "Venta",
+    #            "Compra",
+    #            "Hedge",
+    #        ],
+    #    ),
+    #    "is_widget": "Widget ?",
+    #},
+    #disabled=["command", "is_widget"],
+    #hide_index=True,
+    #)
     
     #groupby_column = st.selectbox(
     #    'What would you like to analyse?',
