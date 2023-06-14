@@ -32,7 +32,7 @@ if FBL3N_uploaded_file:
 Parametros_uploaded_file = st.file_uploader('Selecciona el Archivo Data Master que contenga el catalogo de cuentas', type='xlsx')
 if Parametros_uploaded_file:
     st.markdown('---')
-    df_parametros = pd.read_excel(Parametros_uploaded_file, engine='openpyxl')
+    df_parametros = pd.read_excel(Parametros_uploaded_file, sheet_name = GL_Accounts, engine='openpyxl')
     
     
     st.subheader('Auxiliar FBL3N')
