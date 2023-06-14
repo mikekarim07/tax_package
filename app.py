@@ -58,12 +58,12 @@ if Parametros_uploaded_file:
 
     # -- Información filtrada por company code y agrupada
     df2 = pd.unique(df_FBL3N[['Company Code']].values.ravel())
-    st.dataframe(df2)
+    #st.dataframe(df2)
     
     
     
     #cocode = st.selectbox('Company Code',df2)
-    cocode = df_FBL3N['Company Code'] == st.multiselect('Company Code',[df2])
+    cocode = df_FBL3N['Company Code'] == st.multiselect('Choose all Company Codes', df2)
         
     st.subheader('Auxiliar FBL3N Filtrado por Company code')
     df_FBL_filtered = df_FBL3N[cocode]
