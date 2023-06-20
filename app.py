@@ -42,12 +42,46 @@ if Parametros_uploaded_file:
     st.subheader('Parametros de clasificación')
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
-    
-    FBL3N_ctas = df_FBL3N['Account'].astype(str)
-    Parametros_ctas = df_parametros['GL_Account'].astype(str)
-    Ctas_unicas = pd.unique(FBL3N_ctas[['Account']].values.ravel())
+
+    FBL3N_ctas = df_FBL3N[['Account']].astype(str)
+    Parametros_ctas = df_parametros[['GL_Account']].astype(str)
+    Ctas_unicas = FBL3N_ctas[['Account']].drop_duplicates()
     result = pd.merge(Ctas_unicas, Parametros_ctas, left_on = 'Account', right_on = 'GL_Account', how = 'left')
-    st.dataframe('result')
+    result = result.fillna('Nueva')
+    result = result[result['GL_Account'] == 'Nueva']
+    result = result.rename(columns={"GL_Account": "Description"})
+    result = result.rename(columns={"Account": "GL_Account"})
+    df_parametros = pd.concat([df_parametros, result])
+    
+    
+    new_parametros = st.data_editor(
+    df_parametros,
+    column_config={
+        "GL_Account": "GL_Account",
+        "Description": st.text_input(
+            "Descrption",
+            help="Copia y pega la descripcion de la cuenta desde SAP",
+            width="medium",
+            ],
+        ),
+        "is_widget": "Widget ?",
+    },
+    disabled=["command", "is_widget"],
+    hide_index=True,
+    )
+
+
+
+
+
+
+
+    
+    #FBL3N_ctas = df_FBL3N['Account'].astype(str)
+    #Parametros_ctas = df_parametros['GL_Account'].astype(str)
+    #Ctas_unicas = pd.unique(FBL3N_ctas[['Account']].values.ravel())
+    #result = pd.merge(Ctas_unicas, Parametros_ctas, left_on = 'Account', right_on = 'GL_Account', how = 'left')
+    #st.dataframe('result')
 
 
 
