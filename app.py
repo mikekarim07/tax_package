@@ -52,22 +52,23 @@ if Parametros_uploaded_file:
     result = result.rename(columns={"GL_Account": "Description"})
     result = result.rename(columns={"Account": "GL_Account"})
     df_parametros = pd.concat([df_parametros, result])
+
+    st.dataframe(df_parametros)
     
-    
-    new_parametros = st.data_editor(
-    df_parametros,
-    column_config={
-        "GL_Account": "GL_Account",
-        "Description": st.text_input(
-            "Descrption",
-            help="Copia y pega la descripcion de la cuenta desde SAP",
-            width="medium",
-            ),
-        "is_widget": "Widget ?",
-    },
-    disabled=["command", "is_widget"],
-    hide_index=True,
-    )
+    #new_parametros = st.data_editor(
+    #df_parametros,
+    #column_config={
+    #    "GL_Account": "GL_Account",
+    #    "Description": st.text_input(
+    #        "Descrption",
+    #        help="Copia y pega la descripcion de la cuenta desde SAP",
+    #        width="medium",
+    #        ),
+    #    "is_widget": "Widget ?",
+    #},
+    #disabled=["command", "is_widget"],
+    #hide_index=True,
+    #)
 
 
 
