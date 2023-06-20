@@ -56,6 +56,7 @@ if Parametros_uploaded_file:
     df_parametros = pd.concat([df_parametros, result])
 
     st.dataframe(df_parametros)
+    st.write(df_parametros.shape)
     
     #new_parametros = st.data_editor(
     #df_parametros,
