@@ -28,6 +28,7 @@ st.set_page_config(page_title='Tax Package')
 st.title('Tax Package 📈')
 st.subheader('Cargar los archivos FBL3N y Parametros')
 
+#
 FBL3N_uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
 if FBL3N_uploaded_file:
     st.markdown('---')
@@ -49,6 +50,7 @@ if Parametros_uploaded_file:
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
 
+    
     FBL3N_ctas = df_FBL3N[['Account']].astype(str)
     Parametros_ctas = df_parametros[['GL_Account']].astype(str)
     Ctas_unicas = FBL3N_ctas[['Account']].drop_duplicates()
@@ -59,7 +61,24 @@ if Parametros_uploaded_file:
     result = result.rename(columns={"Account": "GL_Account"})
     result['Country'] = 'Seleccionar'
     result['CoCd'] = 'Seleccionar'
-    result = st.data_editor(result)
+
+    Company_codes = df_parametros[['CoCd']].astype(str)
+    Company_codes = df_parametros[['CoCd']].drop_duplicates()
+    
+    
+    result = st.data_editor(result,
+        column_config={
+        "Description": st.column_config.TextColumn(
+            "Description",
+            help="Copia y pega de SAP la descripcion de la cuenta",)
+        "Country": st.column_config.SelectboxColumn(
+            "Description",
+            help="Selecciona el pais de lista",
+            options=[Company_codes],)
+        },)
+            
+        
+    
 
     df_parametros = pd.concat([df_parametros, result])
 
