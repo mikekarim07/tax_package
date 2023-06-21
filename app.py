@@ -8,7 +8,7 @@ from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 
 # Object notation
-st.sidebar.header("Tax Package")
+#st.sidebar.header("Tax Package")
     
 
 #with st.sidebar:
