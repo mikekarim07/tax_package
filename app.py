@@ -60,8 +60,12 @@ if Parametros_uploaded_file:
     result['Country'] = 'Seleccionar'
     result['CoCd'] = 'Seleccionar'
     result = st.data_editor(result)
+
+    df_parametros = pd.concat([df_parametros, result])
+
+
     
-    FBL3N_merged = df_FBL3N.merge(result, left_on='Account', right_on='GL_Account', how='left')
+    FBL3N_merged = df_FBL3N.merge(df_parametros, left_on='Account', right_on='GL_Account', how='left')
     st.dataframe(FBL3N_merged)
     #df_parametros = pd.concat([df_parametros, result])
 
