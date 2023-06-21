@@ -58,8 +58,8 @@ if Parametros_uploaded_file:
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
     
-    #new_parametros = st.data_editor(
-    #df_parametros,
+    new_parametros = st.data_editor(df_parametros)
+    #,
     #column_config={
     #    "GL_Account": "GL_Account",
     #    "Description": st.text_input(
