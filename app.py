@@ -71,12 +71,16 @@ if Parametros_uploaded_file:
         column_config={
         "Description": st.column_config.TextColumn(
             "Description",
-            help="Copia y pega de SAP la descripcion de la cuenta",),
+            help="Copia y pega de SAP la descripcion de la cuenta",
+        ),
         "Country": st.column_config.SelectboxColumn(
             "Description",
             help="Selecciona el pais de lista",
             options=[Company_codes],)
-        },)
+        },
+        disabled=["GL_Account"],
+        hide_index=True,
+        )
             
         
     
