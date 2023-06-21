@@ -8,8 +8,8 @@ from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 
 # Object notation
-with st.sidebar:
-    st.[element_name]
+st.sidebar.header("Tax Package")
+    
 
 #with st.sidebar:
 #    selected = option_menu(
