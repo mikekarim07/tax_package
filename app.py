@@ -61,7 +61,8 @@ if Parametros_uploaded_file:
     result['CoCd'] = 'Seleccionar'
     result = st.data_editor(result)
     
-    
+    FBL3N_merged = df_FBL3N.merge(result, left_on='Account', right_on='GL_Account', how='left')
+    st.dataframe(FBL3N_merged)
     #df_parametros = pd.concat([df_parametros, result])
 
     #st.dataframe(df_parametros)
