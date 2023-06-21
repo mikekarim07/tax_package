@@ -53,10 +53,15 @@ if Parametros_uploaded_file:
     result = result[result['GL_Account'] == 'Nueva']
     result = result.rename(columns={"GL_Account": "Description"})
     result = result.rename(columns={"Account": "GL_Account"})
-    df_parametros = pd.concat([df_parametros, result])
+    result['Country'] = 'Seleccionar'
+    result['CoCd'] = 'Seleccionar'
+    result = st.data_editor(result)
+    
+    
+    #df_parametros = pd.concat([df_parametros, result])
 
-    st.dataframe(df_parametros)
-    st.write(df_parametros.shape)
+    #st.dataframe(df_parametros)
+    #st.write(df_parametros.shape)
     
     new_parametros = st.data_editor(df_parametros)
     #,
