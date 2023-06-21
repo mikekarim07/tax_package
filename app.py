@@ -7,6 +7,9 @@ import base64
 from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 
+# Object notation
+st.sidebar.[element_name]
+
 #with st.sidebar:
 #    selected = option_menu(
 #        menu_title = "HOME",
