@@ -31,7 +31,7 @@ st.subheader('Cargar los archivos FBL3N y Parametros')
 FBL3N_uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
 if FBL3N_uploaded_file:
     st.markdown('---')
-    df_FBL3N = pd.read_excel(FBL3N_uploaded_file, engine='openpyxl')
+    df_FBL3N = pd.read_excel(FBL3N_uploaded_file, engine='openpyxl', dtype = {'Account': str, 'Document Number': str, 'Company Code': str, 'Document Header Text': str})
 
 Parametros_uploaded_file = st.file_uploader('Selecciona el Archivo Data Master que contenga el catalogo de cuentas', type='xlsx')
 if Parametros_uploaded_file:
