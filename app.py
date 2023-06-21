@@ -67,8 +67,8 @@ if Parametros_uploaded_file:
     
     
     result = st.data_editor(
-        result,
-        column_config={
+    result,
+    column_config={
         "Description": st.column_config.TextColumn("Description", help="Copia y pega de SAP la descripcion de la cuenta",),
         "Country": st.column_config.SelectboxColumn("Country", help="Selecciona el pais de lista", options=[Company_codes],),
         },
