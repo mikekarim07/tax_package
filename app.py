@@ -66,7 +66,8 @@ if Parametros_uploaded_file:
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
     
     
-    result = st.data_editor(result,
+    result = st.data_editor(
+        result,
         column_config={
         "Description": st.column_config.TextColumn(
             "Description",
