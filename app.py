@@ -72,7 +72,7 @@ if Parametros_uploaded_file:
     #Nueva columna con la clave = Company Code & Document Number
     FBL3N_merged = df_FBL3N.merge(df_parametros, left_on='Account', right_on='GL_Account', how='left')
     FBL3N_merged['Key'] = FBL3N_merged['Company Code'] + FBL3N_merged['Document Number']
-    
+    FBL3N_merged = FBL3N_merged.rename(columns={"CoCd": "Related Party"})
     st.dataframe(FBL3N_merged)
 
     
