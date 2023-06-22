@@ -34,21 +34,48 @@ if Parametros_uploaded_file:
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
     st.divider()
-    
+
+
+
+
+    # Nuevo dataframe unicamente con las columnas de Account en FBL3N y GL_Account en Parametros
     FBL3N_ctas = df_FBL3N[['Account']].astype(str)
     Parametros_ctas = df_parametros[['GL_Account']].astype(str)
+    # Eliminar duplicados de FBL3N
     Ctas_unicas = FBL3N_ctas[['Account']].drop_duplicates()
+    # Genera un nuevo Dataframe donde se hace el merge de FBL3N y Parametros
     result = pd.merge(Ctas_unicas, Parametros_ctas, left_on = 'Account', right_on = 'GL_Account', how = 'left')
+    # Las cuentas que no existen o cuentas nuevas, aparecen con un NaN, se reemplaza el NaN por Nueva
     result = result.fillna('Nueva')
+    # Se Filtran las cuentas nuevas, se cambian los nombres de las columnas y se agregan las columnas Country y CoCd
     result = result[result['GL_Account'] == 'Nueva']
     result = result.rename(columns={"GL_Account": "Description"})
     result = result.rename(columns={"Account": "GL_Account"})
     result['Country'] = 'Seleccionar'
     result['CoCd'] = 'Seleccionar'
 
+    #Se despliega el dataframe de "result" en donde se pueden editar las celdas, para que puedan agregar la descrpcion, el country y CoCd de cada cuenta nueva
+    result = st.data_editor(result)
+    #
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
     
     
+    
+
+    df_parametros = pd.concat([df_parametros, result])
+
+    st.dataframe(df_parametros)
+    st.write(df_parametros.shape)
+
+    #Nueva columna con la clave = Company Code & Document Number
+    FBL3N_merged = df_FBL3N.merge(df_parametros, left_on='Account', right_on='GL_Account', how='left')
+    FBL3N_merged['Key'] = FBL3N_merged['Company Code'] + FBL3N_merged['Document Number']
+    
+    st.dataframe(FBL3N_merged)
+
+    
+
+    #codigo para editar el dataframe result considerando que hay que agregar la descripcion, en el Country y Cocode que sea un selectbox
     #result = st.data_editor(result)
     #result,
     #column_config={
@@ -59,18 +86,7 @@ if Parametros_uploaded_file:
     #    hide_index=True,
     #    )
 
-    df_parametros = pd.concat([df_parametros, result])
     
-    FBL3N_merged = df_FBL3N.merge(df_parametros, left_on='Account', right_on='GL_Account', how='left')
-    FBL3N_merged['Key'] = FBL3N_merged['Company Code'] + FBL3N_merged['Document Number']
-    
-    st.dataframe(FBL3N_merged)
-    
-
-    #df_parametros = pd.concat([df_parametros, result])
-
-    #st.dataframe(df_parametros)
-    #st.write(df_parametros.shape)
     
     #new_parametros = st.data_editor(df_parametros)
     #,
