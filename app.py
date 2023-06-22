@@ -66,15 +66,15 @@ if Parametros_uploaded_file:
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
     
     
-    result = st.data_editor(
-    result,
-    column_config={
-        "Description": st.column_config.TextColumn("Description", help="Copia y pega de SAP la descripcion de la cuenta",),
-        "Country": st.column_config.SelectboxColumn("Country", help="Selecciona el pais de lista", options=[Company_codes],),
-        },
-        disabled=["GL_Account"],
-        hide_index=True,
-        )
+    result = st.data_editor(result)
+    #result,
+    #column_config={
+    #    "Description": st.column_config.TextColumn("Description", help="Copia y pega de SAP la descripcion de la cuenta",),
+    #    "Country": st.column_config.SelectboxColumn("Country", help="Selecciona el pais de lista", options=[Company_codes],),
+    #    },
+    #    disabled=["GL_Account"],
+    #    hide_index=True,
+    #    )
             
         
     
@@ -84,7 +84,11 @@ if Parametros_uploaded_file:
 
     
     FBL3N_merged = df_FBL3N.merge(df_parametros, left_on='Account', right_on='GL_Account', how='left')
+    New_FBL3N['Key'] = FBL3N_merged['Company Code'] + FBL3N_merged['Document Number']
+    
     st.dataframe(FBL3N_merged)
+    
+
     #df_parametros = pd.concat([df_parametros, result])
 
     #st.dataframe(df_parametros)
