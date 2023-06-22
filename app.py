@@ -29,11 +29,11 @@ if Parametros_uploaded_file:
     st.subheader('Auxiliar FBL3N')
     st.dataframe(df_FBL3N)
     st.write(df_FBL3N.shape)
-    
+    st.divider()
     st.subheader('Parametros de clasificación')
     st.dataframe(df_parametros)
     st.write(df_parametros.shape)
-
+    st.divider()
     
     FBL3N_ctas = df_FBL3N[['Account']].astype(str)
     Parametros_ctas = df_parametros[['GL_Account']].astype(str)
