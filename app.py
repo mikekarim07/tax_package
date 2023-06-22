@@ -66,7 +66,7 @@ if Parametros_uploaded_file:
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
     
     
-    result = st.data_editor(result)
+    #result = st.data_editor(result)
     #result,
     #column_config={
     #    "Description": st.column_config.TextColumn("Description", help="Copia y pega de SAP la descripcion de la cuenta",),
@@ -125,25 +125,25 @@ if Parametros_uploaded_file:
 
 
 
-    #edited_df = st.data_editor(
-    #df_FBL3N,
-    #column_config={
-    #    "Company Code": "CoCode",
-    #    "Document Number": st.column_config.SelectboxColumn(
-    #        "Doc Number",
-    #        help="Clasifica el Num de documento",
-    #        width="medium",
-    #        options=[
-    #            "Venta",
-    #            "Compra",
-    #            "Hedge",
-    #        ],
-    #    ),
-    #    "is_widget": "Widget ?",
-    #},
-    #disabled=["command", "is_widget"],
-    #hide_index=True,
-    #)
+    edited_df = st.data_editor(
+    df_FBL3N,
+    column_config={
+        "Company Code": "CoCode",
+        "Document Number": st.column_config.SelectboxColumn(
+            "Doc Number",
+            help="Clasifica el Num de documento",
+            width="medium",
+            options=[
+                "Venta",
+                "Compra",
+                "Hedge",
+            ],
+        ),
+        "is_widget": "Widget ?",
+    },
+    disabled=["command", "is_widget"],
+    hide_index=True,
+    )
     
     #groupby_column = st.selectbox(
     #    'What would you like to analyse?',
