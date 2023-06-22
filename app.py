@@ -54,7 +54,9 @@ if Parametros_uploaded_file:
     result['Country'] = 'Seleccionar'
     result['CoCd'] = 'Seleccionar'
 
-    #Se despliega el dataframe de "result" en donde se pueden editar las celdas, para que puedan agregar la descrpcion, el country y CoCd de cada cuenta nueva
+    #Se despliega el dataframe de "result" en donde se pueden editar las celdas, para que puedan agregar la descripcion, el country y CoCd de cada cuenta nueva
+    st.subheader('Cuentas Nuevas')
+    st.write("Clasificar las Cuentas Nuevas con el Company Code y el Pais al que corresponden")
     result = st.data_editor(result)
     #
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
