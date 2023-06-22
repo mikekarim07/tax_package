@@ -7,22 +7,6 @@ import base64
 from io import StringIO, BytesIO
 from streamlit_option_menu import option_menu
 
-# Object notation
-#st.sidebar.header("Tax Package")
-    
-
-#with st.sidebar:
-#    selected = option_menu(
-#        menu_title = "HOME",
-#        options = ['Parametros','Data'],
-#    )
-
-#tab_titles = [
-#    'primera',
-#    'segunda',]
-#tabs = st.tabs(tab_titles)
-
-
 
 st.set_page_config(page_title='Tax Package')
 st.title('Tax Package 📈')
@@ -62,7 +46,6 @@ if Parametros_uploaded_file:
     result['Country'] = 'Seleccionar'
     result['CoCd'] = 'Seleccionar'
 
-    Company_codes = df_parametros[['CoCd']].astype(str)
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
     
     
@@ -75,16 +58,11 @@ if Parametros_uploaded_file:
     #    disabled=["GL_Account"],
     #    hide_index=True,
     #    )
-            
-        
-    
 
     df_parametros = pd.concat([df_parametros, result])
-
-
     
     FBL3N_merged = df_FBL3N.merge(df_parametros, left_on='Account', right_on='GL_Account', how='left')
-    New_FBL3N['Key'] = FBL3N_merged['Company Code'] + FBL3N_merged['Document Number']
+    FBL3N_merged['Key'] = FBL3N_merged['Company Code'] + FBL3N_merged['Document Number']
     
     st.dataframe(FBL3N_merged)
     
