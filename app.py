@@ -60,7 +60,7 @@ if Parametros_uploaded_file:
     result = st.data_editor(result)
     #
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
-    
+    st.selectbox(Company_codes)
     
     
 
@@ -89,9 +89,7 @@ if Parametros_uploaded_file:
     #    hide_index=True,
     #    )
 
-    #prueba de dataframe editable
-    
-    
+  
     #new_parametros = st.data_editor(df_parametros)
     #,
     #column_config={
