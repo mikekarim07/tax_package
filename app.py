@@ -75,7 +75,8 @@ if Parametros_uploaded_file:
     FBL3N_merged = FBL3N_merged.rename(columns={"CoCd": "Related Party"})
     st.dataframe(FBL3N_merged)
 
-    
+    FBL3N_merged = FBL3N_merged.groupby(by=['Company Code', 'CoCd'], as_index=False).sum()
+    st.table(FBL3N_merged)
 
     #codigo para editar el dataframe result considerando que hay que agregar la descripcion, en el Country y Cocode que sea un selectbox
     #result = st.data_editor(result)
@@ -89,21 +90,7 @@ if Parametros_uploaded_file:
     #    )
 
     #prueba de dataframe editable
-    edited_df = st.data_editor(
-    result,
-    column_config={
-        "Description": "Description",
-        "Country": st.column_config.SelectboxColumn(
-            "Doc Number",
-            help="Clasifica el Num de documento",
-            width="medium",
-            options=[[Company_codes]],
-        ),
-        "is_widget": "Widget ?",
-    },
-    disabled=["command", "is_widget"],
-    hide_index=True,
-    )
+    
     
     #new_parametros = st.data_editor(df_parametros)
     #,
