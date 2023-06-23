@@ -76,7 +76,7 @@ if Parametros_uploaded_file:
     st.dataframe(FBL3N_merged)
 
     FBL3N_merged = FBL3N_merged.groupby(by=[groupby_column], as_index=False)['Amount in local currency'].sum()
-    st.table(FBL3N_merged)
+    st.dataframe(FBL3N_merged)
 
     #codigo para editar el dataframe result considerando que hay que agregar la descripcion, en el Country y Cocode que sea un selectbox
     #result = st.data_editor(result)
