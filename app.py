@@ -88,7 +88,22 @@ if Parametros_uploaded_file:
     #    hide_index=True,
     #    )
 
-    
+    #prueba de dataframe editable
+    edited_df = st.data_editor(
+    result,
+    column_config={
+        "Description": "Description",
+        "Country": st.column_config.SelectboxColumn(
+            "Doc Number",
+            help="Clasifica el Num de documento",
+            width="medium",
+            options=[Company Codes],
+        ),
+        "is_widget": "Widget ?",
+    },
+    disabled=["command", "is_widget"],
+    hide_index=True,
+    )
     
     #new_parametros = st.data_editor(df_parametros)
     #,
