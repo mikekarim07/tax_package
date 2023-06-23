@@ -75,7 +75,7 @@ if Parametros_uploaded_file:
     FBL3N_merged = FBL3N_merged.rename(columns={"CoCd": "Related Party"})
     st.dataframe(FBL3N_merged)
 
-    FBL3N_merged = FBL3N_merged.groupby(by=[groupby_column], as_index=False)['Amount in local currency'].sum()
+    FBL3N_merged = FBL3N_merged.groupby(by=['Company Code'], as_index=False)['Amount in local currency'].sum()
     st.dataframe(FBL3N_merged)
 
     #codigo para editar el dataframe result considerando que hay que agregar la descripcion, en el Country y Cocode que sea un selectbox
