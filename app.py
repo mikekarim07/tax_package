@@ -97,7 +97,7 @@ if Parametros_uploaded_file:
             "Doc Number",
             help="Clasifica el Num de documento",
             width="medium",
-            options=[Company_codes],
+            options=[[Company_codes]],
         ),
         "is_widget": "Widget ?",
     },
