@@ -75,7 +75,7 @@ if Parametros_uploaded_file:
     FBL3N_merged = FBL3N_merged.rename(columns={"CoCd": "Related Party"})
     st.dataframe(FBL3N_merged)
 
-    FBL3N_merged = FBL3N_merged[FBL3N_merged['Company Code'] == Company_codes]
+    FBL3N_merged = FBL3N_merged[FBL3N_merged['Company Code'] == groupby_column]
     FBL3N_merged = FBL3N_merged.groupby(by=['Company Code', 'Related Party'], as_index=False)['Amount in local currency'].sum()
     st.dataframe(FBL3N_merged)
 
