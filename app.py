@@ -11,7 +11,7 @@ from streamlit_option_menu import option_menu
 st.set_page_config(page_title='Tax Package')
 st.title('Tax Package 📈')
 st.subheader('Cargar los archivos FBL3N y Parametros')
-
+st.write("Streamlit version:", st.__version__)
 #
 FBL3N_uploaded_file = st.file_uploader('Selecciona el Archivo FBL3N', type='xlsx')
 if FBL3N_uploaded_file:
