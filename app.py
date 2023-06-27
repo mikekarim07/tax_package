@@ -59,7 +59,7 @@ if Parametros_uploaded_file:
     st.write("Clasificar las Cuentas Nuevas con el Company Code y el Pais al que corresponden")
     result = st.data_editor(result)
     #
-    Company_codes = df_parametros[['CoCd']].drop_duplicates()
+    Company_codes = df_FBL3N[['Company Code']].drop_duplicates()
     groupby_column = st.selectbox('Selecciona la CoCode', Company_codes)
     
     
