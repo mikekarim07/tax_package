@@ -60,7 +60,7 @@ if Parametros_uploaded_file:
     result = st.data_editor(result)
     #
     Company_codes = df_parametros[['CoCd']].drop_duplicates()
-    groupby_column = st.selectbox('Selecciona la CoCode',['Selecciona'], Company_codes)
+    groupby_column = st.selectbox('Selecciona la CoCode', Company_codes)
     
     
 
