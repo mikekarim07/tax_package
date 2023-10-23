@@ -5,4 +5,4 @@ streamlit
 numpy
 matplotlib
 streamlit-option-menu
-sklearn
+scikit-learn
