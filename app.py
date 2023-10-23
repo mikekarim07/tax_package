@@ -48,10 +48,13 @@ if uploaded_FBL3N_train:
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
     st.divider()
     st.caption('Archivo FBL3N que se va a usar para entrenamiento del modelo')
+    # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
     subcodes_unique = FBL3N_full['Subcode'].unique()
     subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
     FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
     st.dataframe(FBL3N_filtered)
+    # Mostrar el dataframe sin filtrar
+    # st.dataframe(FBL3N_full)
     st.divider()
 
     
