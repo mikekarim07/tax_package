@@ -48,7 +48,10 @@ if uploaded_FBL3N_train:
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
     st.divider()
     st.caption('Archivo FBL3N que se va a usar para entrenamiento del modelo')
-    st.dataframe(FBL3N_full)
+    subcodes_unique = FBL3N_full['Subcode'].unique()
+    subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
+    FBL3N_filtered = FBL3N_full.isin(subcodes_options)
+    st.dataframe(FBL3N_filtered)
     st.divider()
 
     
