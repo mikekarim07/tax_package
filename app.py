@@ -50,7 +50,7 @@ if uploaded_FBL3N_train:
     st.caption('Archivo FBL3N que se va a usar para entrenamiento del modelo')
     subcodes_unique = FBL3N_full['Subcode'].unique()
     subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
-    FBL3N_filtered = FBL3N_full[Subcode].isin(subcodes_options)
+    FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
     st.dataframe(FBL3N_filtered)
     st.divider()
 
