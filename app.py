@@ -49,12 +49,12 @@ if uploaded_FBL3N_train:
     st.divider()
     st.caption('Archivo FBL3N que se va a usar para entrenamiento del modelo')
     # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
-    subcodes_unique = FBL3N_full['Subcode'].unique()
-    subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
-    FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
-    st.dataframe(FBL3N_filtered)
+    # subcodes_unique = FBL3N_full['Subcode'].unique()
+    # subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
+    # FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
+    # st.dataframe(FBL3N_filtered)
     # Mostrar el dataframe sin filtrar
-    # st.dataframe(FBL3N_full)
+    st.dataframe(FBL3N_full)
     st.divider()
 
     
@@ -119,55 +119,73 @@ if uploaded_new_FBL3N and uploaded_masters:
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
     FBL3N_real['Subcode_ML'] = modelo.predict(X_new_data_tfidf)
 
-    y_test_pred = modelo.predict(X_test_tfidf)
-    accuracy_test = accuracy_score(y_test, y_test_pred)
+    # y_test_pred = modelo.predict(X_test_tfidf)
+    # accuracy_test = accuracy_score(y_test, y_test_pred)
 
     FBL3N_real = FBL3N_real.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
     FBL3N_real = FBL3N_real.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
-    FBL3N_real['Key1'] = FBL3N_real['Company Code'] + FBL3N_real['CoCd'] + (FBL3N_real['Document Date'].astype(str)) + (FBL3N_real['Amount in doc. curr.'].astype(str))
-    FBL3N_real['Key2'] = FBL3N_real['CoCd'] + FBL3N_real['Company Code'] + (FBL3N_real['Document Date'].astype(str)) + (-FBL3N_real['Amount in doc. curr.']).astype(str)
-    
-    FBL3N_real['Counter1'] = FBL3N_real.groupby('Key1').cumcount()
-    FBL3N_real['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
-    FBL3N_real['Key_1'] = FBL3N_real['Key1'] + FBL3N_real['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
-    FBL3N_real['Counter2'] = FBL3N_real.groupby('Key2').cumcount()
-    FBL3N_real['Counter2'] += 0 # Contador para que comience desde 0
-    FBL3N_real['Key_2'] = FBL3N_real['Key2'] + FBL3N_real['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
-    
-    FBL3N_real2 = FBL3N_real.copy()
-    FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
-    # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
-    st.dataframe(FBL3N_real)
 
+    FBL3N_summary = FBL3N_real.copy()
+    FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + (FBL3N_summary['Subcode_ML'].astype(str))
+    FBL3N_summary['K2'] = FBL3N_summary['Cocd'] + FBL3N_summary['Company Code'] + (FBL3N_summary['Code_RP'].astype(str))
+    
+    FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document Currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
+    FBL3N_summary2 = FBL3N_summary.copy()
+    FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2', how='left')
+
+    tab1, tab2 = st.tabs(["Resumen", "Detalle"])
+    
+    with tab1:
+        st.subheader(f'Resumen')
+        st.dataframe(FBL3N_summary)
+
+    with tab2:
+    
+        FBL3N_real['Key1'] = FBL3N_real['Company Code'] + FBL3N_real['CoCd'] + (FBL3N_real['Document Date'].astype(str)) + (FBL3N_real['Amount in doc. curr.'].astype(str))
+        FBL3N_real['Key2'] = FBL3N_real['CoCd'] + FBL3N_real['Company Code'] + (FBL3N_real['Document Date'].astype(str)) + (-FBL3N_real['Amount in doc. curr.']).astype(str)
+        
+        FBL3N_real['Counter1'] = FBL3N_real.groupby('Key1').cumcount()
+        FBL3N_real['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
+        FBL3N_real['Key_1'] = FBL3N_real['Key1'] + FBL3N_real['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+        FBL3N_real['Counter2'] = FBL3N_real.groupby('Key2').cumcount()
+        FBL3N_real['Counter2'] += 0 # Contador para que comience desde 0
+        FBL3N_real['Key_2'] = FBL3N_real['Key2'] + FBL3N_real['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+        
+        FBL3N_real2 = FBL3N_real.copy()
+        FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
+        # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
+        st.dataframe(FBL3N_real)
+    
     end_time02 = time.time()
     processing_time02 = end_time02 - start_time02
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Una vez generado el modelo, este fue aplicado en el nuevo conjunto de datos, asignando las categorías correspondientes en un tiempo total de: {processing_time_formatted02} segundos')
 
-    start_time03 = time.time()
-    fecha_actual = datetime.datetime.now()
-    formato = "%Y%m%d %H%M%S"  # Formato: Año-Mes-Día Hora-Minuto-Segundo
-    fecha_formateada = fecha_actual.strftime(formato)
-
-    # Crear un objeto de Pandas ExcelWriter y un buffer
-    buffer = pd.ExcelWriter("output.xlsx", engine='openpyxl')
-
-    # Escribir el DataFrame en la hoja de Excel
-    FBL3N_real.to_excel(buffer, sheet_name='FBL3N', index=False)
-    FBL3N_real2.to_excel(buffer, sheet_name='FBL3N_2', index=False)
-    # Cerrar el Pandas Excel writer
-    buffer.close()
-
-    # Cargar el archivo Excel en un búfer base64 y crear un enlace de descarga
-    with open("output.xlsx", "rb") as excel_file:
-        b64 = base64.b64encode(excel_file.read()).decode()
-
-    # Crear un enlace de descarga para el archivo Excel
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="FBL3N_{fecha_formateada}.xlsx">Download Excel File</a>'
-
-    # Mostrar el enlace en Streamlit
-    st.markdown(href, unsafe_allow_html=True)
-    end_time03 = time.time()
-    processing_time03 = end_time03 - start_time03
-    processing_time_formatted03 = "{:.4f}".format(processing_time03)
-    st.info(f'Una vez que el modelo fue aplicado al nuevo conjunto de datos, se generó un archivo de Excel para descargar en un tiempo total de: {processing_time_formatted03} segundos')
+    if st.checkbox("Generar Archivo de Excel"):
+        start_time03 = time.time()
+        fecha_actual = datetime.datetime.now()
+        formato = "%Y%m%d %H%M%S"  # Formato: Año-Mes-Día Hora-Minuto-Segundo
+        fecha_formateada = fecha_actual.strftime(formato)
+        
+        # Crear un objeto de Pandas ExcelWriter y un buffer
+        buffer = pd.ExcelWriter("output.xlsx", engine='openpyxl')
+    
+        # Escribir el DataFrame en la hoja de Excel
+        FBL3N_real.to_excel(buffer, sheet_name='FBL3N', index=False)
+        FBL3N_real2.to_excel(buffer, sheet_name='FBL3N_2', index=False)
+        # Cerrar el Pandas Excel writer
+        buffer.close()
+    
+        # Cargar el archivo Excel en un búfer base64 y crear un enlace de descarga
+        with open("output.xlsx", "rb") as excel_file:
+            b64 = base64.b64encode(excel_file.read()).decode()
+    
+        # Crear un enlace de descarga para el archivo Excel
+        href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="FBL3N_{fecha_formateada}.xlsx">Download Excel File</a>'
+    
+        # Mostrar el enlace en Streamlit
+        st.markdown(href, unsafe_allow_html=True)
+        end_time03 = time.time()
+        processing_time03 = end_time03 - start_time03
+        processing_time_formatted03 = "{:.4f}".format(processing_time03)
+        st.success(f'Archivo de Excel generado en un tiempo total de: {processing_time_formatted03} segundos')
