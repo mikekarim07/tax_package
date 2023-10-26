@@ -134,7 +134,7 @@ if uploaded_new_FBL3N and uploaded_masters:
     FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
     FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
     FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
-    FBL3N_summary = FBL3N_summary['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2'].fillna(0)
+    # FBL3N_summary = FBL3N_summary['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2'].fillna(0)
     FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
     
 
