@@ -126,8 +126,8 @@ if uploaded_new_FBL3N and uploaded_masters:
     FBL3N_real = FBL3N_real.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
 
     FBL3N_summary = FBL3N_real.copy()
-    FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + (FBL3N_summary['Subcode_ML'].astype(str))
-    FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + (FBL3N_summary['Code_RP'].astype(str))
+    FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
+    FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
     FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
    
     FBL3N_summary2 = FBL3N_summary.copy()
