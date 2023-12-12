@@ -28,7 +28,7 @@ st.set_page_config(
 # st.header('Machine Learnig Model')
 st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
 
-st.divider()
+# st.divider()
 
 start_time01 = time.time()
 uploaded_FBL3N_train = st.sidebar.file_uploader("Carga el archivo que contenga la clasificación para el entrenamiento del modelo de ML", type=["xlsx"], accept_multiple_files=False)
@@ -46,7 +46,7 @@ if uploaded_FBL3N_train:
     # FBL3N_full
     # Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
-    st.divider()
+    # st.divider()
     st.caption('Archivo FBL3N que se va a usar para entrenamiento del modelo')
     # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
     # subcodes_unique = FBL3N_full['Subcode'].unique()
@@ -94,9 +94,10 @@ st.divider()
 st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
 
 start_time02 = time.time()
-uploaded_new_FBL3N = st.file_uploader("Cargar el archivo que contiene el conjunto de datos para su clasificación", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
-uploaded_masters = st.file_uploader("Cargar el maestros de datos que incluye el catálogo de cuentas y subcategorías", key="masters", type=["xlsx"], accept_multiple_files=False)
-
+st.sidebar.divider()
+uploaded_new_FBL3N = st.sidebar.file_uploader("Cargar el archivo que contiene el conjunto de datos para su clasificación", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
+uploaded_masters = st.sidebar.file_uploader("Cargar el maestros de datos que incluye el catálogo de cuentas y subcategorías", key="masters", type=["xlsx"], accept_multiple_files=False)
+st.sidebar.divider()
 if uploaded_new_FBL3N and uploaded_masters:
     FBL3N_real = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
                 dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
