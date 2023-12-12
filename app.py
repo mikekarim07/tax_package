@@ -15,7 +15,7 @@ import time
 
 
 st.set_page_config(
-    page_title="Modelo de Machine Learning para la clasificación de las partidas intercompañía.",
+    page_title="Tax Package ML Classification Model",
     page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -24,14 +24,14 @@ st.set_page_config(
     }
 )
 
-
-st.header('Machine Learnig Model')
-st.subheader('Modelo de aprendizaje automatico de clasificación de categorías y subcategorías de operaciones con partes relacionadas')
+# st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=150)
+# st.header('Machine Learnig Model')
+st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
 
 st.divider()
 
 start_time01 = time.time()
-uploaded_FBL3N_train = st.file_uploader("Carga el archivo que contenga la clasificación para el entrenamiento del modelo de ML", type=["xlsx"], accept_multiple_files=False)
+uploaded_FBL3N_train = st.sidebar.file_uploader("Carga el archivo que contenga la clasificación para el entrenamiento del modelo de ML", type=["xlsx"], accept_multiple_files=False)
 if uploaded_FBL3N_train:
     FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
 
