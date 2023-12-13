@@ -31,7 +31,7 @@ st.subheader('Tax Package - Related Party Operations Category Classification Mac
 # st.divider()
 
 start_time01 = time.time()
-uploaded_FBL3N_train = st.sidebar.file_uploader("Carga el archivo que contenga la clasificación para el entrenamiento del modelo de ML", type=["xlsx"], accept_multiple_files=False)
+uploaded_FBL3N_train = st.sidebar.file_uploader("Upload FBL3N file which contains historical data classified to train the Machine Learning Model", type=["xlsx"], accept_multiple_files=False)
 if uploaded_FBL3N_train:
     FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
 
@@ -47,7 +47,7 @@ if uploaded_FBL3N_train:
     # Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
     # st.divider()
-    st.caption('Archivo FBL3N que se va a usar para entrenamiento del modelo')
+    st.caption('FBL3N dataset to be trained')
     # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
     # subcodes_unique = FBL3N_full['Subcode'].unique()
     # subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
@@ -80,23 +80,23 @@ if uploaded_FBL3N_train:
 
     # Calcular la precisión del modelo en el conjunto de prueba
     accuracy = accuracy_score(y_test, y_pred)
-    accuracy = "{:.4%}".format(accuracy)
+    accuracy = "{:.2%}".format(accuracy)
     # print(accuracy)
-    st.caption('El modelo de aprendizaje finalizó y una vez que el modelo fue probado, dio un porcentaje de accuracy del:')
-    st.metric(label="Accuracy", value=accuracy, delta=accuracy)
+    # st.caption('El modelo de aprendizaje finalizó y una vez que el modelo fue probado, dio un porcentaje de accuracy del:')
+    st.metric(label="Model Accuracy", value=accuracy, delta=accuracy)
     
     end_time01 = time.time()
     processing_time01 = end_time01 - start_time01
-    processing_time_formatted01 = "{:.4f}".format(processing_time01)
-    st.info(f'Tiempo total de entrenamiento del Modelo de Aprendizaje de clasificación de las operaciones con partes relacionadas: {processing_time_formatted01} segundos')
+    processing_time_formatted01 = "{:.2f}".format(processing_time01)
+    st.info(f'Machine Learning model training: {processing_time_formatted01} seconds')
 
 st.divider()
-st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
+# st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
 
 start_time02 = time.time()
 st.sidebar.divider()
-uploaded_new_FBL3N = st.sidebar.file_uploader("Cargar el archivo que contiene el conjunto de datos para su clasificación", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
-uploaded_masters = st.sidebar.file_uploader("Cargar el maestros de datos que incluye el catálogo de cuentas y subcategorías", key="masters", type=["xlsx"], accept_multiple_files=False)
+uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
+uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.divider()
 if uploaded_new_FBL3N and uploaded_masters:
     FBL3N_real = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
