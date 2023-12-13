@@ -24,7 +24,7 @@ st.set_page_config(
     }
 )
 
-# st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=150)
+st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=120)
 # st.header('Machine Learnig Model')
 st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
 
@@ -145,8 +145,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     # y_test_pred = modelo.predict(X_test_tfidf)
     # accuracy_test = accuracy_score(y_test, y_test_pred)
 
-    FBL3N_new = FBL3N_tobe_class.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
-    FBL3N_new = FBL3N_tobe_class.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
+    FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
+    FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
 
     FBL3N_summary = FBL3N_new.copy()
     FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
