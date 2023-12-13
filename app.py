@@ -46,7 +46,7 @@ if uploaded_FBL3N_train:
     # FBL3N_full
     # Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
-    FBL3N_full['Identificador'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' +  FBL3N_full['Document Number'] + ' ' + FBL3N_full['Amount in doc. curr.'] + ' ' + FBL3N_full['Posting Date']
+    FBL3N_full['Identificador'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' +  FBL3N_full['Document Number'] + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str)) + ' ' + FBL3N_full['Posting Date']
     # st.divider()
     st.caption('FBL3N dataset to be trained')
     # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
@@ -116,7 +116,7 @@ if uploaded_new_FBL3N and uploaded_masters:
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
-    FBL3N_new['Identificador'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Document Number'] + ' ' + FBL3N_new['Amount in doc. curr.'] + ' ' + FBL3N_new['Posting Date']
+    FBL3N_new['Identificador'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Document Number'] + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + FBL3N_new['Posting Date']
     FBL3N_tobe_class = FBL3N_real[~FBL3N_new['Identificador'].isin(FBL3N_full['Identificador'])]
     FBL3N_classified = FBL3N_new[FBL3N_new['Identificador'].isin(FBL3N_full['Identificador'])]
 
