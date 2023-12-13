@@ -90,7 +90,7 @@ if uploaded_FBL3N_train:
     end_time01 = time.time()
     processing_time01 = end_time01 - start_time01
     processing_time_formatted01 = "{:.2f}".format(processing_time01)
-    st.info(f'Machine Learning model training: {processing_time_formatted01} seconds')
+    st.info(f'Machine Learning model training time: {processing_time_formatted01} seconds')
 
 st.divider()
 # st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
@@ -119,7 +119,7 @@ if uploaded_new_FBL3N and uploaded_masters:
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
     FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
     # FBL3N_new['Identificador'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Document Number'] + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + FBL3N_new['Posting Date']
-    FBL3N_tobe_class = FBL3N_real[~FBL3N_new['Id'].isin(FBL3N_full['Id'])]
+    FBL3N_tobe_class = FBL3N_new[~FBL3N_new['Id'].isin(FBL3N_full['Id'])]
     FBL3N_classified = FBL3N_new[FBL3N_new['Id'].isin(FBL3N_full['Id'])]
 
 
