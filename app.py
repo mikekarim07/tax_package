@@ -99,7 +99,7 @@ uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains th
 uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.divider()
 if uploaded_new_FBL3N and uploaded_masters:
-    FBL3N_real = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
+    FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
                 dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
                         'Text': str, 'Document Header Text': str, 'User Name': str,
                         'Tax Code': str,})
@@ -110,23 +110,28 @@ if uploaded_new_FBL3N and uploaded_masters:
                          'Code_RP': str, 'Code_Desc_RP': str,})
     
     
-
+    FBL3N_full['Identificador'] = FBL3N_full['Company Code'] + FBL3N_full['Document Type'] + FBL3N_full['Document Number'] + FBL3N_full['Amount in doc. curr.'] + FBL3N_full['Posting Date']
     # Paso 2: Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Document Header Text', 'User Name', 'Tax Code']
-    FBL3N_real[columnas_rellenar_real] = FBL3N_real[columnas_rellenar_real].fillna('')
-    FBL3N_real['ML'] = FBL3N_real['Company Code'] + ' ' + FBL3N_real['Document Type'] + ' ' + FBL3N_real['Account'] + ' ' + FBL3N_real['Text'] + ' ' + FBL3N_real['Document Header Text'] + ' ' + FBL3N_real['User Name'] + ' ' + FBL3N_real['Tax Code']
+    FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
+    FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
+    FBL3N_new['Identificador'] = FBL3N_new['Company Code'] + FBL3N_new['Document Type'] + FBL3N_new['Document Number'] + FBL3N_new['Amount in doc. curr.'] + FBL3N_new['Posting Date']
+    FBL3N_tobe_class = FBL3N_real[~FBL3N_new['Identificador'].isin(FBL3N_full['Identificador'])]
+    FBL3N_classified = FBL3N_new[FBL3N_new['Identificador'].isin(FBL3N_full['Identificador'])]
+
+
     
     X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_real['ML'])
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
-    FBL3N_real['Subcode_ML'] = modelo.predict(X_new_data_tfidf)
+    FBL3N_tobe_class['Subcode_ML'] = modelo.predict(X_new_data_tfidf)
 
     # y_test_pred = modelo.predict(X_test_tfidf)
     # accuracy_test = accuracy_score(y_test, y_test_pred)
 
-    FBL3N_real = FBL3N_real.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
-    FBL3N_real = FBL3N_real.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
+    FBL3N_tobe_class = FBL3N_tobe_class.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
+    FBL3N_tobe_class = FBL3N_tobe_class.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
 
-    FBL3N_summary = FBL3N_real.copy()
+    FBL3N_summary = FBL3N_tobe_class.copy()
     FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
     FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
     FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
@@ -148,20 +153,21 @@ if uploaded_new_FBL3N and uploaded_masters:
 
     with tab2:
     
-        FBL3N_real['Key1'] = FBL3N_real['Company Code'] + FBL3N_real['CoCd'] + (FBL3N_real['Document Date'].astype(str)) + (FBL3N_real['Amount in doc. curr.'].astype(str))
-        FBL3N_real['Key2'] = FBL3N_real['CoCd'] + FBL3N_real['Company Code'] + (FBL3N_real['Document Date'].astype(str)) + (-FBL3N_real['Amount in doc. curr.']).astype(str)
+        FBL3N_tobe_class['Key1'] = FBL3N_tobe_class['Company Code'] + FBL3N_tobe_class['CoCd'] + (FBL3N_tobe_class['Document Date'].astype(str)) + (FBL3N_tobe_class['Amount in doc. curr.'].astype(str))
+        FBL3N_tobe_class['Key2'] = FBL3N_tobe_class['CoCd'] + FBL3N_tobe_class['Company Code'] + (FBL3N_tobe_class['Document Date'].astype(str)) + (-FBL3N_tobe_class['Amount in doc. curr.']).astype(str)
         
-        FBL3N_real['Counter1'] = FBL3N_real.groupby('Key1').cumcount()
-        FBL3N_real['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
-        FBL3N_real['Key_1'] = FBL3N_real['Key1'] + FBL3N_real['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
-        FBL3N_real['Counter2'] = FBL3N_real.groupby('Key2').cumcount()
-        FBL3N_real['Counter2'] += 0 # Contador para que comience desde 0
-        FBL3N_real['Key_2'] = FBL3N_real['Key2'] + FBL3N_real['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+        FBL3N_tobe_class['Counter1'] = FBL3N_tobe_class.groupby('Key1').cumcount()
+        FBL3N_tobe_class['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
+        FBL3N_tobe_class['Key_1'] = FBL3N_tobe_class['Key1'] + FBL3N_tobe_class['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+        FBL3N_tobe_class['Counter2'] = FBL3N_tobe_class.groupby('Key2').cumcount()
+        FBL3N_tobe_class['Counter2'] += 0 # Contador para que comience desde 0
+        FBL3N_tobe_class['Key_2'] = FBL3N_tobe_class['Key2'] + FBL3N_tobe_class['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
         
-        FBL3N_real2 = FBL3N_real.copy()
+        FBL3N_real2 = FBL3N_tobe_class.copy()
         FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
         # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
-        st.dataframe(FBL3N_real)
+        st.dataframe(FBL3N_tobe_class)
+        st.dataframe(FBL3N_classified)
     
     end_time02 = time.time()
     processing_time02 = end_time02 - start_time02
