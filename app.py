@@ -109,7 +109,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.divider()
 # st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
 
-# start_time02 = time.time()
+    start_time02 = time.time()
 # st.sidebar.divider()
 # uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
 # uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
