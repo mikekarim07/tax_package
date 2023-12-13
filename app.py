@@ -119,8 +119,8 @@ if uploaded_new_FBL3N and uploaded_masters:
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
     FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
     # FBL3N_new['Identificador'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Document Number'] + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + FBL3N_new['Posting Date']
-    FBL3N_tobe_class = FBL3N_real[~FBL3N_new['Identificador'].isin(FBL3N_full['Identificador'])]
-    FBL3N_classified = FBL3N_new[FBL3N_new['Identificador'].isin(FBL3N_full['Identificador'])]
+    FBL3N_tobe_class = FBL3N_real[~FBL3N_new['Id'].isin(FBL3N_full['Id'])]
+    FBL3N_classified = FBL3N_new[FBL3N_new['Id'].isin(FBL3N_full['Id'])]
 
 
     
