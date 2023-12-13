@@ -106,7 +106,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted01 = "{:.2f}".format(processing_time01)
     st.info(f'Machine Learning model training time: {processing_time_formatted01} seconds')
 
-st.divider()
+    st.divider()
 # st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
 
 # start_time02 = time.time()
