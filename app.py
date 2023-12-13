@@ -38,6 +38,16 @@ uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contai
 st.sidebar.divider()
 if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
+    FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
+                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
+                        'Text': str, 'Document Header Text': str, 'User Name': str,
+                        'Tax Code': str,})
+    accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
+                dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
+    subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
+                  dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
+                         'Code_RP': str, 'Code_Desc_RP': str,})
+
 
     
 
@@ -99,21 +109,21 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 st.divider()
 # st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
 
-start_time02 = time.time()
+# start_time02 = time.time()
 # st.sidebar.divider()
 # uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
 # uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
 # st.sidebar.divider()
 # if uploaded_new_FBL3N and uploaded_masters:
-    FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
-                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
-                        'Text': str, 'Document Header Text': str, 'User Name': str,
-                        'Tax Code': str,})
-    accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
-                dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
-    subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
-                  dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
-                         'Code_RP': str, 'Code_Desc_RP': str,})
+    # FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
+    #             dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
+    #                     'Text': str, 'Document Header Text': str, 'User Name': str,
+    #                     'Tax Code': str,})
+    # accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
+    #             dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
+    # subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
+    #               dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
+    #                      'Code_RP': str, 'Code_Desc_RP': str,})
     
     
 
