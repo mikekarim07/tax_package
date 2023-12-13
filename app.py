@@ -124,7 +124,7 @@ if uploaded_new_FBL3N and uploaded_masters:
 
 
     
-    X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_real['ML'])
+    X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_new['ML'])
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
     FBL3N_tobe_class['Subcode_ML'] = modelo.predict(X_new_data_tfidf)
 
