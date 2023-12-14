@@ -185,7 +185,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
         # st.dataframe(FBL3N_tobe_class)
         # st.dataframe(FBL3N_classified)
-        st.datafrane(FBL3N_new)
+        st.dataframe(FBL3N_new)
     
     end_time02 = time.time()
     processing_time02 = end_time02 - start_time02
