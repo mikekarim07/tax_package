@@ -188,11 +188,18 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Una vez generado el modelo, este fue aplicado en el nuevo conjunto de datos, asignando las categorías correspondientes en un tiempo total de: {processing_time_formatted02} segundos')
 
+    excel_buffer = BytesIO()
+
+# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+
+# Descargar el archivo Excel en Streamlit
     st.download_button(
-    label="Descargar archivo",
-    data=FBL3N_new.to_excel(),
-    filename="FBL3N_new.xlsx",
-)
+        label="Descargar Excel",
+        data=excel_buffer.getvalue(),
+        file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+        key='download_button'
+    )
 
     # # if st.checkbox("Generar Archivo de Excel"):
     # #     start_time03 = time.time()
