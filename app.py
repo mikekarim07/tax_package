@@ -188,31 +188,37 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Una vez generado el modelo, este fue aplicado en el nuevo conjunto de datos, asignando las categorías correspondientes en un tiempo total de: {processing_time_formatted02} segundos')
 
-    # if st.checkbox("Generar Archivo de Excel"):
-    #     start_time03 = time.time()
-    #     fecha_actual = datetime.datetime.now()
-    #     formato = "%Y%m%d %H%M%S"  # Formato: Año-Mes-Día Hora-Minuto-Segundo
-    #     fecha_formateada = fecha_actual.strftime(formato)
+    st.download_button(
+    label="Descargar archivo",
+    data=FBL3N_new.to_excel(),
+    filename="FBL3N_new.xlsx",
+)
+
+    # # if st.checkbox("Generar Archivo de Excel"):
+    # #     start_time03 = time.time()
+    # #     fecha_actual = datetime.datetime.now()
+    # #     formato = "%Y%m%d %H%M%S"  # Formato: Año-Mes-Día Hora-Minuto-Segundo
+    # #     fecha_formateada = fecha_actual.strftime(formato)
         
-        # Crear un objeto de Pandas ExcelWriter y un buffer
-    buffer = pd.ExcelWriter("output.xlsx", engine='openpyxl')
+    #     # Crear un objeto de Pandas ExcelWriter y un buffer
+    # buffer = pd.ExcelWriter("output.xlsx", engine='openpyxl')
 
-    # Escribir el DataFrame en la hoja de Excel
-    FBL3N_new.to_excel(buffer, sheet_name='FBL3N', index=False)
-    # FBL3N_real2.to_excel(buffer, sheet_name='FBL3N_2', index=False)
-    # Cerrar el Pandas Excel writer
-    buffer.close()
+    # # Escribir el DataFrame en la hoja de Excel
+    # FBL3N_new.to_excel(buffer, sheet_name='FBL3N', index=False)
+    # # FBL3N_real2.to_excel(buffer, sheet_name='FBL3N_2', index=False)
+    # # Cerrar el Pandas Excel writer
+    # buffer.close()
 
-    # Cargar el archivo Excel en un búfer base64 y crear un enlace de descarga
-    with open("output.xlsx", "rb") as excel_file:
-        b64 = base64.b64encode(excel_file.read()).decode()
+    # # Cargar el archivo Excel en un búfer base64 y crear un enlace de descarga
+    # with open("output.xlsx", "rb") as excel_file:
+    #     b64 = base64.b64encode(excel_file.read()).decode()
 
-    # Crear un enlace de descarga para el archivo Excel
-    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="FBL3N_{fecha_formateada}.xlsx">Download Excel File</a>'
+    # # Crear un enlace de descarga para el archivo Excel
+    # href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="FBL3N_{fecha_formateada}.xlsx">Download Excel File</a>'
 
-    # Mostrar el enlace en Streamlit
-    st.markdown(href, unsafe_allow_html=True)
-        # end_time03 = time.time()
-        # processing_time03 = end_time03 - start_time03
-        # processing_time_formatted03 = "{:.4f}".format(processing_time03)
-        # st.success(f'Archivo de Excel generado en un tiempo total de: {processing_time_formatted03} segundos')
+    # # Mostrar el enlace en Streamlit
+    # st.markdown(href, unsafe_allow_html=True)
+    #     # end_time03 = time.time()
+    #     # processing_time03 = end_time03 - start_time03
+    #     # processing_time_formatted03 = "{:.4f}".format(processing_time03)
+    #     # st.success(f'Archivo de Excel generado en un tiempo total de: {processing_time_formatted03} segundos')
