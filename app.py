@@ -37,7 +37,8 @@ uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains th
 uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.divider()
 if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
-    FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
+    FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
+                               dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
     FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
                 dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
                         'Text': str, 'Document Header Text': str, 'User Name': str,
@@ -131,12 +132,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
-    FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
-
-    FBL3N_tobe_class = FBL3N_new[~FBL3N_new['Id'].isin(FBL3N_full['Id'])]
-    FBL3N_classified = FBL3N_new[FBL3N_new['Id'].isin(FBL3N_full['Id'])]
-
-
+    # FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
     
     X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_new['ML'])
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
