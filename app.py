@@ -137,7 +137,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
     # FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
-    
+    FBL3N_new['Subcode_td_1'] = FBL3N_full['Company Code'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Posting period'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str))
     X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_new['ML'])
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
     FBL3N_new['Subcode_ML'] = modelo.predict(X_new_data_tfidf)
@@ -157,7 +157,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
     FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
     FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
-    # FBL3N_summary = FBL3N_summary['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2'].fillna(0)
+    FBL3N_summary = FBL3N_summary['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2'].fillna(0)
     FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
     
 
@@ -169,16 +169,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         st.dataframe(FBL3N_summary)
 
     with tab2:
-    
-        FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
-        FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
+        FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
+        # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
+        # FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
         
-        FBL3N_new['Counter1'] = FBL3N_new.groupby('Key1').cumcount()
-        FBL3N_new['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
-        FBL3N_new['Key_1'] = FBL3N_new['Key1'] + FBL3N_new['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
-        FBL3N_new['Counter2'] = FBL3N_new.groupby('Key2').cumcount()
-        FBL3N_new['Counter2'] += 0 # Contador para que comience desde 0
-        FBL3N_new['Key_2'] = FBL3N_new['Key2'] + FBL3N_new['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+        # FBL3N_new['Counter1'] = FBL3N_new.groupby('Key1').cumcount()
+        # FBL3N_new['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
+        # FBL3N_new['Key_1'] = FBL3N_new['Key1'] + FBL3N_new['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+        # FBL3N_new['Counter2'] = FBL3N_new.groupby('Key2').cumcount()
+        # FBL3N_new['Counter2'] += 0 # Contador para que comience desde 0
+        # FBL3N_new['Key_2'] = FBL3N_new['Key2'] + FBL3N_new['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
         
         FBL3N_real2 = FBL3N_new.copy()
         FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
