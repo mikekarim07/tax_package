@@ -168,6 +168,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     with tab1:
         st.subheader(f'Resumen')
         st.dataframe(FBL3N_summary)
+        st.write(FBL3N_summary.columns)
 
     with tab2:
         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
