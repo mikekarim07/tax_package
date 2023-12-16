@@ -63,9 +63,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     # Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
     FBL3N_full['Id'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_full['Posting Date'].astype(str))
-
+    FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Posting Period'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str))
     # st.divider()
-    st.caption('FBL3N dataset to be trained')
+    st.caption('ML FBL3N train dataset')
     # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
     # subcodes_unique = FBL3N_full['Subcode'].unique()
     # subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
@@ -76,7 +76,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.divider()
 
     
-
+    FBL3N_previous_subcode = FBL3N_full[['Subcode_td', 'Subcode']].drop_duplicates()
+    FBL3N_previous_subcode["conteo"] = FBL3N_previous_subcode.groupby('Subcode_td')['Subcode_td'].transform("size")
+    st.caption('Registros unicos')
+    st.dataframe(FBL3N_previous_subcode)
     FBL3N_train = FBL3N_full[['ML', 'Subcode']].drop_duplicates()
     # FBL3N_train
 
