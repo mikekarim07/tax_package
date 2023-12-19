@@ -41,7 +41,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
                                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
     FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
-                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
+                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Document Number': str,
                         'Text': str, 'Document Header Text': str, 'User Name': str,
                         'Tax Code': str,})
     accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
