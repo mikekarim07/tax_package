@@ -31,6 +31,9 @@ workbook = load_workbook("Template FBL3N.xlsx")
 sheet = workbook["FBL3N"]
 template_excel = pd.sheet()
 st.dataframe()
+# Get the table range (flexible for varying table sizes)
+table_range = sheet.tables["tbl_FBL3N"].ref  # Get initial range
+table_range = table_range.split(":")  # Split into start and end cells
 
 
 st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=120)
@@ -204,19 +207,45 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Una vez generado el modelo, este fue aplicado en el nuevo conjunto de datos, asignando las categorías correspondientes en un tiempo total de: {processing_time_formatted02} segundos')
 
+
+#-------------------------sobreescribir rchivo de excel-------------------------
+    # Replace table data with new DataFrame
+    
+    sheet[table_range[0]:table_range[1]] = FBL3N_new.values
+    
+    # Resize table to fit new data
+    sheet.tables["tbl_FBL3N"].ref = f"{table_range[0]}:{sheet.max_row}{sheet.max_column}"
+    
+    # Create download button with modified code
     excel_buffer = BytesIO()
-
-# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
-
-# Descargar el archivo Excel en Streamlit
+    workbook.save(excel_buffer)  # Save directly to BytesIO
     st.download_button(
         label="Descargar Excel",
         data=excel_buffer.getvalue(),
-        file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-        key='download_button'
+        file_name="FBL3N.xlsx",  # Updated file name
+        key="download_button",
     )
+#-------------------------
 
+    
+#     excel_buffer = BytesIO()
+
+# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+
+# # Descargar el archivo Excel en Streamlit
+#     st.download_button(
+#         label="Descargar Excel",
+#         data=excel_buffer.getvalue(),
+#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+#         key='download_button'
+#     )
+
+
+
+
+
+#-------------codigo anterior---------------------
     # # if st.checkbox("Generar Archivo de Excel"):
     # #     start_time03 = time.time()
     # #     fecha_actual = datetime.datetime.now()
