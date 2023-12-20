@@ -25,6 +25,12 @@ st.set_page_config(
     }
 )
 
+#----------------Load Excel File in root----------------
+# workbook = load_workbook("Template FBL3N.xlsx")
+# sheet = workbook["FBL3N"]
+
+
+
 st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=120)
 # st.header('Machine Learnig Model')
 st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
