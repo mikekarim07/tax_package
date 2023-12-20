@@ -29,8 +29,8 @@ st.set_page_config(
 #----------------Load Excel File in root----------------
 workbook = load_workbook("Template FBL3N.xlsx")
 sheet = workbook["FBL3N"]
-template_excel = pd.sheet()
-st.dataframe()
+template_excel = pd.DataFrame(sheet)
+st.dataframe(template_excel)
 # Get the table range (flexible for varying table sizes)
 table_range = sheet.tables["tbl_FBL3N"].ref  # Get initial range
 table_range = table_range.split(":")  # Split into start and end cells
