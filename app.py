@@ -163,7 +163,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     #---------------Columnas individuales de subcodes-------------------
     def subcode_121(row):
     # Verificar las condiciones
-        if row['referencia'].startswith("00015-") and row['Document Header Text'].startswith("1176"):
+        if row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("1176"):
             return "121"
         else:
             return None  # O cualquier otro valor por defecto que desees
