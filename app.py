@@ -26,14 +26,6 @@ st.set_page_config(
     }
 )
 
-#----------------Load Excel File in root----------------
-workbook = load_workbook("Template FBL3N.xlsx")
-sheet = workbook["FBL3N"]
-template_excel = pd.DataFrame(sheet)
-st.dataframe(template_excel)
-# Get the table range (flexible for varying table sizes)
-table_range = sheet.tables["tbl_FBL3N"].ref  # Get initial range
-table_range = table_range.split(":")  # Split into start and end cells
 
 
 st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=120)
@@ -285,7 +277,30 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 
+#---------------abrir archivo de excel y sobreescribir data
 
+    workbook = load_workbook("Template FBL3N.xlsx")
+    sheet = workbook["FBL3N"]
+    tbl_FBL3N_range = sheet.tables['tbl_FBL3N'].ref
+    sheet[tbl_FBL3N_range] = FBL3N_new.values
+
+    excel_buffer = BytesIO()
+    workbook.save(excel_buffer)
+    
+    # Generate a download button
+    st.download_button(
+        label="Download Excel",
+        data=excel_buffer.getvalue(),
+        file_name='modified_template.xlsx',
+        key='download_button'
+    )
+
+
+
+
+
+
+    
 #-------------------------sobreescribir rchivo de excel-------------------------
     # Replace table data with new DataFrame
     
