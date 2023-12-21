@@ -75,7 +75,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_full['CONCAT'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str))
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Reference'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
     FBL3N_full['Id'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_full['Posting Date'].astype(str))
-    # FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Posting period'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str))
+
+    #---------- Subcode_td: Columna que contiene el Subcode de train data para posteriormente cruzar con el dataset clasificado
     FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str)) + FBL3N_full['Document Type'] + (FBL3N_full['Posting period'].astype(str)) + (FBL3N_full['Amount in doc. curr.'].astype(str))
     # st.divider()
     st.caption('ML FBL3N train dataset')
@@ -162,19 +163,32 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
     FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
     FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
-    #---------------Columnas individuales de subcodes-------------------
+    #---------------Funciones para subcodes fijas-------------------
     def sc_121_1(row):
         if row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("1176"):
             return "121"
         else:
-            return ''  # O cualquier otro valor por defecto que desees
+            return ''
 
     def sc_121_2(row):
         if row['Reference'].startswith("00016-") and (row['Document Header Text'].startswith("1176") or row['Document Header Text'].startswith("8")):
             return "121"
         else:
-            return ''  # O cualquier otro valor por defecto que desees
+            return ''
 
+    def sc_121_3(row):
+        if row['Reference'].startswith("1176") and row['Document Type'].startswith("RV"):
+            return "121"
+        else:
+            return ''
+
+    def sc_221_1(row):
+        if row['Reference'].startswith("1176") and row['Document Type'].startswith("RN"):
+            return "221"
+        else:
+            return ''
+
+    
     def sc_150(row):
     # Verificar las condiciones
         if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['Company Code']) + str(row['CoCd'])):
@@ -192,9 +206,11 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     
     FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121_1, axis=1)
     FBL3N_new['SC_2'] = FBL3N_new.apply(sc_121_2, axis=1)
-    FBL3N_new['SC_3'] = FBL3N_new.apply(sc_150, axis=1)
-    FBL3N_new['SC_4'] = FBL3N_new.apply(sc_250, axis=1)
-
+    FBL3N_new['SC_3'] = FBL3N_new.apply(sc_121_3, axis=1)
+    FBL3N_new['SC_4'] = FBL3N_new.apply(sc_221_1, axis=1)
+    FBL3N_new['SC_5'] = FBL3N_new.apply(sc_150, axis=1)
+    FBL3N_new['SC_6'] = FBL3N_new.apply(sc_250, axis=1)
+    FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6']
 
 
 
