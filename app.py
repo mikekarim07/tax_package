@@ -231,7 +231,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
     
 
-    
+    reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
+    st.write(reg_clas)
     tab1, tab2 = st.tabs(["Resumen", "Detalle"])
     
     with tab1:
