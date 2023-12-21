@@ -166,27 +166,27 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         if row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("1176"):
             return "121"
         else:
-            return None  # O cualquier otro valor por defecto que desees
+            return ''  # O cualquier otro valor por defecto que desees
 
     def sc_121_2(row):
         if row['Reference'].startswith("00016-") and (row['Document Header Text'].startswith("1176") or row['Document Header Text'].startswith("8")):
             return "121"
         else:
-            return None  # O cualquier otro valor por defecto que desees
+            return ''  # O cualquier otro valor por defecto que desees
 
     def sc_150(row):
     # Verificar las condiciones
         if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['Company Code']) + str(row['CoCd'])):
             return "150"
         else:
-            return None
+            return ''
 
     def sc_250(row):
     # Verificar las condiciones
         if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['CoCd']) + str(row['Company Code'])):
             return "250"
         else:
-            return None
+            return ''
 
     
     FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121_1, axis=1)
