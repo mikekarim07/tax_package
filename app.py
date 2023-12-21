@@ -279,34 +279,37 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
 #---------------abrir archivo de excel y sobreescribir data
 
-    workbook = load_workbook("Template FBL3N.xlsx")
-    sheet = workbook["FBL3N"]
-    sheet_name = "FBL3N"
-    table_name = "tbl_FBL3N"
-
+    excel_buffer = BytesIO()
     
-    tbl_FBL3N_range = sheet.tables['tbl_FBL3N'].ref
-    if ':' in tbl_FBL3N_range:
-        start_col, start_row, end_col, end_row = tbl_FBL3N_range.split(":")
-        
-        # Iterate over the DataFrame rows and update the values in the worksheet
-        for index, row in FBL3N_new.iterrows():
-            for col_num, (col_name, value) in enumerate(row.items(), start=1):
-                cell_address = f"{chr(ord(start_col) + col_num - 1)}{int(start_row) + index}"
-                sheet[cell_address] = value
+    # Write the DataFrame to the Excel buffer
+    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='Sheet1')
     
-        # Save the modified Excel file in memory
-        excel_buffer = BytesIO()
-        workbook.save(excel_buffer)
+    # Load the Excel file template.xlsx
+    excel_file_path = "template.xlsx"
+    workbook = load_workbook(excel_file_path)
     
-        # Generate a download button
-        st.download_button(
-            label="Download Excel",
-            data=excel_buffer.getvalue(),
-            file_name='modified_template.xlsx',
-            key='download_button'
-        )    
-
+    # Access the specified sheet
+    sheet = workbook['tbl_FBL3N']
+    
+    # Clear existing data in the table
+    for row in sheet['A2:M10000']:  # Assuming your table starts from A2 and goes up to M10000
+        for cell in row:
+            cell.value = None
+    
+    # Load the data from the Excel buffer into the table starting from A2
+    excel_buffer.seek(0)
+    sheet['A2'].value = excel_buffer
+    
+    # Save the modified workbook
+    workbook.save(excel_file_path)
+    
+    # Create a download button
+    st.download_button(
+        label="Download Updated Excel",
+        data=excel_buffer.getvalue(),
+        file_name='updated_template.xlsx',
+        key='download_button'
+    )
 
 
 
