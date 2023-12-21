@@ -174,12 +174,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         else:
             return None  # O cualquier otro valor por defecto que desees
 
-    # def sc_150(row):
-    #     if row['Document Header Text'].contains("loan int") and row['Reference'].startswith(FBL3N_new['Company Code'] + FBL3N_new['CoCd']):
-    #         return "150"
-    #     else:
-    #         return None  # O cualquier otro valor por defecto que desees
-    
     def sc_150(row):
     # Verificar las condiciones
         if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['Company Code']) + str(row['CoCd'])):
@@ -187,10 +181,18 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         else:
             return None
 
+    def sc_250(row):
+    # Verificar las condiciones
+        if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['CoCd']) + str(row['Company Code'])):
+            return "250"
+        else:
+            return None
+
     
     FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121_1, axis=1)
     FBL3N_new['SC_2'] = FBL3N_new.apply(sc_121_2, axis=1)
     FBL3N_new['SC_3'] = FBL3N_new.apply(sc_150, axis=1)
+    FBL3N_new['SC_4'] = FBL3N_new.apply(sc_250, axis=1)
 
 
 
