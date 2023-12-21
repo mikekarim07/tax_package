@@ -173,8 +173,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         else:
             return None  # O cualquier otro valor por defecto que desees
     
-    FBL3N_new['SC_1'] = FBL3N_new.apply(subcode_121_1, axis=1)
-    FBL3N_new['SC_2'] = FBL3N_new.apply(subcode_121_2, axis=1)
+    FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121_1, axis=1)
+    FBL3N_new['SC_2'] = FBL3N_new.apply(sc_121_2, axis=1)
 
 
 
