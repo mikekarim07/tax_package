@@ -161,13 +161,21 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
     FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
     #---------------Columnas individuales de subcodes-------------------
-    def subcode_121(row):
+    def sc_121_1(row):
     # Verificar las condiciones
         if row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("1176"):
             return "121"
         else:
             return None  # O cualquier otro valor por defecto que desees
-    FBL3N_new['SC_1'] = FBL3N_new.apply(subcode_121, axis=1)
+
+    def sc_121_2(row):
+    # Verificar las condiciones
+        if row['Reference'].startswith("00016-") and (row['Document Header Text'].startswith("1176") or row['Document Header Text'].startswith("8")):
+            return "121"
+        else:
+            return None  # O cualquier otro valor por defecto que desees
+    FBL3N_new['SC_1'] = FBL3N_new.apply(subcode_121_1, axis=1)
+    FBL3N_new['SC_2'] = FBL3N_new.apply(subcode_121_2, axis=1)
 
 
 
