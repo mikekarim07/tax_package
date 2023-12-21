@@ -72,6 +72,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
     # FBL3N_full
     # Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
+    FBL3N_full['CONCAT'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str))
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Reference'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
     FBL3N_full['Id'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_full['Posting Date'].astype(str))
     # FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Posting period'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str))
@@ -174,7 +175,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
             return None  # O cualquier otro valor por defecto que desees
 
     def sc_150(row):
-        if row['Document Header Text'].contains("loan int") and row['Reference'].startswith(FBL3N_new['Company Code'] + FBL3N_new['CoCD']):
+        if row['Document Header Text'].contains("loan int") and row['Reference'].startswith(FBL3N_new['Company Code'] + FBL3N_new['CoCd']):
             return "150"
         else:
             return None  # O cualquier otro valor por defecto que desees
