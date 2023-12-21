@@ -282,10 +282,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     workbook = load_workbook("Template FBL3N.xlsx")
     sheet = workbook["FBL3N"]
     tbl_FBL3N_range = sheet.tables['tbl_FBL3N'].ref
+    start_col, start_row, end_col, end_row = tbl_FBL3N_range.split(":")
 
     for index, row in FBL3N_new.iterrows():
-        for col_num, value in enumerate(row, start=1):
-            sheet.cell(row=tbl_FBL3N_range.min_row + index, column=tbl_FBL3N_range.min_col + col_num - 1, value=value)
+        for col_num, (col_name, value) in enumerate(row.items(), start=1):
+            cell_address = f"{chr(ord(start_col) + col_num - 1)}{int(start_row) + index}"
+            sheet[cell_address] = value
 
 
     excel_buffer = BytesIO()
