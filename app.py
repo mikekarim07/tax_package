@@ -281,6 +281,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
     workbook = load_workbook("Template FBL3N.xlsx")
     sheet = workbook["FBL3N"]
+    sheet_name = "FBL3N"
+    table_name = "tbl_FBL3N"
+
+    
     tbl_FBL3N_range = sheet.tables['tbl_FBL3N'].ref
     start_col, start_row, end_col, end_row = tbl_FBL3N_range.split(":")
 
