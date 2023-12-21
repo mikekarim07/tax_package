@@ -286,24 +286,26 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
     
     tbl_FBL3N_range = sheet.tables['tbl_FBL3N'].ref
-    start_col, start_row, end_col, end_row = tbl_FBL3N_range.split(":")
-
-    for index, row in FBL3N_new.iterrows():
-        for col_num, (col_name, value) in enumerate(row.items(), start=1):
-            cell_address = f"{chr(ord(start_col) + col_num - 1)}{int(start_row) + index}"
-            sheet[cell_address] = value
-
-
-    excel_buffer = BytesIO()
-    workbook.save(excel_buffer)
+    if ':' in tbl_FBL3N_range:
+        start_col, start_row, end_col, end_row = tbl_FBL3N_range.split(":")
+        
+        # Iterate over the DataFrame rows and update the values in the worksheet
+        for index, row in FBL3N_new.iterrows():
+            for col_num, (col_name, value) in enumerate(row.items(), start=1):
+                cell_address = f"{chr(ord(start_col) + col_num - 1)}{int(start_row) + index}"
+                sheet[cell_address] = value
     
-    # Generate a download button
-    st.download_button(
-        label="Download Excel",
-        data=excel_buffer.getvalue(),
-        file_name='modified_template.xlsx',
-        key='download_button'
-    )
+        # Save the modified Excel file in memory
+        excel_buffer = BytesIO()
+        workbook.save(excel_buffer)
+    
+        # Generate a download button
+        st.download_button(
+            label="Download Excel",
+            data=excel_buffer.getvalue(),
+            file_name='modified_template.xlsx',
+            key='download_button'
+        )    
 
 
 
