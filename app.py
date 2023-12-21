@@ -209,6 +209,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         else:
             return ''
 
+    def sc_300_1(row):
+    # Verificar las condiciones
+        if "wf-batch" in str(row['User Name']).lower():
+            return "300"
+        else:
+            return ''
+
     
     FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121_1, axis=1)
     FBL3N_new['SC_2'] = FBL3N_new.apply(sc_121_2, axis=1)
@@ -217,7 +224,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_new['SC_5'] = FBL3N_new.apply(sc_221_2, axis=1)
     FBL3N_new['SC_6'] = FBL3N_new.apply(sc_150, axis=1)
     FBL3N_new['SC_7'] = FBL3N_new.apply(sc_250, axis=1)
-    FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7']
+    FBL3N_new['SC_8'] = FBL3N_new.apply(sc_300_1, axis=1)
+    FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8']
 
 
 
