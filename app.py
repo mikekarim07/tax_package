@@ -227,7 +227,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_new['SC_8'] = FBL3N_new.apply(sc_300_1, axis=1)
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8']
 
-
+    def Subcode_Correction(row):
+    # Verificar las condiciones
+        if row['SC_concat'] =! '' and (row['SC_concat'] =! row['Subcode_ML'] ):
+            return ['SC_concat']
+        else:
+            return ['Subcode_ML']
+    FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
 
 
 
