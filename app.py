@@ -282,7 +282,11 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     workbook = load_workbook("Template FBL3N.xlsx")
     sheet = workbook["FBL3N"]
     tbl_FBL3N_range = sheet.tables['tbl_FBL3N'].ref
-    sheet[tbl_FBL3N_range] = FBL3N_new.values
+
+    for index, row in FBL3N_new.iterrows():
+        for col_num, value in enumerate(row, start=1):
+            sheet.cell(row=tbl_FBL3N_range.min_row + index, column=tbl_FBL3N_range.min_col + col_num - 1, value=value)
+
 
     excel_buffer = BytesIO()
     workbook.save(excel_buffer)
