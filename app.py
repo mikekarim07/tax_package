@@ -172,9 +172,17 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
             return "121"
         else:
             return None  # O cualquier otro valor por defecto que desees
+
+    def sc_150(row):
+        if row['Document Header Text'].contains("loan int") and row['Reference'].startswith(FBL3N_new['Company Code'] + FBL3N_new['CoCD']):
+            return "150"
+        else:
+            return None  # O cualquier otro valor por defecto que desees
     
+
     FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121_1, axis=1)
     FBL3N_new['SC_2'] = FBL3N_new.apply(sc_121_2, axis=1)
+    FBL3N_new['SC_3'] = FBL3N_new.apply(sc_150, axis=1)
 
 
 
