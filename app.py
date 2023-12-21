@@ -283,7 +283,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     end_time02 = time.time()
     processing_time02 = end_time02 - start_time02
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
-    st.info(f'Una vez generado el modelo, este fue aplicado en el nuevo conjunto de datos, asignando las categorías correspondientes en un tiempo total de: {processing_time_formatted02} segundos')
+    st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 
 
 #-------------------------sobreescribir rchivo de excel-------------------------
