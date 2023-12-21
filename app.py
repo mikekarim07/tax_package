@@ -230,9 +230,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     def Subcode_Correction(row):
     # Verificar las condiciones
         if row['SC_concat'] != '' and (row['SC_concat'] != row['Subcode_ML'] ):
-            return ['SC_concat']
+            return row['SC_concat']
         else:
-            return ['Subcode_ML']
+            return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
 
 
