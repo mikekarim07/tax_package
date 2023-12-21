@@ -301,69 +301,69 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
 
     
-#-------------------------sobreescribir rchivo de excel-------------------------
-    # Replace table data with new DataFrame
+# #-------------------------sobreescribir rchivo de excel-------------------------
+#     # Replace table data with new DataFrame
     
-    sheet[table_range[0]:table_range[1]] = FBL3N_new.values
+#     sheet[table_range[0]:table_range[1]] = FBL3N_new.values
     
-    # Resize table to fit new data
-    sheet.tables["tbl_FBL3N"].ref = f"{table_range[0]}:{sheet.max_row}{sheet.max_column}"
+#     # Resize table to fit new data
+#     sheet.tables["tbl_FBL3N"].ref = f"{table_range[0]}:{sheet.max_row}{sheet.max_column}"
     
-    # Create download button with modified code
-    excel_buffer = BytesIO()
-    workbook.save(excel_buffer)  # Save directly to BytesIO
-    st.download_button(
-        label="Descargar Excel",
-        data=excel_buffer.getvalue(),
-        file_name="FBL3N.xlsx",  # Updated file name
-        key="download_button",
-    )
-#-------------------------
-
-    
+#     # Create download button with modified code
 #     excel_buffer = BytesIO()
-
-# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
-
-# # Descargar el archivo Excel en Streamlit
+#     workbook.save(excel_buffer)  # Save directly to BytesIO
 #     st.download_button(
 #         label="Descargar Excel",
 #         data=excel_buffer.getvalue(),
-#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-#         key='download_button'
+#         file_name="FBL3N.xlsx",  # Updated file name
+#         key="download_button",
 #     )
+# #-------------------------
+
+    
+# #     excel_buffer = BytesIO()
+
+# # # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+# #     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+
+# # # Descargar el archivo Excel en Streamlit
+# #     st.download_button(
+# #         label="Descargar Excel",
+# #         data=excel_buffer.getvalue(),
+# #         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+# #         key='download_button'
+# #     )
 
 
 
 
 
-#-------------codigo anterior---------------------
-    # # if st.checkbox("Generar Archivo de Excel"):
-    # #     start_time03 = time.time()
-    # #     fecha_actual = datetime.datetime.now()
-    # #     formato = "%Y%m%d %H%M%S"  # Formato: Año-Mes-Día Hora-Minuto-Segundo
-    # #     fecha_formateada = fecha_actual.strftime(formato)
+# #-------------codigo anterior---------------------
+#     # # if st.checkbox("Generar Archivo de Excel"):
+#     # #     start_time03 = time.time()
+#     # #     fecha_actual = datetime.datetime.now()
+#     # #     formato = "%Y%m%d %H%M%S"  # Formato: Año-Mes-Día Hora-Minuto-Segundo
+#     # #     fecha_formateada = fecha_actual.strftime(formato)
         
-    #     # Crear un objeto de Pandas ExcelWriter y un buffer
-    # buffer = pd.ExcelWriter("output.xlsx", engine='openpyxl')
+#     #     # Crear un objeto de Pandas ExcelWriter y un buffer
+#     # buffer = pd.ExcelWriter("output.xlsx", engine='openpyxl')
 
-    # # Escribir el DataFrame en la hoja de Excel
-    # FBL3N_new.to_excel(buffer, sheet_name='FBL3N', index=False)
-    # # FBL3N_real2.to_excel(buffer, sheet_name='FBL3N_2', index=False)
-    # # Cerrar el Pandas Excel writer
-    # buffer.close()
+#     # # Escribir el DataFrame en la hoja de Excel
+#     # FBL3N_new.to_excel(buffer, sheet_name='FBL3N', index=False)
+#     # # FBL3N_real2.to_excel(buffer, sheet_name='FBL3N_2', index=False)
+#     # # Cerrar el Pandas Excel writer
+#     # buffer.close()
 
-    # # Cargar el archivo Excel en un búfer base64 y crear un enlace de descarga
-    # with open("output.xlsx", "rb") as excel_file:
-    #     b64 = base64.b64encode(excel_file.read()).decode()
+#     # # Cargar el archivo Excel en un búfer base64 y crear un enlace de descarga
+#     # with open("output.xlsx", "rb") as excel_file:
+#     #     b64 = base64.b64encode(excel_file.read()).decode()
 
-    # # Crear un enlace de descarga para el archivo Excel
-    # href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="FBL3N_{fecha_formateada}.xlsx">Download Excel File</a>'
+#     # # Crear un enlace de descarga para el archivo Excel
+#     # href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="FBL3N_{fecha_formateada}.xlsx">Download Excel File</a>'
 
-    # # Mostrar el enlace en Streamlit
-    # st.markdown(href, unsafe_allow_html=True)
-    #     # end_time03 = time.time()
-    #     # processing_time03 = end_time03 - start_time03
-    #     # processing_time_formatted03 = "{:.4f}".format(processing_time03)
-    #     # st.success(f'Archivo de Excel generado en un tiempo total de: {processing_time_formatted03} segundos')
+#     # # Mostrar el enlace en Streamlit
+#     # st.markdown(href, unsafe_allow_html=True)
+#     #     # end_time03 = time.time()
+#     #     # processing_time03 = end_time03 - start_time03
+#     #     # processing_time_formatted03 = "{:.4f}".format(processing_time03)
+#     #     # st.success(f'Archivo de Excel generado en un tiempo total de: {processing_time_formatted03} segundos')
