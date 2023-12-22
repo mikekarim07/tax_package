@@ -292,9 +292,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     # Enable Excel autofilter for the whole sheet
     sheet.auto_filter.ref = sheet.dimensions
     
-    # Save the modified workbook
-    workbook.save(excel_file_path)
-    
     # Create a download button
     excel_buffer = BytesIO()
     workbook.save(excel_buffer)
