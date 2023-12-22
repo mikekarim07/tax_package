@@ -280,37 +280,37 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
 #---------------abrir archivo de excel y sobreescribir data
 
-    excel_buffer = BytesIO()
+    # excel_buffer = BytesIO()
     
-    # Write the DataFrame to the Excel buffer
-    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
+    # # Write the DataFrame to the Excel buffer
+    # FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
     
-    # Load the Excel file template.xlsx
-    excel_file_path = "Template FBL3N.xlsx"
-    workbook = load_workbook(excel_file_path)
+    # # Load the Excel file template.xlsx
+    # excel_file_path = "Template FBL3N.xlsx"
+    # workbook = load_workbook(excel_file_path)
     
-    # Access the specified sheet
-    sheet = workbook['FBL3N']
+    # # Access the specified sheet
+    # sheet = workbook['FBL3N']
     
-    # Clear existing data in the table
-    for row in sheet['A1:AF200000']:  # Assuming your table starts from A2 and goes up to M10000
-        for cell in row:
-            cell.value = None
+    # # Clear existing data in the table
+    # for row in sheet['A1:AF200000']:  # Assuming your table starts from A2 and goes up to M10000
+    #     for cell in row:
+    #         cell.value = None
     
-    # Load the data from the Excel buffer into the table starting from A2
-    excel_buffer.seek(0)
-    sheet['A1'].value = excel_buffer
+    # # Load the data from the Excel buffer into the table starting from A2
+    # excel_buffer.seek(0)
+    # sheet['A1'].value = excel_buffer
     
-    # Save the modified workbook
-    workbook.save(excel_file_path)
+    # # Save the modified workbook
+    # workbook.save(excel_file_path)
     
-    # Create a download button
-    st.download_button(
-        label="Download Updated Excel",
-        data=excel_buffer.getvalue(),
-        file_name='updated_template.xlsx',
-        key='download_button'
-    )
+    # # Create a download button
+    # st.download_button(
+    #     label="Download Updated Excel",
+    #     data=excel_buffer.getvalue(),
+    #     file_name='updated_template.xlsx',
+    #     key='download_button'
+    # )
 
 
 
