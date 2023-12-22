@@ -278,37 +278,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
-    excel_file_path = "Template FBL3N.xlsx"
-    workbook = load_workbook(excel_file_path)
-    
-    # Access the specified sheet ("FBL3N" in this case)
-    sheet = workbook['FBL3N']
-    
-    # Clear existing data in the sheet
-    for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=1, max_col=sheet.max_column):
-        for cell in row:
-            cell.value = None
-    
-    # Load the data from the DataFrame into the sheet starting from A2
-    for index, row in FBL3N_new.iterrows():
-        for col_idx, value in enumerate(row):
-            sheet.cell(row=index + 2, column=col_idx + 1, value=value)
-    
-    # Enable Excel autofilter for the whole sheet
-    sheet.auto_filter.ref = sheet.dimensions
-    
-    # Save the modified workbook
-    workbook.save(excel_file_path)
-    
-    # Create a download button
-    excel_buffer = BytesIO()
-    workbook.save(excel_buffer)
-    st.download_button(
-        label="Download Updated Excel",
-        data=excel_buffer.getvalue(),
-        file_name='updated_Template_FBL3N.xlsx',
-        key='download_button'
-    )
 
 
 #---------------abrir archivo de excel y sobreescribir data
