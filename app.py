@@ -84,6 +84,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     
     FBL3N_previous_subcode = FBL3N_full[['Subcode_td', 'Subcode']].drop_duplicates()
     FBL3N_previous_subcode["conteo"] = FBL3N_previous_subcode.groupby('Subcode_td')['Subcode_td'].transform("size")
+    FBL3N_previous_subcode.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
     st.caption('Registros unicos')
     st.dataframe(FBL3N_previous_subcode)
     FBL3N_train = FBL3N_full[['ML', 'Subcode']].drop_duplicates()
