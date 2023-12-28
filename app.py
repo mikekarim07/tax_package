@@ -280,29 +280,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
-    table = Table(displayName="FBL3N", ref=f"A1:{chr(64 + len(FBL3N_new.columns))}{len(FBL3N_new) + 1}")
-    table.tableStyleInfo = TableStyleInfo(
-        name="TableStyleMedium9", showFirstColumn=False,
-        showLastColumn=False, showRowStripes=True, showColumnStripes=True)
-    worksheet = Workbook().active
-    worksheet.append(FBL3N_new.columns.tolist())
-    for row in FBL3N_new.itertuples(index=False, name=None):
-        worksheet.append(list(row))
-    
-    # Add the table to the worksheet
-    worksheet.add_table(table)
-    
-    # Save the workbook to BytesIO buffer
-    excel_buffer = BytesIO()
-    worksheet.parent.save(excel_buffer)
-    
-    # Create a download button
-    st.download_button(
-        label="Download Excel",
-        data=excel_buffer.getvalue(),
-        file_name='example.xlsx',
-        key='download_button'
-    )
 # 
 #     table = Table("FBL3N", FBL3N_new)
 #     sheet = Worksheet("FBL3N")
