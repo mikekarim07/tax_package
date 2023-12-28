@@ -327,10 +327,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 #     print(f'Excel file "{excel_file_path}" created successfully.')
         
 #---------------
-    # import streamlit as st
-    # import pandas as pd
-    # from openpyxl import load_workbook
-    # from io import BytesIO
+    import streamlit as st
+    import pandas as pd
+    from openpyxl import load_workbook
+    from io import BytesIO
     
     # Load the existing Excel file
     file_path = 'Template FBL3N.xlsx'
@@ -346,8 +346,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     
     # Paste the DataFrame FBL3N_new in sheet "FBL3N" cell A1
     with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
-        writer.book = workbook
-        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N', startrow=0, startcol=0)
+        # Set the visibility of the sheet to True
+        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N', startrow=0, startcol=0, header=None, visible=True)
     
     # Save the modified Excel file in BytesIO
     excel_buffer.seek(0)
