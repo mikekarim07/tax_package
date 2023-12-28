@@ -15,9 +15,9 @@ import xlsxwriter
 from xlsxwriter import Workbook
 import time
 import openpyxl
-
-from openpyxl import load_workbook
 from openpyxl import Workbook
+from openpyxl import load_workbook
+
 
 
 
@@ -284,16 +284,41 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
     
+#     excel_buffer = BytesIO()
+
+# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+
+# # Descargar el archivo Excel en Streamlit
+#     st.download_button(
+#         label="Descargar Excel",
+#         data=excel_buffer.getvalue(),
+#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+#         key='download_button'
+#     )
+# ---------------------AGREGAR AL LA HOJA CATALOGOS
     excel_buffer = BytesIO()
-
-# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+    
+    # Utilizar el método to_excel(), pero guardar en el objeto BytesIO en lugar de un archivo local
     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
-
-# Descargar el archivo Excel en Streamlit
+    
+    # Crear un libro de Excel y agregar las hojas 'FBL3N' y 'Catalogos'
+    with pd.ExcelWriter(excel_buffer, engine='openpyxl', mode='a') as writer:
+        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N')
+    
+        # Crear la hoja 'Catalogos'
+        catalogos_sheet = writer.book.create_sheet('Catalogos')
+        
+        # Escribir en la celda A1 de la hoja 'Catalogos'
+        catalogos_sheet['A1'] = 'Company Code'
+        
+        # Escribir la fórmula en la celda A2 de la hoja 'Catalogos'
+        catalogos_sheet['A2'] = '=SORT(UNIQUE(INDIRECT("FBL3N!A2:A"&COUNTA(FBL3N!A:A))),,1)'
+    
+    # Descargar el archivo Excel en Streamlit
     st.download_button(
         label="Descargar Excel",
         data=excel_buffer.getvalue(),
         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
     )
-
