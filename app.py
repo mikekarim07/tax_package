@@ -313,3 +313,43 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
 
 
+    # import streamlit as st
+    # import pandas as pd
+    # import xlsxwriter
+    # from io import BytesIO
+    
+    # Cargar el archivo "template" desde el directorio raíz
+    template_path = "template.xlsx"
+    template_book = pd.ExcelFile(template_path)
+    
+    # # Leer el DataFrame FBL3N_new (reemplázalo con tus datos reales)
+    # data = {'Columna1': [1, 2, 3],
+    #         'Columna2': ['A', 'B', 'C']}
+    # FBL3N_new = pd.DataFrame(data)
+    
+    # Función para reemplazar la hoja 'FBL3N' del archivo Excel con el nuevo DataFrame
+    def reemplazar_excel(template_path, sheet_name, dataframe):
+        # Leer el archivo Excel original y reemplazar la hoja 'FBL3N'
+        with pd.ExcelWriter(template_path, engine='xlsxwriter') as writer:
+            writer.book = pd.ExcelFile(template_path).book
+            dataframe.to_excel(writer, sheet_name=sheet_name, index=False)
+    
+        # Botón para reemplazar y descargar el archivo Excel
+        # Reemplazar la hoja 'FBL3N' del archivo Excel con el nuevo DataFrame
+    reemplazar_excel(template_path, 'FBL3N', FBL3N_new)
+
+    # Preparar el archivo Excel para la descarga
+    excel_data = BytesIO()
+    with pd.ExcelWriter(excel_data, engine='xlsxwriter') as writer:
+        writer.book = pd.ExcelFile(template_path).book
+        FBL3N_new.to_excel(writer, sheet_name='FBL3N', index=False)
+    
+    excel_data.seek(0)
+
+    # Descargar el archivo Excel actualizado
+    st.download_button(label="Descargar archivo Excel", key='file_download', data=excel_data, file_name='archivo_actualizado.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    st.success('Archivo Excel reemplazado y descargado con éxito.')
+
+# Ejecutar la aplicación
+if __name__ == '__main__':
+    main()
