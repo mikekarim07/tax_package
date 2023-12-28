@@ -297,21 +297,22 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 #         key='download_button'
 #     )
 
-
-
+    
+    import pandas as pd
+    from io import BytesIO
+    import streamlit as st
+    
     template_path = "Template FBL3N.xlsx"
-    template_book = load_workbook(template_path)
-
+    
+    # # Crear un DataFrame de ejemplo (reemplázalo con tus datos reales)
+    # data = {'Columna1': [1, 2, 3],
+    #         'Columna2': ['A', 'B', 'C']}
+    # FBL3N_new = pd.DataFrame(data)
+    
     # Función para pegar el DataFrame en la hoja FBL3N a partir de la celda A1
     def pegar_en_excel(dataframe, hoja, celda_inicio='A1'):
-        writer = pd.ExcelWriter(template_path, engine='openpyxl')
-        writer.book = template_book
-        writer.sheets = {ws.title: ws for ws in template_book.worksheets}
-    
-        dataframe.to_excel(writer, index=False, sheet_name=hoja, startrow=0, startcol=0)
-    
-        writer.save()
-        writer.close()
+        with pd.ExcelWriter(template_path, engine='openpyxl', mode='a') as writer:
+            dataframe.to_excel(writer, index=False, sheet_name=hoja, startrow=0, startcol=0)
     
     # Llamada a la función para pegar en el archivo Excel
     pegar_en_excel(FBL3N_new, 'FBL3N')
@@ -319,7 +320,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     # Botón de descarga
     st.download_button(
         label="Descargar Excel",
-        data=BytesIO(template_book.save()),
+        data=BytesIO(),
         file_name='template_actualizado.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
     )
