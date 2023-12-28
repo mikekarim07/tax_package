@@ -284,43 +284,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
     
-#     excel_buffer = BytesIO()
+    excel_buffer = BytesIO()
 
-# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
 
-# # Descargar el archivo Excel en Streamlit
-#     st.download_button(
-#         label="Descargar Excel",
-#         data=excel_buffer.getvalue(),
-#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-#         key='download_button'
-#     )
-
-    
-    import pandas as pd
-    from io import BytesIO
-    import streamlit as st
-    
-    template_path = "Template FBL3N.xlsx"
-    
-    # # Crear un DataFrame de ejemplo (reemplázalo con tus datos reales)
-    # data = {'Columna1': [1, 2, 3],
-    #         'Columna2': ['A', 'B', 'C']}
-    # FBL3N_new = pd.DataFrame(data)
-    
-    # Función para pegar el DataFrame en la hoja FBL3N a partir de la celda A1
-    def pegar_en_excel(dataframe, hoja, celda_inicio='A1'):
-        with pd.ExcelWriter(template_path, engine='openpyxl', mode='a') as writer:
-            dataframe.to_excel(writer, index=False, sheet_name=hoja, startrow=0, startcol=0)
-    
-    # Llamada a la función para pegar en el archivo Excel
-    pegar_en_excel(FBL3N_new, 'FBL3N')
-    
-    # Botón de descarga
+# Descargar el archivo Excel en Streamlit
     st.download_button(
         label="Descargar Excel",
-        data=BytesIO(),
-        file_name='template_actualizado.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+        data=excel_buffer.getvalue(),
+        file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
     )
+
