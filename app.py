@@ -284,19 +284,78 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
     
-    excel_buffer = BytesIO()
+#     excel_buffer = BytesIO()
 
-# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
+# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
     
 
-# Descargar el archivo Excel en Streamlit
-    st.download_button(
-        label="Descargar Excel",
-        data=excel_buffer.getvalue(),
-        file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-        key='download_button'
-    )
+# # Descargar el archivo Excel en Streamlit
+#     st.download_button(
+#         label="Descargar Excel",
+#         data=excel_buffer.getvalue(),
+#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+#         key='download_button'
+#     )
 #---------------------AGREGAR AL LA HOJA CATALOGOS
     
+# # import pandas as pd
+# # import xlsxwriter
+
     
+#     # Create an Excel file with xlsxwriter
+#     excel_file_path = 'Template FBL3N.xlsx'
+#     # workbook = xlsxwriter.Workbook(excel_file_path)
+    
+#     # Write the DataFrame FBL3N_new to cell A1 on a worksheet named 'FBL3N'
+#     # worksheet = workbook.add_worksheet('FBL3N')
+#     # worksheet.write('A1', 'FBL3N_new data:')
+#     FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
+    
+#     # # Add another worksheet named 'Catalogs'
+#     # catalogs_worksheet = workbook.add_worksheet('Catalogs')
+    
+#     # # Write 'Company Code' to cell A1 on the 'Catalogs' worksheet
+#     # catalogs_worksheet.write('A1', 'Company Code')
+    
+#     # # Write the formula '=SORT(UNIQUE(INDIRECT("FBL3N!A2:A"&COUNTA(FBL3N!A:A))),,1)' to cell A2 on the 'Catalogs' worksheet
+#     # catalogs_worksheet.write('A2', '=SORT(UNIQUE(INDIRECT("FBL3N!A2:A"&COUNTA(FBL3N!A:A))),,1)')
+    
+#     # Save the Excel file
+#     workbook.close()
+    
+#     print(f'Excel file "{excel_file_path}" created successfully.')
+        
+#---------------
+    # import streamlit as st
+    # import pandas as pd
+    # from openpyxl import load_workbook
+    # from io import BytesIO
+    
+    # Load the existing Excel file
+    file_path = 'Template FBL3N.xlsx'
+    workbook = load_workbook(file_path)
+    
+    # # Assuming FBL3N_new is your DataFrame
+    # data = {'Column1': [1, 2, 3],
+    #         'Column2': ['A', 'B', 'C']}
+    # FBL3N_new = pd.DataFrame(data)
+    
+    # Create a BytesIO object to store the modified Excel file
+    excel_buffer = BytesIO()
+    
+    # Paste the DataFrame FBL3N_new in sheet "FBL3N" cell A1
+    with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+        writer.book = workbook
+        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N', startrow=0, startcol=0)
+    
+    # Save the modified Excel file in BytesIO
+    excel_buffer.seek(0)
+    
+    # Create a st.download_button for the Excel file
+    st.download_button(
+        label="Download Excel",
+        data=excel_buffer.getvalue(),
+        file_name='Modified_Template.xlsx',  # You can change the file name as needed
+        key='download_button'
+    )
