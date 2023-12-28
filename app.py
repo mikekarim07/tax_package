@@ -284,40 +284,46 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
     
-#     excel_buffer = BytesIO()
-
-# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
-    
-
-# # Descargar el archivo Excel en Streamlit
-#     st.download_button(
-#         label="Descargar Excel",
-#         data=excel_buffer.getvalue(),
-#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-#         key='download_button'
-#     )
-#---------------------AGREGAR AL LA HOJA CATALOGOS
-    
-    # excel_file_path = 'Template FBL3N.xlsx'
-    # FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
-    # workbook.close()
-    
-    # print(f'Excel file "{excel_file_path}" created successfully.')
-        
-#---------------
-    
-    # Load the existing Excel file
-    file_path = 'Template FBL3N.xlsx'
-    
-    # Create a BytesIO object to store the modified Excel file
     excel_buffer = BytesIO()
-    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N', startrow=1, startcol=1, header=False)
+
+# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
+    (max_row, max_col) = FBL3N_new.shape
     
+    # Make the columns wider for clarity.
+    worksheet.set_column(0, max_col - 1, 12)
     
+    # Set the autofilter.
+    worksheet.autofilter(0, 0, max_row, max_col - 1)
+    
+# Descargar el archivo Excel en Streamlit
     st.download_button(
-        label="Download Excel",
+        label="Descargar Excel",
         data=excel_buffer.getvalue(),
-        file_name='Modified_Template.xlsx',  # You can change the file name as needed
+        file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
     )
+# #---------------------AGREGAR AL LA HOJA CATALOGOS
+    
+#     # excel_file_path = 'Template FBL3N.xlsx'
+#     # FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
+#     # workbook.close()
+    
+#     # print(f'Excel file "{excel_file_path}" created successfully.')
+        
+# #---------------
+    
+#     # Load the existing Excel file
+#     file_path = 'Template FBL3N.xlsx'
+    
+#     # Create a BytesIO object to store the modified Excel file
+#     excel_buffer = BytesIO()
+#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N', startrow=1, startcol=1, header=False)
+    
+    
+#     st.download_button(
+#         label="Download Excel",
+#         data=excel_buffer.getvalue(),
+#         file_name='Modified_Template.xlsx',  # You can change the file name as needed
+#         key='download_button'
+#     )
