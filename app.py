@@ -284,7 +284,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_range = FBL3N_new.iloc[
     FBL3N_new.index.min(): FBL3N_new.index.max() + 1,
     FBL3N_new.columns.get_loc(FBL3N_new.columns.min()): FBL3N_new.columns.get_loc(FBL3N_new.columns.max()) + 1]
-    st.write(FBL3N_range)
+    st.caption(FBL3N_range)
 
 
 
