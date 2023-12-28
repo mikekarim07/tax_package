@@ -313,11 +313,15 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     
     # Función para reemplazar la hoja 'FBL3N' del archivo Excel con el nuevo DataFrame
     def reemplazar_excel(template_path, sheet_name, dataframe):
-        # Leer el archivo Excel original y reemplazar la hoja 'FBL3N'
-        with pd.ExcelWriter(template_path, engine='xlsxwriter') as writer:
-            writer.book = pd.ExcelFile(template_path).book
-            dataframe.to_excel(writer, sheet_name=sheet_name, index=False)
+        # Leer el archivo Excel original
+        book = pd.ExcelFile(template_path)
     
+        # Reemplazar la hoja 'FBL3N' con el nuevo DataFrame
+        with pd.ExcelWriter(template_path, engine='xlsxwriter') as writer:
+            book.book = writer.book  # Utilizar el libro del nuevo escritor
+            book.sheets = dict((ws.title, ws) for ws in book.book.worksheets)
+    
+            dataframe.to_excel(writer, sheet_name=sheet_name, index=False)    
         # Botón para reemplazar y descargar el archivo Excel
         # Reemplazar la hoja 'FBL3N' del archivo Excel con el nuevo DataFrame
     reemplazar_excel(template_path, 'FBL3N', FBL3N_new)
