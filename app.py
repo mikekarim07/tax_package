@@ -281,7 +281,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
-    FBL3N_range = FBL3N_new.index.min() + 1 : FBL3N_new.index.max() + 1, FBL3N_new.columns.min() : FBL3N_new.columns.max()
+    FBL3N_range = FBL3N_new.iloc[
+    FBL3N_new.index.min(): FBL3N_new.index.max() + 1,
+    FBL3N_new.columns.get_loc(FBL3N_new.columns.min()): FBL3N_new.columns.get_loc(FBL3N_new.columns.max()) + 1]
     st.write(FBL3N_range)
 
 
