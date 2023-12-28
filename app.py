@@ -299,59 +299,26 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 #     )
 #---------------------AGREGAR AL LA HOJA CATALOGOS
     
-# # import pandas as pd
-# # import xlsxwriter
-
+    excel_file_path = 'Template FBL3N.xlsx'
+    FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
+    workbook.close()
     
-#     # Create an Excel file with xlsxwriter
-#     excel_file_path = 'Template FBL3N.xlsx'
-#     # workbook = xlsxwriter.Workbook(excel_file_path)
-    
-#     # Write the DataFrame FBL3N_new to cell A1 on a worksheet named 'FBL3N'
-#     # worksheet = workbook.add_worksheet('FBL3N')
-#     # worksheet.write('A1', 'FBL3N_new data:')
-#     FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
-    
-#     # # Add another worksheet named 'Catalogs'
-#     # catalogs_worksheet = workbook.add_worksheet('Catalogs')
-    
-#     # # Write 'Company Code' to cell A1 on the 'Catalogs' worksheet
-#     # catalogs_worksheet.write('A1', 'Company Code')
-    
-#     # # Write the formula '=SORT(UNIQUE(INDIRECT("FBL3N!A2:A"&COUNTA(FBL3N!A:A))),,1)' to cell A2 on the 'Catalogs' worksheet
-#     # catalogs_worksheet.write('A2', '=SORT(UNIQUE(INDIRECT("FBL3N!A2:A"&COUNTA(FBL3N!A:A))),,1)')
-    
-#     # Save the Excel file
-#     workbook.close()
-    
-#     print(f'Excel file "{excel_file_path}" created successfully.')
+    print(f'Excel file "{excel_file_path}" created successfully.')
         
 #---------------
-    # import streamlit as st
-    # import pandas as pd
-    # from openpyxl import load_workbook
-    # from io import BytesIO
     
     # Load the existing Excel file
     file_path = 'Template FBL3N.xlsx'
-    workbook = load_workbook(file_path)
-    
-    # # Assuming FBL3N_new is your DataFrame
-    # data = {'Column1': [1, 2, 3],
-    #         'Column2': ['A', 'B', 'C']}
-    # FBL3N_new = pd.DataFrame(data)
     
     # Create a BytesIO object to store the modified Excel file
     excel_buffer = BytesIO()
     
-    # Paste the DataFrame FBL3N_new in sheet "FBL3N" cell A1
-    worksheet = workbook['FBL3N']
-    worksheet.append([None] * (FBL3N_new.shape[1] - 1))  # Add a blank row for data starting from A1
-    for index, row in FBL3N_new.iterrows():
-        worksheet.append(row.tolist())
     
-    # Save the modified Excel file in BytesIO
-    workbook.save(excel_buffer)
+    # Save the modified Excel file in BytesIO using xlsxwriter
+    excel_writer = pd.ExcelWriter(excel_buffer, engine='xlsxwriter')
+    FBL3N_new.to_excel(excel_writer, index=False, sheet_name='FBL3N', startrow=1, startcol=1, header=False)
+    excel_writer.save()
+    excel_writer.close()
     excel_buffer.seek(0)
     
     # Create a st.download_button for the Excel file
