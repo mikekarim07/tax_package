@@ -14,6 +14,8 @@ import base64
 import xlsxwriter
 from xlsxwriter import Workbook
 import time
+import openpyxl
+
 from openpyxl import load_workbook
 from openpyxl import Workbook
 
@@ -297,44 +299,27 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
 
 
-    # import streamlit as st
-    # import pandas as pd
-    # import xlsxwriter
-    # from io import BytesIO
-    
-    # Cargar el archivo "template" desde el directorio raíz
     template_path = "Template FBL3N.xlsx"
-    template_book = pd.ExcelFile(template_path)
-    
-    # # Leer el DataFrame FBL3N_new (reemplázalo con tus datos reales)
-    # data = {'Columna1': [1, 2, 3],
-    #         'Columna2': ['A', 'B', 'C']}
-    # FBL3N_new = pd.DataFrame(data)
-    
-    # Función para reemplazar la hoja 'FBL3N' del archivo Excel con el nuevo DataFrame
-    def reemplazar_excel(template_path, sheet_name, dataframe):
-        # Leer el archivo Excel original
-        book = pd.ExcelFile(template_path)
-    
-        # Reemplazar la hoja 'FBL3N' con el nuevo DataFrame
-        with pd.ExcelWriter(template_path, engine='xlsxwriter') as writer:
-            book.book = writer.book  # Utilizar el libro del nuevo escritor
-            book.sheets = dict((ws.title, ws) for ws in book.book.worksheets)
-    
-            dataframe.to_excel(writer, sheet_name=sheet_name, index=False)    
-        # Botón para reemplazar y descargar el archivo Excel
-        # Reemplazar la hoja 'FBL3N' del archivo Excel con el nuevo DataFrame
-    reemplazar_excel(template_path, 'FBL3N', FBL3N_new)
+    template_book = load_workbook(template_path)
 
-    # Preparar el archivo Excel para la descarga
-    excel_data = BytesIO()
-    with pd.ExcelWriter(excel_data, engine='xlsxwriter') as writer:
-        writer.book = pd.ExcelFile(template_path).book
-        FBL3N_new.to_excel(writer, sheet_name='FBL3N', index=False)
+    # Función para pegar el DataFrame en la hoja FBL3N a partir de la celda A1
+    def pegar_en_excel(dataframe, hoja, celda_inicio='A1'):
+        writer = pd.ExcelWriter(template_path, engine='openpyxl')
+        writer.book = template_book
+        writer.sheets = {ws.title: ws for ws in template_book.worksheets}
     
-    excel_data.seek(0)
-
-    # Descargar el archivo Excel actualizado
-    st.download_button(label="Descargar archivo Excel", key='file_download', data=excel_data, file_name='archivo_actualizado.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    st.success('Archivo Excel reemplazado y descargado con éxito.')
-
+        dataframe.to_excel(writer, index=False, sheet_name=hoja, startrow=0, startcol=0)
+    
+        writer.save()
+        writer.close()
+    
+    # Llamada a la función para pegar en el archivo Excel
+    pegar_en_excel(FBL3N_new, 'FBL3N')
+    
+    # Botón de descarga
+    st.download_button(
+        label="Descargar Excel",
+        data=BytesIO(template_book.save()),
+        file_name='template_actualizado.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+        key='download_button'
+    )
