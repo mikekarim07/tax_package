@@ -14,9 +14,6 @@ import base64
 import xlsxwriter
 from xlsxwriter import Workbook
 import time
-import openpyxl
-from openpyxl import Workbook
-from openpyxl import load_workbook
 
 
 
@@ -288,13 +285,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
 # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
-    (max_row, max_col) = FBL3N_new.shape
+    # (max_row, max_col) = FBL3N_new.shape
     
-    # Make the columns wider for clarity.
-    worksheet.set_column(0, max_col - 1, 12)
+    # # Make the columns wider for clarity.
+    # worksheet.set_column(0, max_col - 1, 12)
     
-    # Set the autofilter.
-    worksheet.autofilter(0, 0, max_row, max_col - 1)
+    # # Set the autofilter.
+    # worksheet.autofilter(0, 0, max_row, max_col - 1)
     
 # Descargar el archivo Excel en Streamlit
     st.download_button(
