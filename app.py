@@ -350,6 +350,3 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.download_button(label="Descargar archivo Excel", key='file_download', data=excel_data, file_name='archivo_actualizado.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     st.success('Archivo Excel reemplazado y descargado con éxito.')
 
-# Ejecutar la aplicación
-if __name__ == '__main__':
-    main()
