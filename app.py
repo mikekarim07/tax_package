@@ -345,13 +345,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     excel_buffer = BytesIO()
     
     # Paste the DataFrame FBL3N_new in sheet "FBL3N" cell A1
-    with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
-        writer.book = workbook
-        writer.sheets = dict((ws.title, ws) for ws in workbook.worksheets)
-    
-        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N', startrow=1, startcol=1, header=False)
+    worksheet = workbook['FBL3N']
+    worksheet.append([None] * (FBL3N_new.shape[1] - 1))  # Add a blank row for data starting from A1
+    for index, row in FBL3N_new.iterrows():
+        worksheet.append(row.tolist())
     
     # Save the modified Excel file in BytesIO
+    workbook.save(excel_buffer)
     excel_buffer.seek(0)
     
     # Create a st.download_button for the Excel file
