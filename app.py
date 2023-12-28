@@ -12,11 +12,11 @@ import io
 from io import StringIO
 import base64
 import xlsxwriter
+from xlsxwriter import Workbook
 import time
 from openpyxl import load_workbook
 from openpyxl import Workbook
-from openpyxl.worksheet.table import Table, TableStyleInfo
-from xltable import Table, Worksheet, Workbook
+
 
 
 st.set_page_config(
@@ -281,25 +281,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
-    # Create the table and workbook as you did previously
-    table = Table("FBL3N", FBL3N_new)
-    sheet = Worksheet("FBL3N")
-    sheet.add_table(table)
-    workbook = Workbook("example.xlsx")
-    workbook.add_sheet(sheet)
-    
-    # Create a buffer to hold the Excel file in memory
-    excel_buffer = workbook.to_buffer()
-    
-    # Create the download button
-    st.download_button(
-        label="Descargar Excel",
-        data=excel_buffer,
-        file_name="FBL3N.xlsx",  # Adjust file name as needed
-        key="download_button",
-    )
-
-
+    FBL3N_range = FBL3N_new.index.min() + 1 : FBL3N_new.index.max() + 1, FBL3N_new.columns.min() : FBL3N_new.columns.max()
+    st.write(FBL3N_range)
 
 
 
