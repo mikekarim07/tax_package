@@ -303,7 +303,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     # from io import BytesIO
     
     # Cargar el archivo "template" desde el directorio raíz
-    template_path = "template.xlsx"
+    template_path = "Template FBL3N.xlsx"
     template_book = pd.ExcelFile(template_path)
     
     # # Leer el DataFrame FBL3N_new (reemplázalo con tus datos reales)
