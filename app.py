@@ -287,7 +287,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 #     excel_buffer = BytesIO()
 
 # # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
+    
 
 # # Descargar el archivo Excel en Streamlit
 #     st.download_button(
@@ -296,26 +297,22 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 #         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
 #         key='download_button'
 #     )
-# ---------------------AGREGAR AL LA HOJA CATALOGOS
-    excel_buffer = BytesIO()
+---------------------AGREGAR AL LA HOJA CATALOGOS
     
-    # Utilizar el método to_excel(), pero guardar en el objeto BytesIO en lugar de un archivo local
-    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+    path = 'Template FBL3N.xlsx'
     
-    # Crear un libro de Excel y agregar las hojas 'FBL3N' y 'Catalogos'
-    with pd.ExcelWriter(excel_buffer, engine='openpyxl', mode='a') as writer:
-        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N')
+    # Abrir el archivo Excel con openpyxl
+    workbook = openpyxl.load_workbook(path)
     
-        # Crear la hoja 'Catalogos'
-        catalogos_sheet = writer.book.create_sheet('Catalogos')
-        
-        # Escribir en la celda A1 de la hoja 'Catalogos'
-        catalogos_sheet['A1'] = 'Company Code'
-        
-        # Escribir la fórmula en la celda A2 de la hoja 'Catalogos'
-        catalogos_sheet['A2'] = '=SORT(UNIQUE(INDIRECT("FBL3N!A2:A"&COUNTA(FBL3N!A:A))),,1)'
+    # Escribir el DataFrame en la hoja 'FBL3N'
+    with pd.ExcelWriter(path, engine='openpyxl') as writer:
+        writer.book = workbook
+        FBL3N.to_excel(writer, sheet_name='FBL3N')
     
     # Descargar el archivo Excel en Streamlit
+    excel_buffer = BytesIO()
+    workbook.save(excel_buffer)
+    
     st.download_button(
         label="Descargar Excel",
         data=excel_buffer.getvalue(),
