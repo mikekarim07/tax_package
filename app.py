@@ -299,11 +299,11 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 #     )
 #---------------------AGREGAR AL LA HOJA CATALOGOS
     
-    excel_file_path = 'Template FBL3N.xlsx'
-    FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
-    workbook.close()
+    # excel_file_path = 'Template FBL3N.xlsx'
+    # FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
+    # workbook.close()
     
-    print(f'Excel file "{excel_file_path}" created successfully.')
+    # print(f'Excel file "{excel_file_path}" created successfully.')
         
 #---------------
     
