@@ -14,6 +14,8 @@ import base64
 import xlsxwriter
 import time
 from openpyxl import load_workbook
+from openpyxl import Workbook
+from openpyxl.worksheet.table import Table, TableStyleInfo
 
 
 st.set_page_config(
@@ -278,21 +280,51 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
-
-
+    table = Table(displayName="FBL3N", ref=f"A1:{chr(64 + len(FBL3N_new.columns))}{len(FBL3N_new) + 1}")
+    table.tableStyleInfo = TableStyleInfo(
+        name="TableStyleMedium9", showFirstColumn=False,
+        showLastColumn=False, showRowStripes=True, showColumnStripes=True)
+    worksheet = Workbook().active
+    worksheet.append(FBL3N_new.columns.tolist())
+    for row in FBL3N_new.itertuples(index=False, name=None):
+        worksheet.append(list(row))
     
-# #     excel_buffer = BytesIO()
+    # Add the table to the worksheet
+    worksheet.add_table(table)
+    
+    # Save the workbook to BytesIO buffer
+    excel_buffer = BytesIO()
+    worksheet.parent.save(excel_buffer)
+    
+    # Create a download button
+    st.download_button(
+        label="Download Excel",
+        data=excel_buffer.getvalue(),
+        file_name='example.xlsx',
+        key='download_button'
+    )
 
-# # # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-# #     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+#     table = Table("FBL3N", FBL3N_new)
+#     sheet = Worksheet("FBL3N")
+#     sheet.add_table(table)
 
-# # # Descargar el archivo Excel en Streamlit
-# #     st.download_button(
-# #         label="Descargar Excel",
-# #         data=excel_buffer.getvalue(),
-# #         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-# #         key='download_button'
-# #     )
+#     workbook = Workbook("example.xlsx")
+#     workbook.add_sheet(sheet)
+
+# # write the workbook to the file (requires xlsxwriter)
+#     workbook.to_xlsx()
+#     excel_buffer = BytesIO()
+
+# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')  # Asegúrate de cambiar 'Hoja1' al nombre real de tu hoja
+
+# # Descargar el archivo Excel en Streamlit
+#     st.download_button(
+#         label="Descargar Excel",
+#         data=excel_buffer.getvalue(),
+#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+#         key='download_button'
+#     )
 
 
 
