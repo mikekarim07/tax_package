@@ -284,38 +284,19 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
     
-#     excel_buffer = BytesIO()
-
-# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
-    
-
-# # Descargar el archivo Excel en Streamlit
-#     st.download_button(
-#         label="Descargar Excel",
-#         data=excel_buffer.getvalue(),
-#         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-#         key='download_button'
-#     )
----------------------AGREGAR AL LA HOJA CATALOGOS
-    
-    path = 'Template FBL3N.xlsx'
-    
-    # Abrir el archivo Excel con openpyxl
-    workbook = openpyxl.load_workbook(path)
-    
-    # Escribir el DataFrame en la hoja 'FBL3N'
-    with pd.ExcelWriter(path, engine='openpyxl') as writer:
-        writer.book = workbook
-        FBL3N.to_excel(writer, sheet_name='FBL3N')
-    
-    # Descargar el archivo Excel en Streamlit
     excel_buffer = BytesIO()
-    workbook.save(excel_buffer)
+
+# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
     
+
+# Descargar el archivo Excel en Streamlit
     st.download_button(
         label="Descargar Excel",
         data=excel_buffer.getvalue(),
         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
     )
+---------------------AGREGAR AL LA HOJA CATALOGOS
+    
+    
