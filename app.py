@@ -36,8 +36,8 @@ st.subheader('Tax Package - Related Party Operations Category Classification Mac
 
 # st.divider()
 #--------------
-if FBL3N_Class not in st.session_state:
-    st.session_state.FBL3N_Class = None
+if FBL3N_Classified not in st.session_state:
+    st.session_state.FBL3N_Classified = None
 #--------------
 
 start_time01 = time.time()
@@ -234,13 +234,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
     
-    if st.session_state.FBL3N_Class is None and FBL3N_new is not None:
-        st.session_state.FBL3N_Class = FBL3N_new.copy()
+    if st.session_state.FBL3N_Classified is None and FBL3N_new is not None:
+        st.session_state.FBL3N_Classified = FBL3N_new.copy()
 
-    CoCode = st.session_state.FBL3N_Class["Company Code"].unique()
+    CoCode = st.session_state.FBL3N_Classified["Company Code"].unique()
     Selected_CoCode = st.selectbox("Select Company Code", CoCode)
-    Amount_Summary = st.session_state.FBL3N_Class[st.session_state.FBL3N_Class["Company Code"] == Selected_CoCode].groupby("Company Code")["amount in doc. curr."].sum()
-    st.dataframe(st.session_state.FBL3N_Class)
+    Amount_Summary = st.session_state.FBL3N_Classified[st.session_state.FBL3N_Classified["Company Code"] == Selected_CoCode].groupby("Company Code")["amount in doc. curr."].sum()
+    st.dataframe(st.session_state.FBL3N_Classified)
     st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
 
 
