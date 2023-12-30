@@ -36,8 +36,17 @@ st.subheader('Tax Package - Related Party Operations Category Classification Mac
 
 # st.divider()
 #--------------
-if FBL3N_Classified not in st.session_state:
-    st.session_state.FBL3N_Classified = None
+def load_and_preprocess_data(uploaded_file):
+    FBL3N_full = pd.read_excel(uploaded_file, engine='openpyxl', sheet_name='FBL3N', dtype={'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str})
+    FBL3N_full['Document Date'] = pd.to_datetime(FBL3N_full['Document Date']).dt.date
+    return FBL3N_full
+
+
+def take_FBL3N_class(FBL3N_new):
+    FBL3N_Classified = FBL3N_new.copy()
+    return FBL3N_Classified
+    
+
 #--------------
 
 start_time01 = time.time()
@@ -233,15 +242,25 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         else:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
+
+    
+    if FBL3N_Classified not in st.session_state:
+    st.session_state.FBL3N_Classified = None
+    
+    uploaded_FBL3N_train = st.file_uploader("Carga el archivo FBL3N mas actualizado que contenga la clasificación de los movimientos para poder entrenar el modelo de ML", type=["xlsx"], accept_multiple_files=False)
+    
+    # Inicializar o cargar el DataFrame en st.session_state
+    if 'FBL3N_Classified' not in st.session_state:
+        st.session_state.FBL3N_Classified = None
     
     if st.session_state.FBL3N_Classified is None and FBL3N_new is not None:
-        st.session_state.FBL3N_Classified = FBL3N_new.copy()
-
-    CoCode = st.session_state.FBL3N_Classified["Company Code"].unique()
-    Selected_CoCode = st.selectbox("Select Company Code", CoCode)
-    Amount_Summary = st.session_state.FBL3N_Classified[st.session_state.FBL3N_Classified["Company Code"] == Selected_CoCode].groupby("Company Code")["amount in doc. curr."].sum()
-    st.dataframe(st.session_state.FBL3N_Classified)
-    st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
+        st.session_state.FBL3N_Classified = take_FBL3N_class(FBL3N_new)
+    
+        CoCode = st.session_state.FBL3N_Classified["Company Code"].unique()
+        Selected_CoCode = st.selectbox("Select Company Code", CoCode)
+        Amount_Summary = st.session_state.FBL3N_Classified[st.session_state.FBL3N_Classified["Company Code"] == Selected_CoCode].groupby("Company Code")["amount in doc. curr."].sum()
+        st.dataframe(st.session_state.FBL3N_Classified)
+        st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
 
 
 
