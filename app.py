@@ -249,7 +249,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         st.session_state.FBL3N_Classified = None
     
     if st.session_state.FBL3N_Classified is None and FBL3N_new is not None:
-        st.session_state.FBL3N_Classified = take_FBL3N_class(FBL3N_new)
+        st.session_state.FBL3N_Classified = FBL3N_new.copy()
     
     CoCode = st.session_state.FBL3N_Classified["Company Code"].unique()
     Selected_CoCode = st.selectbox("Select Company Code", CoCode)
