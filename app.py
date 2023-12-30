@@ -35,6 +35,10 @@ st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/imag
 st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
 
 # st.divider()
+#--------------
+if FBL3N_Class not in st.session_state:
+    st.session_state.FBL3N_Class = None
+#--------------
 
 start_time01 = time.time()
 uploaded_FBL3N_train = st.sidebar.file_uploader("Upload FBL3N file which contains historical data classified to train the Machine Learning Model", type=["xlsx"], accept_multiple_files=False)
@@ -229,135 +233,145 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         else:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
+    
+    if st.session_state.FBL3N_Class is None and FBL3N_new is not None:
+        st.session_state.FBL3N_Class = FBL3N_new.copy()
+
+    CoCode = st.session_state.FBL3N_Class["Company Code"].unique()
+    Selected_CoCode = st.selectbox("Select Company Code", CoCode)
+    Amount_Summary = st.session_state.FBL3N_Class[st.session_state.FBL3N_Class["Company Code"] == Selected_CoCode].groupby("Company Code")["amount in doc. curr."].sum()
+    st.dataframe(st.session_state.FBL3N_Class)
+    st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
+
 
 
 
     
-    FBL3N_summary = FBL3N_new.copy()
-    FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
-    FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
-    FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
+#     FBL3N_summary = FBL3N_new.copy()
+#     FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
+#     FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
+#     FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
    
-    FBL3N_summary2 = FBL3N_summary.copy()
-    FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
-    FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
-    FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
-    # FBL3N_summary = FBL3N_summary[['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2']].fillna(0)
-    # FBL3N_summary = FBL3N_summary[['Amount in doc. curr.', 'Amount in doc. curr._k2']].fillna(0)
-    FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
+#     FBL3N_summary2 = FBL3N_summary.copy()
+#     FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
+#     FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
+#     FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
+#     # FBL3N_summary = FBL3N_summary[['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2']].fillna(0)
+#     # FBL3N_summary = FBL3N_summary[['Amount in doc. curr.', 'Amount in doc. curr._k2']].fillna(0)
+#     FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
     
 
-    reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
-    st.write(reg_clas)
-    tab1, tab2 = st.tabs(["Resumen", "Detalle"])
+#     reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
+#     st.write(reg_clas)
+#     tab1, tab2 = st.tabs(["Resumen", "Detalle"])
     
-    with tab1:
-        st.subheader(f'Resumen')
-        st.dataframe(FBL3N_summary)
-        st.write(FBL3N_summary.columns)
+#     with tab1:
+#         st.subheader(f'Resumen')
+#         st.dataframe(FBL3N_summary)
+#         st.write(FBL3N_summary.columns)
 
-    with tab2:
-        FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
-        # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
-        # FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
+#     with tab2:
+#         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
+#         # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
+#         # FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
         
-        # FBL3N_new['Counter1'] = FBL3N_new.groupby('Key1').cumcount()
-        # FBL3N_new['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
-        # FBL3N_new['Key_1'] = FBL3N_new['Key1'] + FBL3N_new['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
-        # FBL3N_new['Counter2'] = FBL3N_new.groupby('Key2').cumcount()
-        # FBL3N_new['Counter2'] += 0 # Contador para que comience desde 0
-        # FBL3N_new['Key_2'] = FBL3N_new['Key2'] + FBL3N_new['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+#         # FBL3N_new['Counter1'] = FBL3N_new.groupby('Key1').cumcount()
+#         # FBL3N_new['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
+#         # FBL3N_new['Key_1'] = FBL3N_new['Key1'] + FBL3N_new['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+#         # FBL3N_new['Counter2'] = FBL3N_new.groupby('Key2').cumcount()
+#         # FBL3N_new['Counter2'] += 0 # Contador para que comience desde 0
+#         # FBL3N_new['Key_2'] = FBL3N_new['Key2'] + FBL3N_new['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
         
-        FBL3N_real2 = FBL3N_new.copy()
-        FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
-        # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
-        # st.dataframe(FBL3N_tobe_class)
-        # st.dataframe(FBL3N_classified)
-        st.dataframe(FBL3N_new)
+#         FBL3N_real2 = FBL3N_new.copy()
+#         FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
+#         # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
+#         # st.dataframe(FBL3N_tobe_class)
+#         # st.dataframe(FBL3N_classified)
+#         st.dataframe(FBL3N_new)
     
-    end_time02 = time.time()
-    processing_time02 = end_time02 - start_time02
-    processing_time_formatted02 = "{:.4f}".format(processing_time02)
-    st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
-#--------------
+#     end_time02 = time.time()
+#     processing_time02 = end_time02 - start_time02
+#     processing_time_formatted02 = "{:.4f}".format(processing_time02)
+#     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
+# #--------------
+    
+# #     excel_buffer = BytesIO()
+
+# # # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
+# #     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
+# #     # (max_row, max_col) = FBL3N_new.shape
+    
+# #     # # Make the columns wider for clarity.
+# #     # worksheet.set_column(0, max_col - 1, 12)
+    
+# #     # # Set the autofilter.
+# #     # worksheet.autofilter(0, 0, max_row, max_col - 1)
+    
+# # # Descargar el archivo Excel en Streamlit
+# #     st.download_button(
+# #         label="Descargar Excel",
+# #         data=excel_buffer.getvalue(),
+# #         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+# #         key='download_button'
+# #     )
+# # # #---------------------AGREGAR AL LA HOJA CATALOGOS
+    
+# # #     # excel_file_path = 'Template FBL3N.xlsx'
+# # #     # FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
+# # #     # workbook.close()
+    
+# # #     # print(f'Excel file "{excel_file_path}" created successfully.')
+        
+# # # #---------------
+    
+# # #     # Load the existing Excel file
+# # #     file_path = 'Template FBL3N.xlsx'
+    
+# # #     # Create a BytesIO object to store the modified Excel file
+# # #     excel_buffer = BytesIO()
+# # #     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N', startrow=1, startcol=1, header=False)
+    
+    
+# # #     st.download_button(
+# # #         label="Download Excel",
+# # #         data=excel_buffer.getvalue(),
+# # #         file_name='Modified_Template.xlsx',  # You can change the file name as needed
+# # #         key='download_button'
+# # #     )
+
     
 #     excel_buffer = BytesIO()
+    
+#     # Create a Pandas Excel writer using XlsxWriter as the engine.
+#     writer = pd.ExcelWriter(excel_buffer, engine="xlsxwriter")
+    
+#     # Write the dataframe data to XlsxWriter. Turn off the default header and
+#     # index and skip one row to allow us to insert a user defined header.
+#     FBL3N_new.to_excel(writer, sheet_name="FBL3N", startrow=1, header=True, index=False)
+    
+#     # Get the xlsxwriter workbook and worksheet objects.
+#     workbook = writer.book
+#     worksheet = writer.sheets["FBL3N"]
+    
+#     # Get the dimensions of the dataframe.
+#     (max_row, max_col) = FBL3N_new.shape
+    
+#     # Create a list of column headers, to use in add_table().
+#     column_settings = [{"header": column} for column in FBL3N_new.columns]
+    
+#     # Add the Excel table structure. Pandas will add the data.
+#     worksheet.add_table(0, 0, max_row, max_col - 1, {"columns": column_settings})
+    
+#     # Make the columns wider for clarity.
+#     worksheet.set_column(0, max_col - 1, 12)
+    
+#     # Close the Pandas Excel writer and output the Excel file.
+#     writer.close()
 
-# # Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
-#     # (max_row, max_col) = FBL3N_new.shape
     
-#     # # Make the columns wider for clarity.
-#     # worksheet.set_column(0, max_col - 1, 12)
-    
-#     # # Set the autofilter.
-#     # worksheet.autofilter(0, 0, max_row, max_col - 1)
-    
-# # Descargar el archivo Excel en Streamlit
 #     st.download_button(
 #         label="Descargar Excel",
 #         data=excel_buffer.getvalue(),
 #         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
 #         key='download_button'
 #     )
-# # #---------------------AGREGAR AL LA HOJA CATALOGOS
-    
-# #     # excel_file_path = 'Template FBL3N.xlsx'
-# #     # FBL3N_new.to_excel(excel_file_path, sheet_name='FBL3N', startrow=1, index=False, header=False)
-# #     # workbook.close()
-    
-# #     # print(f'Excel file "{excel_file_path}" created successfully.')
-        
-# # #---------------
-    
-# #     # Load the existing Excel file
-# #     file_path = 'Template FBL3N.xlsx'
-    
-# #     # Create a BytesIO object to store the modified Excel file
-# #     excel_buffer = BytesIO()
-# #     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N', startrow=1, startcol=1, header=False)
-    
-    
-# #     st.download_button(
-# #         label="Download Excel",
-# #         data=excel_buffer.getvalue(),
-# #         file_name='Modified_Template.xlsx',  # You can change the file name as needed
-# #         key='download_button'
-# #     )
-
-    
-    excel_buffer = BytesIO()
-    
-    # Create a Pandas Excel writer using XlsxWriter as the engine.
-    writer = pd.ExcelWriter(excel_buffer, engine="xlsxwriter")
-    
-    # Write the dataframe data to XlsxWriter. Turn off the default header and
-    # index and skip one row to allow us to insert a user defined header.
-    FBL3N_new.to_excel(writer, sheet_name="FBL3N", startrow=1, header=True, index=False)
-    
-    # Get the xlsxwriter workbook and worksheet objects.
-    workbook = writer.book
-    worksheet = writer.sheets["FBL3N"]
-    
-    # Get the dimensions of the dataframe.
-    (max_row, max_col) = FBL3N_new.shape
-    
-    # Create a list of column headers, to use in add_table().
-    column_settings = [{"header": column} for column in FBL3N_new.columns]
-    
-    # Add the Excel table structure. Pandas will add the data.
-    worksheet.add_table(0, 0, max_row, max_col - 1, {"columns": column_settings})
-    
-    # Make the columns wider for clarity.
-    worksheet.set_column(0, max_col - 1, 12)
-    
-    # Close the Pandas Excel writer and output the Excel file.
-    writer.close()
-
-    
-    st.download_button(
-        label="Descargar Excel",
-        data=excel_buffer.getvalue(),
-        file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
-        key='download_button'
-    )
