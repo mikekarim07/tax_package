@@ -209,32 +209,28 @@ def load_data():
 def page1():
     st.title("Machine Learning Classification Model")
     st.info("Please upload the required files.")
-    FBL3N_full = load_data()
+    FBL3N_new = load_data()
 
-    if FBL3N_full is not None:
-        st.dataframe(FBL3N_full)
+    if FBL3N_new is not None:
+        st.dataframe(FBL3N_new)
 
-def page2(fbl3n_full):
+def page2(FBL3N_new):
     st.title("Analysis")
-    company_codes = fbl3n_full["Company Code"].unique()
+    company_codes = FBL3N_new["Company Code"].unique()
     selected_company_code = st.selectbox("Select Company Code", company_codes)
-    grouped_data = fbl3n_full[fbl3n_full["Company Code"] == selected_company_code].groupby("Company Code")["amount in doc. curr."].sum()
+    grouped_data = FBL3N_new[FBL3N_new["Company Code"] == selected_company_code].groupby("Company Code")["amount in doc. curr."].sum()
     st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
 
 def main():
+    # Load data once
+    FBL3N_new = load_data()
+
     # Page 1
     page1()
 
     # Page 2 (using cached result from Page 1)
-    FBL3N_full = load_data()
-    if FBL3N_full is not None:
-        page2(FBL3N_full)
+    if FBL3N_new is not None:
+        page2(FBL3N_new)
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-#--------mmmmmmmmmmmm-------------------mmmmmmmmmmmmmmmm------------
