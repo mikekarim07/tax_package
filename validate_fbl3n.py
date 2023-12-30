@@ -1,50 +1,34 @@
 import streamlit as st
 import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.metrics import accuracy_score
+import pickle
+import os
+import datetime
+from io import BytesIO
+import io
+from io import StringIO
+import base64
+import xlsxwriter
+from xlsxwriter import Workbook
+import time
+
+st.set_page_config(
+    page_title="Tax Package ML Classification Model",
+    page_icon="📈",
+    layout="wide",
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': 'mailto:miguel.karim@karimortega.com'
+    }
+)
+
 
 # Define a function to load or generate FBL3N_new (Page 1)
 @st.cache
-
-# Page 1: ICode 1, result dataframe "FBL3N_new"
-def page1():
-    import streamlit as st
-    import pandas as pd
-    from sklearn.model_selection import train_test_split
-    from sklearn.feature_extraction.text import TfidfVectorizer
-    from sklearn.naive_bayes import MultinomialNB
-    from sklearn.metrics import accuracy_score
-    import pickle
-    import os
-    import datetime
-    from io import BytesIO
-    import io
-    from io import StringIO
-    import base64
-    import xlsxwriter
-    from xlsxwriter import Workbook
-    import time
-    
-    
-    
-    
-    st.set_page_config(
-        page_title="Tax Package ML Classification Model",
-        page_icon="📈",
-        layout="wide",
-        initial_sidebar_state="expanded",
-        menu_items={
-            'Get Help': 'mailto:miguel.karim@karimortega.com'
-        }
-    )
-    
-    
-    
-    st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=120)
-    # st.header('Machine Learnig Model')
-    st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
-    
-    # st.divider()
-    
-    start_time01 = time.time()
+def load_data():
     uploaded_FBL3N_train = st.sidebar.file_uploader("Upload FBL3N file which contains historical data classified to train the Machine Learning Model", type=["xlsx"], accept_multiple_files=False)
     st.sidebar.divider()
     uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
@@ -237,61 +221,18 @@ def page1():
             else:
                 return row['Subcode_ML']
         FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
-    
-    
-    
-        
-        FBL3N_summary = FBL3N_new.copy()
-        FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
-        FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
-        FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
-       
-        FBL3N_summary2 = FBL3N_summary.copy()
-        FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
-        FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
-        FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
-        # FBL3N_summary = FBL3N_summary[['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2']].fillna(0)
-        # FBL3N_summary = FBL3N_summary[['Amount in doc. curr.', 'Amount in doc. curr._k2']].fillna(0)
-        FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
-        
-    
-        reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
-        st.write(reg_clas)
-        tab1, tab2 = st.tabs(["Resumen", "Detalle"])
-        
-        with tab1:
-            st.subheader(f'Resumen')
-            st.dataframe(FBL3N_summary)
-            st.write(FBL3N_summary.columns)
-    
-        with tab2:
-            FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
-            # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
-            # FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
-            
-            # FBL3N_new['Counter1'] = FBL3N_new.groupby('Key1').cumcount()
-            # FBL3N_new['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
-            # FBL3N_new['Key_1'] = FBL3N_new['Key1'] + FBL3N_new['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
-            # FBL3N_new['Counter2'] = FBL3N_new.groupby('Key2').cumcount()
-            # FBL3N_new['Counter2'] += 0 # Contador para que comience desde 0
-            # FBL3N_new['Key_2'] = FBL3N_new['Key2'] + FBL3N_new['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
-            
-            FBL3N_real2 = FBL3N_new.copy()
-            FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
-            # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
-            # st.dataframe(FBL3N_tobe_class)
-            # st.dataframe(FBL3N_classified)
-            st.dataframe(FBL3N_new)
-        
-        end_time02 = time.time()
-        processing_time02 = end_time02 - start_time02
-        processing_time_formatted02 = "{:.4f}".format(processing_time02)
-        st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
+    return FBL3N_new
 
+def page1():
+    st.title("Machine Learning Clasification Model")
+    # Load or generate FBL3N_new
+    FBL3N_new = load_data()
+    
+    # Display FBL3N_new
+    st.dataframe(FBL3N_new)
 
-# Page 2: Group by "Company Code" and show the sum "amount in doc. curr."
 def page2(fbl3n_new):
-    st.title("Page 2: Group by Company Code")
+    st.title("Analisis")
     
     # Get unique company codes
     company_codes = FBL3N_new["Company Code"].unique()
@@ -305,7 +246,6 @@ def page2(fbl3n_new):
     # Display the result
     st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
 
-# Main app
 def main():
     # Page 1
     page1()
@@ -317,3 +257,83 @@ def main():
 # Run the app
 if __name__ == "__main__":
     main()
+
+#-------------------
+
+
+
+
+
+
+
+# st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=120)
+# # st.header('Machine Learnig Model')
+# st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
+
+# # st.divider()
+
+# start_time01 = time.time()
+
+
+
+    
+#     FBL3N_summary = FBL3N_new.copy()
+#     FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
+#     FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
+#     FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
+   
+#     FBL3N_summary2 = FBL3N_summary.copy()
+#     FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
+#     FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
+#     FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
+#     # FBL3N_summary = FBL3N_summary[['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2']].fillna(0)
+#     # FBL3N_summary = FBL3N_summary[['Amount in doc. curr.', 'Amount in doc. curr._k2']].fillna(0)
+#     FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
+    
+
+#     reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
+#     st.write(reg_clas)
+#     tab1, tab2 = st.tabs(["Resumen", "Detalle"])
+    
+#     with tab1:
+#         st.subheader(f'Resumen')
+#         st.dataframe(FBL3N_summary)
+#         st.write(FBL3N_summary.columns)
+
+#     with tab2:
+#         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
+#         # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
+#         # FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
+        
+#         # FBL3N_new['Counter1'] = FBL3N_new.groupby('Key1').cumcount()
+#         # FBL3N_new['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
+#         # FBL3N_new['Key_1'] = FBL3N_new['Key1'] + FBL3N_new['Counter1'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+#         # FBL3N_new['Counter2'] = FBL3N_new.groupby('Key2').cumcount()
+#         # FBL3N_new['Counter2'] += 0 # Contador para que comience desde 0
+#         # FBL3N_new['Key_2'] = FBL3N_new['Key2'] + FBL3N_new['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
+        
+#         FBL3N_real2 = FBL3N_new.copy()
+#         FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
+#         # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
+#         # st.dataframe(FBL3N_tobe_class)
+#         # st.dataframe(FBL3N_classified)
+#         st.dataframe(FBL3N_new)
+    
+#     end_time02 = time.time()
+#     processing_time02 = end_time02 - start_time02
+#     processing_time_formatted02 = "{:.4f}".format(processing_time02)
+#     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
+
+
+
+
+
+
+
+# #---------------------    
+    
+# # Page 1: ICode 1, result dataframe "FBL3N_new"
+
+# # Page 2: Group by "Company Code" and show the sum "amount in doc. curr."
+
+# # Main app
