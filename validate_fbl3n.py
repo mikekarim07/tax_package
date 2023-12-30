@@ -34,7 +34,10 @@ def load_data():
     uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
     uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
     st.sidebar.divider()
+    
+
     if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
+        st.sidebar.info("Data is being loaded...")
         FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
                                    dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str,
                                             'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
@@ -46,10 +49,8 @@ def load_data():
         subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
                       dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
                              'Code_RP': str, 'Code_Desc_RP': str,})
-    
-    
-        
-    
+
+        st.sidebar.success("Data loaded successfully!")
         # Paso 2: Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
         columnas_rellenar = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
         FBL3N_full[columnas_rellenar] = FBL3N_full[columnas_rellenar].fillna('')
@@ -221,15 +222,18 @@ def load_data():
             else:
                 return row['Subcode_ML']
         FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
-    return FBL3N_new
+    
+        return FBL3N_new
+
+
 
 def page1():
     st.title("Machine Learning Clasification Model")
-    # Load or generate FBL3N_new
+    st.info("Please upload the required files.")
     FBL3N_new = load_data()
-    
-    # Display FBL3N_new
-    st.dataframe(FBL3N_new)
+
+    if FBL3N_new is not None:
+        st.dataframe(FBL3N_new)
 
 def page2(fbl3n_new):
     st.title("Analisis")
@@ -249,10 +253,13 @@ def page2(fbl3n_new):
 def main():
     # Page 1
     page1()
-    
+
     # Page 2 (using cached result from Page 1)
-    FBL3N_new = load_data()  # Load data outside of page2 to avoid re-running load_data
-    page2(FBL3N_new)
+    FBL3N_new = load_data()
+    if FBL3N_new is not None:
+        page2(FBL3N_new)
+
+
 
 # Run the app
 if __name__ == "__main__":
