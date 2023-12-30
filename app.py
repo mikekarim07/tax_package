@@ -251,11 +251,11 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     if st.session_state.FBL3N_Classified is None and FBL3N_new is not None:
         st.session_state.FBL3N_Classified = take_FBL3N_class(FBL3N_new)
     
-        CoCode = st.session_state.FBL3N_Classified["Company Code"].unique()
-        Selected_CoCode = st.selectbox("Select Company Code", CoCode)
-        Amount_Summary = st.session_state.FBL3N_Classified[st.session_state.FBL3N_Classified["Company Code"] == Selected_CoCode].groupby("Company Code")["Amount in doc. curr."].sum()
-        st.dataframe(st.session_state.FBL3N_Classified)
-        st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
+    CoCode = st.session_state.FBL3N_Classified["Company Code"].unique()
+    Selected_CoCode = st.selectbox("Select Company Code", CoCode)
+    Amount_Summary = st.session_state.FBL3N_Classified[st.session_state.FBL3N_Classified["Company Code"] == Selected_CoCode].groupby("Company Code")["Amount in doc. curr."].sum()
+    st.dataframe(st.session_state.FBL3N_Classified)
+    st.write(f"Sum of amount in doc. curr. for {selected_company_code}:", grouped_data)
 
 
 
