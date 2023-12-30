@@ -244,11 +244,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
 
     
-    if FBL3N_Classified not in st.session_state:
-        st.session_state.FBL3N_Classified = None
-    
-    uploaded_FBL3N_train = st.file_uploader("Carga el archivo FBL3N mas actualizado que contenga la clasificación de los movimientos para poder entrenar el modelo de ML", type=["xlsx"], accept_multiple_files=False)
-    
     # Inicializar o cargar el DataFrame en st.session_state
     if 'FBL3N_Classified' not in st.session_state:
         st.session_state.FBL3N_Classified = None
