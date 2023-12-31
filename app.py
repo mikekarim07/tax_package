@@ -283,6 +283,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
         columns_to_rename = {'CoCd': 'Related Party'}
         FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
+        st.write(FBL3N_new.columns)
     
         
         FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text',
