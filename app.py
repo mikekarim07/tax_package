@@ -231,29 +231,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
 
-    def Subcode(row):
-    # Verificar las condiciones
-        if row['Subcode_assigned'] == '':
-            return row['Subcode_assigned']
-        else:
-            return row['SC_Fix']
-    FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
-    
-    
-    #-----Rename Columns
-    # columns_to_rename = {'Col1': 'NewCol1', 'Col2': 'NewCol2'}
-    # df = df.rename(columns=columns_to_rename)
-
-    columns_to_eliminate = ['Status', 'V', 'ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 'Code_Type', 'Code', 'Code_Desc',
-                            'Code_Type_RP', 'Code_RP', 'Code_Desc_RP', 'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
-                           'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
-    FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
-    columns_to_rename = {'CoCd': 'Related Party'}
-    FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
-
-    
-    FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text',
-                           'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local Currency', 'Local Currency', 'Amount in doc. curr.', 'Document Currency', 'Posting Date']]
 
 
     
@@ -287,6 +264,30 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
     with tab2:
         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
+            def Subcode(row):
+            # Verificar las condiciones
+                if row['Subcode_assigned'] == '':
+                    return row['Subcode_assigned']
+                else:
+                    return row['SC_Fix']
+            FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
+            
+            
+            #-----Rename Columns
+            # columns_to_rename = {'Col1': 'NewCol1', 'Col2': 'NewCol2'}
+            # df = df.rename(columns=columns_to_rename)
+        
+            columns_to_eliminate = ['Status', 'V', 'ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 'Code_Type', 'Code', 'Code_Desc',
+                                    'Code_Type_RP', 'Code_RP', 'Code_Desc_RP', 'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
+                                   'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
+            FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
+            columns_to_rename = {'CoCd': 'Related Party'}
+            FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
+        
+            
+            FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text',
+                                   'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local Currency', 'Local Currency', 'Amount in doc. curr.', 'Document Currency', 'Posting Date']]
+
         # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
         # FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
         
