@@ -59,14 +59,15 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
     
 
-    # Paso 2: Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
+    #----- Paso 2: Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
     columnas_rellenar = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_full[columnas_rellenar] = FBL3N_full[columnas_rellenar].fillna('')
     # FBL3N_full.dropna(subset=columnas_rellenar, how='any', inplace=True)
+    
+    # Eliminar las filas que contienen NA o no contienen valores de subcode
+    FBL3N_full.dropna(subset=['Subcode'], how='any', inplace=True)
 
-
-    # FBL3N_full
-    # Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
+    #----- Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
     FBL3N_full['CONCAT'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str))
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Reference'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
     FBL3N_full['Id'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_full['Posting Date'].astype(str))
@@ -74,46 +75,45 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     #---------- Subcode_td: Columna que contiene el Subcode de train data para posteriormente cruzar con el dataset clasificado
     FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str)) + FBL3N_full['Document Type'] + (FBL3N_full['Posting period'].astype(str)) + (FBL3N_full['Amount in doc. curr.'].astype(str))
     # st.divider()
-    st.caption('ML FBL3N train dataset')
+    # st.caption('ML FBL3N train dataset')
     # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
     # subcodes_unique = FBL3N_full['Subcode'].unique()
     # subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
     # FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
     # st.dataframe(FBL3N_filtered)
     # Mostrar el dataframe sin filtrar
-    st.dataframe(FBL3N_full)
+    # st.dataframe(FBL3N_full)
     st.divider()
 
-    
+    #----- Generar dataframe con el Subcode asignado previamente para validarlo más adelante
     FBL3N_previous_subcode = FBL3N_full[['Subcode_td', 'Subcode']].drop_duplicates()
     FBL3N_previous_subcode["conteo"] = FBL3N_previous_subcode.groupby('Subcode_td')['Subcode_td'].transform("size")
     FBL3N_previous_subcode.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
-    st.caption('Registros unicos')
-    st.dataframe(FBL3N_previous_subcode)
+    #----- Mostrar en caso de que sea necesario
+    # st.caption('Registros unicos')
+    # st.dataframe(FBL3N_previous_subcode)
+    
+    #----- Eliminar duplicados para entrenar el modelo
     FBL3N_train = FBL3N_full[['ML', 'Subcode']].drop_duplicates()
-    # FBL3N_train
-
     X = FBL3N_train['ML']
     y = FBL3N_train['Subcode']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Vectorizar los datos de texto utilizando TF-IDF
+    #----- Vectorizar los datos de texto utilizando TF-IDF
     tfidf_vectorizer = TfidfVectorizer(max_features=1000)
     X_train_tfidf = tfidf_vectorizer.fit_transform(X_train)
     X_test_tfidf = tfidf_vectorizer.transform(X_test)
 
-    # Entrenar un modelo de clasificación
+    #----- Entrenar un modelo de clasificación
     modelo = MultinomialNB()
     modelo.fit(X_train_tfidf, y_train)
 
-    # Realizar predicciones en el conjunto de prueba
+    #----- Realizar predicciones en el conjunto de prueba
     y_pred = modelo.predict(X_test_tfidf)
 
     # Calcular la precisión del modelo en el conjunto de prueba
     accuracy = accuracy_score(y_test, y_pred)
     accuracy = "{:.2%}".format(accuracy)
-    # print(accuracy)
-    # st.caption('El modelo de aprendizaje finalizó y una vez que el modelo fue probado, dio un porcentaje de accuracy del:')
     st.metric(label="Model Accuracy", value=accuracy, delta=accuracy)
     
     end_time01 = time.time()
@@ -122,33 +122,17 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     st.info(f'Machine Learning model training time: {processing_time_formatted01} seconds')
 
     st.divider()
-# st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
+    # st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
 
     start_time02 = time.time()
-# st.sidebar.divider()
-# uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
-# uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
-# st.sidebar.divider()
-# if uploaded_new_FBL3N and uploaded_masters:
-    # FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
-    #             dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str,
-    #                     'Text': str, 'Document Header Text': str, 'User Name': str,
-    #                     'Tax Code': str,})
-    # accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
-    #             dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
-    # subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
-    #               dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
-    #                      'Code_RP': str, 'Code_Desc_RP': str,})
-    
-    
 
-    # Paso 2: Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
+    #----- Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
     FBL3N_new['CONCAT_01'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str))
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Reference'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
     # FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
-    # FBL3N_new['Subcode_td_1'] = FBL3N_new['Company Code'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Posting period'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str))
+    
     FBL3N_new['Subcode_td_1'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str)) + FBL3N_new['Document Type'] + (FBL3N_new['Posting period'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
     X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_new['ML'])
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
@@ -263,6 +247,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         st.write(FBL3N_summary.columns)
 
     with tab2:
+        FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
         def Subcode(row):
         # Verificar las condiciones
@@ -270,8 +255,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
                 return row['Subcode_assigned']
             else:
                 return row['SC_Fix']
-        FBL3N_new['Subcode_mike'] = FBL3N_new.apply(Subcode, axis=1)
-        FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
+        FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
+        
         
         #-----Rename Columns
         # columns_to_rename = {'Col1': 'NewCol1', 'Col2': 'NewCol2'}
@@ -284,8 +269,11 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         # columns_to_rename = {'CoCd': 'Related Party'}
         # FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
         st.write(FBL3N_new.columns)
-    
-        
+
+        #-------- Para volver a cruzar el dataframe con el Subcode ajustado con el catalogo de cuentas y los subcodigos
+        # FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
+        # FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
+
         # FBL3N_new = FBL3N_new[['CONCAT', 'Subcode',  'Subcode 2','Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
         #                        'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date']]
         
