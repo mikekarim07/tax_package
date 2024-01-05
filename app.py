@@ -262,12 +262,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
         # columns_to_rename = {'Col1': 'NewCol1', 'Col2': 'NewCol2'}
         # df = df.rename(columns=columns_to_rename)
     
-        # columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 'Code_Type', 'Code', 'Code_Desc',
-        #                         'Code_Type_RP', 'Code_RP', 'Code_Desc_RP', 'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
-        #                        'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
-        # FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
-        # columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
-        # FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
+        columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 'Code_Type', 'Code', 'Code_Desc',
+                                'Code_Type_RP', 'Code_RP', 'Code_Desc_RP', 'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
+                               'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
+        FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
+        columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
+        FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
         st.write(FBL3N_new.columns)
 
         #-------- Para volver a cruzar el dataframe con el Subcode ajustado con el catalogo de cuentas y los subcodigos
