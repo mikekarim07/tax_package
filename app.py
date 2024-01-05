@@ -249,6 +249,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     with tab2:
         # FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
+        FBL3N_new['Subcode_assigned'] = FBL3N_new['Subcode_assigned'].fillna('')
         def Subcode(row):
         # Verificar las condiciones
             if row['Subcode_assigned'] != '':
@@ -256,7 +257,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
             else:
                 return row['SC_Fix']
         FBL3N_new['Subcode_MK'] = FBL3N_new.apply(Subcode, axis=1)
-        FBL3N_new['Subcode_MK'] = FBL3N_new['Subcode_MK'].fillna('')
+        
             
         # columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 'Code_Type', 'Code', 'Code_Desc',
         #                         'Code_Type_RP', 'Code_RP', 'Code_Desc_RP', 'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
