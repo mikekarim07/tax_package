@@ -270,7 +270,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
                 return row['Subcode_assigned']
             else:
                 return row['SC_Fix']
-        FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
+        FBL3N_new['Subcode_mike'] = FBL3N_new.apply(Subcode, axis=1)
         
         
         #-----Rename Columns
