@@ -145,7 +145,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
     # Paso 2: Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
-    FBL3N_new['CONCAT'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str))
+    FBL3N_new['CONCAT_01'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str))
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Reference'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
     # FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
     # FBL3N_new['Subcode_td_1'] = FBL3N_new['Company Code'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Posting period'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str))
@@ -271,7 +271,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
             else:
                 return row['SC_Fix']
         FBL3N_new['Subcode_mike'] = FBL3N_new.apply(Subcode, axis=1)
-        
+        FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
         
         #-----Rename Columns
         # columns_to_rename = {'Col1': 'NewCol1', 'Col2': 'NewCol2'}
