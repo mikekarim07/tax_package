@@ -248,7 +248,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
     with tab2:
         # FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
-        # FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
+        FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
         def Subcode(row):
         # Verificar las condiciones
             if row['Subcode_assigned'] != '':
