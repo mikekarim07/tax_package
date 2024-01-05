@@ -273,7 +273,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
 
         #-------- Para volver a cruzar el dataframe con el Subcode ajustado con el catalogo de cuentas y los subcodigos
         # FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
-        FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
+        FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode", right_on='Code', how='left')
 
         
         # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
