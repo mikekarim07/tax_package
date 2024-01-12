@@ -44,7 +44,7 @@ uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains th
 uploaded_ZLAAUDIT = st.sidebar.file_uploader("Upload the file which contains the ZLAAUDIT dataset", key="ZLAAUDIT", type=["xlsx"], accept_multiple_files=False)
 uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.divider()
-if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters:
+if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded_ZLAAUDIT:
     FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
                                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Document Number': str, 'Account': str, 'Text': str,
                                         'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
