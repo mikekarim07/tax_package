@@ -177,7 +177,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     #### Testing ends
 
     FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
-    FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
+    #----- Evaluar si quitar el cruzar la tabla con Subcodes (creo que no la estoy usando para nada, y al final las elimino)
+    # FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
     #---------------Funciones para subcodes fijas-------------------
     def sc_121_1(row):
         if row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("1176"):
@@ -250,39 +251,32 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
 
-
-
-    
-
-
-
-    
-    FBL3N_summary = FBL3N_new.copy()
-    FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
-    FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
-    FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
-   
-    FBL3N_summary2 = FBL3N_summary.copy()
-    FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
-    FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
-    FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
-    # FBL3N_summary = FBL3N_summary[['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2']].fillna(0)
-    # FBL3N_summary = FBL3N_summary[['Amount in doc. curr.', 'Amount in doc. curr._k2']].fillna(0)
-    FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
-    
-
-    reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
-    st.write(reg_clas)
+    #----- Contar el numero total de registros (evaluar si la dejo o no)
+    # reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
+    # st.write(reg_clas)
     
     tab1, tab2 = st.tabs(["Resumen", "Detalle"])
     
     with tab1:
         st.subheader('Resumen')
+        FBL3N_summary = FBL3N_new.copy()
+        FBL3N_summary['K1'] = FBL3N_summary['Company Code'] + FBL3N_summary['CoCd'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Subcode_ML'].astype(str))
+        FBL3N_summary['K2'] = FBL3N_summary['CoCd'] + FBL3N_summary['Company Code'] + FBL3N_summary['Document currency'] + (FBL3N_summary['Code_RP'].astype(str))
+        FBL3N_summary = FBL3N_summary.groupby(by=['Company Code', 'CoCd', 'Subcode_ML', 'Code_Type', 'Code_Desc', 'Code_RP', 'Document currency', 'K1', 'K2'], as_index=False)['Amount in doc. curr.'].sum()
+       
+        FBL3N_summary2 = FBL3N_summary.copy()
+        FBL3N_summary2.columns = [col_name + '_k2' for col_name in FBL3N_summary2]
+        FBL3N_summary = FBL3N_summary.merge(FBL3N_summary2, left_on="K1", right_on='K2_k2', how='left')
+        FBL3N_summary = FBL3N_summary.drop(columns=['K1', 'K2','Company Code_k2','CoCd_k2','Subcode_ML_k2','Code_Type_k2','Code_Desc_k2','Code_RP_k2','K1_k2','K2_k2'])
+        # FBL3N_summary = FBL3N_summary[['Document currency', 'Amount in doc. curr.', 'Document currency_k2', 'Amount in doc. curr._k2']].fillna(0)
+        # FBL3N_summary = FBL3N_summary[['Amount in doc. curr.', 'Amount in doc. curr._k2']].fillna(0)
+        FBL3N_summary['Diferencia'] = FBL3N_summary['Amount in doc. curr.'] + FBL3N_summary['Amount in doc. curr._k2']
+    
         st.dataframe(FBL3N_summary)
         st.write(FBL3N_summary.columns)
 
     with tab2:
-        # FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
+        FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
         FBL3N_new['Subcode_assigned'] = FBL3N_new['Subcode_assigned'].fillna('')
         def Subcode(row):
@@ -291,16 +285,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
                 return row['Subcode_assigned']
             else:
                 return row['SC_Fix']
-        FBL3N_new['Subcode_MK'] = FBL3N_new.apply(Subcode, axis=1)
+        FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
         
             
-        # columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 'Code_Type', 'Code', 'Code_Desc',
-        #                         'Code_Type_RP', 'Code_RP', 'Code_Desc_RP', 'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
-        #                        'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
-        # FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
-        # columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
-        # FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
-        # FBL3N_new['Subcode 2'] = ''
+        columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 
+                                'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
+                               'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
+        FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
+        columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
+        FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
+        FBL3N_new['Subcode 2'] = ''
         st.write(FBL3N_new.columns)
         # FBL3N_new = FBL3N_new[['CONCAT', 'Subcode',  'Subcode 2', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
         #                        'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date', 'Status', 'V']]
