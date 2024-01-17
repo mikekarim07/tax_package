@@ -314,7 +314,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         def create_subcode2(FBL3N_new):
             if "Subcode 2" not in FBL3N_new.columns:
                 FBL3N_new["Subcode 2"] = ""
-            return df
+            return FBL3N_new
         FBL3N_new = create_subcode2(FBL3N_new)
         
         
