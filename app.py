@@ -42,9 +42,10 @@ uploaded_FBL3N_train = st.sidebar.file_uploader("Upload FBL3N file which contain
 st.sidebar.divider()
 uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
 uploaded_ZLAAUDIT = st.sidebar.file_uploader("Upload the file which contains the ZLAAUDIT dataset", key="ZLAAUDIT", type=["xlsx"], accept_multiple_files=False)
+uploaded_SdosFin = st.sidebar.file_uploader("Upload the file which contains the SALDOS FINANCIEROS dataset", key="SaldosFinancieros", type=["xlsx"], accept_multiple_files=False)
 uploaded_masters = st.sidebar.file_uploader("Upload masterdata file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.divider()
-if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded_ZLAAUDIT:
+if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and uploaded_ZLAAUDIT:
     FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
                                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Document Number': str, 'Account': str, 'Text': str,
                                         'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
@@ -52,10 +53,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                 dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Document Number': str,
                         'Text': str, 'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
 
-    ZLAAUDIT = pd.read_excel(uploaded_ZLAAUDIT, engine='openpyxl', sheet_name='ZLAAUDIT',
-                dtype = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document Number': str, 'Business Area': str,
-                        'Document type': str, 'Tax Code': str, 'Line item': str, 'Posting Key': str, 'Account': str, 'Assignment': str,
-                        'User Name': str, 'Reference': str, 'Document Header Text': str, 'Currency': str, 'Local Currency': str,})
+    # ZLAAUDIT = pd.read_excel(uploaded_ZLAAUDIT, engine='openpyxl', sheet_name='ZLAAUDIT',
+    #             dtype = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document Number': str, 'Business Area': str,
+    #                     'Document type': str, 'Tax Code': str, 'Line item': str, 'Posting Key': str, 'Account': str, 'Assignment': str,
+    #                     'User Name': str, 'Reference': str, 'Document Header Text': str, 'Currency': str, 'Local Currency': str,})
 
     accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
                 dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
@@ -64,62 +65,67 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                   dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
                          'Code_RP': str, 'Code_Desc_RP': str,})
 
+    saldos_financieros = pd.read_excel(uploaded_SdosFin, engine='openpyxl', sheet_name='SaldosFin_MX',
+                  dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
+                         'Type': str, 'Balance': str,})
 
+    ######----------MACHINE LEARNING MODEL----------######
+    #-----Stage 1: Clean dataset, to get unique records and avoid NA, to have a clean Dataset to run the Machine Learning Model
+    #----- Step 1: Fill "NaN" cell as empty ('') at specified columns
+    NA_Fill_Columns = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
+    FBL3N_full[NA_Fill_Columns] = FBL3N_full[NA_Fill_Columns].fillna('')
+    # FBL3N_full.dropna(subset=NA_Fill_Columns, how='any', inplace=True)
     
-
-    #----- Paso 2: Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
-    columnas_rellenar = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
-    FBL3N_full[columnas_rellenar] = FBL3N_full[columnas_rellenar].fillna('')
-    # FBL3N_full.dropna(subset=columnas_rellenar, how='any', inplace=True)
-    
-    # Eliminar las filas que contienen NA o no contienen valores de subcode
+    #----- Step 2: Delete rows with no Subcode (either NA or blank)
     FBL3N_full.dropna(subset=['Subcode'], how='any', inplace=True)
 
-    #----- Paso 3: Crear una nueva columna 'ML' con el contenido de las columnas especificadas
+    #----- Step 3: Create a new column "ML"
     FBL3N_full['CONCAT'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str))
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Reference'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
-    FBL3N_full['Id'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_full['Posting Date'].astype(str))
+    # FBL3N_full['Id'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + (FBL3N_full['Document Number'].astype(str)) + ' ' + (FBL3N_full['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_full['Posting Date'].astype(str))
 
-    #---------- Subcode_td: Columna que contiene el Subcode de train data para posteriormente cruzar con el dataset clasificado
+    #----- Step 4: Create a new column "Subcode_td", which contains the Subcode that has been assigned previously in order to use it later
     FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str)) + FBL3N_full['Document Type'] + (FBL3N_full['Posting period'].astype(str)) + (FBL3N_full['Amount in doc. curr.'].astype(str))
-    st.divider()
-    st.caption('ML FBL3N train dataset')
-    # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
-    # subcodes_unique = FBL3N_full['Subcode'].unique()
-    # subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
-    # FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
-    # st.dataframe(FBL3N_filtered)
-    # Mostrar el dataframe sin filtrar
-    st.dataframe(FBL3N_full)
-    st.divider()
 
-    #----- Generar dataframe con el Subcode asignado previamente para validarlo más adelante
+    #----- Step 4a: This code is for showing on screen the FBL3N dataset that is going to be used to train the model
+    # st.divider()
+    # st.caption('ML FBL3N train dataset')
+    # # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
+    # # subcodes_unique = FBL3N_full['Subcode'].unique()
+    # # subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
+    # # FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
+    # # st.dataframe(FBL3N_filtered)
+    # # Mostrar el dataframe sin filtrar
+    # st.dataframe(FBL3N_full)
+    # st.divider()
+
+    #----- Step 5: Use FBL3N_full dataset to create a new one, with the Subcode previously assigned (this step applies in case that exists a FBL3N dataset already coded for previous periods and not to loose the work already done)
     FBL3N_previous_subcode = FBL3N_full[['Subcode_td', 'Subcode']].drop_duplicates()
     FBL3N_previous_subcode["conteo"] = FBL3N_previous_subcode.groupby('Subcode_td')['Subcode_td'].transform("size")
     FBL3N_previous_subcode.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
-    #----- Mostrar en caso de que sea necesario
+    #----- Step 5a: Shows unique records of previously assigned subcoded dataset
     # st.caption('Registros unicos')
     # st.dataframe(FBL3N_previous_subcode)
     
-    #----- Eliminar duplicados para entrenar el modelo
+    #----- Step 6: Delete duplicated values of ML column in order to train the model (test dataset is setup to 20%, this can be adjusted)
     FBL3N_train = FBL3N_full[['ML', 'Subcode']].drop_duplicates()
     X = FBL3N_train['ML']
     y = FBL3N_train['Subcode']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    #----- Vectorizar los datos de texto utilizando TF-IDF
+    #----- Step 7: Vectorize text data using TF-IDF (in previous versions max_features were set at 1,000, beacuse that provides the best accuracy when training the model, however this can be adjusted manually or with a streamlit widget, but re-runnings take time)
     tfidf_vectorizer = TfidfVectorizer(max_features=1000)
     X_train_tfidf = tfidf_vectorizer.fit_transform(X_train)
     X_test_tfidf = tfidf_vectorizer.transform(X_test)
 
-    #----- Entrenar un modelo de clasificación
+    #----- Step 8: Train the classification model
     modelo = MultinomialNB()
     modelo.fit(X_train_tfidf, y_train)
 
-    #----- Realizar predicciones en el conjunto de prueba
+    #----- Step 9: Make predictions to the test dataset
     y_pred = modelo.predict(X_test_tfidf)
 
-    # Calcular la precisión del modelo en el conjunto de prueba
+    #----- Step 10: Calculate model accuracy
     accuracy = accuracy_score(y_test, y_pred)
     accuracy = "{:.2%}".format(accuracy)
     st.metric(label="Model Accuracy", value=accuracy, delta=accuracy)
@@ -133,21 +139,42 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     # st.subheader('Una vez entrenado el modelo de ML, se realizará la clasificación en el nuevo conjunto de datos')
 
     start_time02 = time.time()
+    
 
-    #----- Rellenar las celdas "NaN" como celdas vacías ('') en las columnas especificadas
+    #----- Stage 2: Work with new FBL3N dataset, Masters (GL_Accounts and Subcodes), ZLAAUDIT and Saldos Financieros
+    #----- Step 1: Fill "NaN" cell as empty ('') at specified columns
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
+
+    #----- Step 2: Create a new column "ML"
     FBL3N_new['CONCAT_01'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str))
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Reference'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
     # FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
-    
+
+    #----- Step 3: Create a new column for comparing FBL3N (Original and New) to get the previously assigned subcode
     FBL3N_new['Subcode_td_1'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str)) + FBL3N_new['Document Type'] + (FBL3N_new['Posting period'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
+
+    #----- Step 4: Assign the Subcode to the new FBL3N dataset uploades, according to the ML model
     X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_new['ML'])
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
     FBL3N_new['Subcode_ML'] = modelo.predict(X_new_data_tfidf)
 
     # y_test_pred = modelo.predict(X_test_tfidf)
     # accuracy_test = accuracy_score(y_test, y_test_pred)
+
+    #### Testing
+    #----- Codigo para crear una nueva columna que contenga el porcentaje de certeza en la prediccion, vamos a ver si funciona
+    # Assuming 'modelo' is your trained model
+    probability_matrix = modelo.predict_proba(X_new_data_tfidf)
+    
+    # Extract the probabilities for the predicted class
+    certainty_percentages = [max(probabilities) * 100 for probabilities in probability_matrix]
+    
+    # Create a new column 'Certainty_Percentage' in your DataFrame
+    FBL3N_new['Certainty_Percentage'] = certainty_percentages
+    
+    # Now, FBL3N_new contains a column with the certainty percentage for each prediction
+    #### Testing ends
 
     FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
     FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
