@@ -347,11 +347,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         FBL3N_new['Counter2'] += 0 # Contador para que comience desde 0
         FBL3N_new['Key_2'] = FBL3N_new['Key2'] + FBL3N_new['Counter2'].astype(str) # Crear una nueva columna 'key_modified' que contiene la columna 'key' con el contador
         
-        FBL3N_real2 = FBL3N_new.copy()
-        FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
+        # FBL3N_real2 = FBL3N_new.copy()
+        # FBL3N_real2.columns = [col_name + '_k2' for col_name in FBL3N_real2]
         # FBL3N_real = FBL3N_real.merge(FBL3N_real2, left_on="Key1", right_on='Key2_k2', how='left')
         # st.dataframe(FBL3N_tobe_class)
         # st.dataframe(FBL3N_classified)
+
+        #----- eliminar las columnas Key1, Key2, Counter1, Counter2
+        drop_keycols = ['Key1', 'Key2', 'Counter1', 'Counter2']
+        FBL3N_new = FBL3N_new.drop(columns=drop_keycols)
+        
         st.dataframe(FBL3N_new)
     
     end_time02 = time.time()
