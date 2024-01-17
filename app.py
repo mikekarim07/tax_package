@@ -309,8 +309,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         
         # FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Document Date'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
         # FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (FBL3N_new['Document Date'].astype(str)) + (-FBL3N_new['Amount in doc. curr.']).astype(str)
-        FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['CoCd'] + (FBL3N_new['Amount in doc. curr.'].astype(str))
-        FBL3N_new['Key2'] = FBL3N_new['CoCd'] + FBL3N_new['Company Code'] + (-FBL3N_new['Amount in doc. curr.']).astype(str)
+        FBL3N_new['Key1'] = FBL3N_new['Company Code'] + FBL3N_new['Related Party'] + (FBL3N_new['Amount in doc. curr.'].astype(str))
+        FBL3N_new['Key2'] = FBL3N_new['Related Party'] + FBL3N_new['Company Code'] + (-FBL3N_new['Amount in doc. curr.']).astype(str)
         
         FBL3N_new['Counter1'] = FBL3N_new.groupby('Key1').cumcount()
         FBL3N_new['Counter1'] += 0 # Sumar 1 al contador para que comience desde 1 en lugar de 0
