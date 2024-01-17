@@ -159,9 +159,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     # Realizar predicciones con el modelo entrenado en el conjunto de datos real
     FBL3N_new['Subcode_ML'] = modelo.predict(X_new_data_tfidf)
 
-    # y_test_pred = modelo.predict(X_test_tfidf)
-    # accuracy_test = accuracy_score(y_test, y_test_pred)
-
     #### Testing
     #----- Codigo para crear una nueva columna que contenga el porcentaje de certeza en la prediccion, vamos a ver si funciona
     # Assuming 'modelo' is your trained model
@@ -276,7 +273,26 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         # st.write(FBL3N_summary.columns)
 
     with tab2:
-        FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
+        def remove_CONCAT(FBL3N_new):
+            if "CONCAT" in FBL3N_new.columns:
+                FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
+            return FBL3N_new
+        FBL3N_new = remove_CONCAT(FBL3N_new)
+        
+        def remove_Subcode(FBL3N_new):
+            if "Subcode" in FBL3N_new.columns:
+                FBL3N_new = FBL3N_new.drop("Subcode", axis=1)
+            return FBL3N_new
+        FBL3N_new = remove_Subcode(FBL3N_new)
+
+        def remove_RelatedParty(FBL3N_new):
+            if "Related Party" in FBL3N_new.columns:
+                FBL3N_new = FBL3N_new.drop("Related Party", axis=1)
+            return FBL3N_new
+        FBL3N_new = remove_RelatedParty(FBL3N_new)
+
+        
+        # FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
         FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
         FBL3N_new['Subcode_assigned'] = FBL3N_new['Subcode_assigned'].fillna('')
         def Subcode(row):
@@ -294,8 +310,20 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
         columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
         FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
-        FBL3N_new['Subcode 2'] = ''
+        
+        def create_subcode2(FBL3N_new):
+            if "Subcode 2" not in FBL3N_new.columns:
+                FBL3N_new["Subcode 2"] = ""
+            return df
+        FBL3N_new = create_subcode2(FBL3N_new)
+        
+        
+        
+        # FBL3N_new['Subcode 2'] = ''
         st.write(FBL3N_new.columns)
+        FBL3N_new = FBL3N_new.reorder_levels(['CONCAT', 'Subcode',  'Subcode 2', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text',
+                                              'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date', 'Status', 'V',], axis=1)
+        
         # FBL3N_new = FBL3N_new[['CONCAT', 'Subcode',  'Subcode 2', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
         #                        'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date', 'Status', 'V']]
         # date_columns = ['Document Date', 'Posting Date']
