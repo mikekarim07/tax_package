@@ -356,6 +356,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         #----- eliminar las columnas Key1, Key2, Counter1, Counter2
         drop_keycols = ['Key1', 'Key2', 'Counter1', 'Counter2']
         FBL3N_new = FBL3N_new.drop(columns=drop_keycols)
+
+        integer_cols = ['Subcode', 'Account', 'Document Number']
+        FBL3N_new[integer_cols] = FBL3N_new[integer_cols].apply(pd.to_numeric, errors='coerce', downcast='integer')
+
         
         st.dataframe(FBL3N_new)
     
