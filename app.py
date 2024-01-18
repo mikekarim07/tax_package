@@ -369,13 +369,11 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
 #--------------
-    
-    excel_buffer = BytesIO()
 
     current_datetime = datetime.now().strftime('%y%m%d_%H%M')
-
-    # Construct the file name with "FBL3N" and current date and time 
     file_name = f'FBL3N_{current_datetime}.xlsx'
+    
+    excel_buffer = BytesIO()
     
 # Descargar el archivo Excel en Streamlit
     st.download_button(
