@@ -381,6 +381,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     st.download_button(
         label="Download FBL3N Classified excel file",
         data=excel_buffer.getvalue(),
-        file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
+        file_name=file_name,  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
     )
