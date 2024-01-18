@@ -371,19 +371,14 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     
     excel_buffer = BytesIO()
 
-# Utilizar el método to_excel() pero guardar en el objeto BytesIO en lugar de un archivo local
-    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
-    # (max_row, max_col) = FBL3N_new.shape
-    
-    # # Make the columns wider for clarity.
-    # worksheet.set_column(0, max_col - 1, 12)
-    
-    # # Set the autofilter.
-    # worksheet.autofilter(0, 0, max_row, max_col - 1)
+    current_datetime = datetime.now().strftime('%y%m%d_%H%M')
+
+    # Construct the file name with "FBL3N" and current date and time
+    file_name = f'FBL3N_{current_datetime}.xlsx'
     
 # Descargar el archivo Excel en Streamlit
     st.download_button(
-        label="Descargar Excel",
+        label="Download FBL3N Classified excel file",
         data=excel_buffer.getvalue(),
         file_name='template.xlsx',  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
