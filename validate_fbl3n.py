@@ -65,7 +65,7 @@ if file is not None:
     related_party_filter = st.sidebar.multiselect("Seleccionar Related Party:", unique_related_parties)
 
     # Aplicar filtros
-    filtered_df = apply_filters(df, company_code_filter, related_party_filter)
+    filtered_df = apply_filters(FBL3N_classified, company_code_filter, related_party_filter)
 
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_df)
