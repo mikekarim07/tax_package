@@ -75,5 +75,5 @@ if file is not None:
     st.dataframe(filtered_FBL3N_classified)
     # st.dataframe(merged_FBL3N_classified)
     pyg_html = pyg.walk(filtered_FBL3N_classified, return_html=True)
-    components.html = (pyg_html, height=1000, scrolling=True)
+    components.html = (pyg_html, scrolling=True)
     
