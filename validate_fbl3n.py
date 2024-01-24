@@ -62,7 +62,7 @@ if st.session_state.FBL3N_classified is not None:
     selected_related_party = st.selectbox("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
     st.session_state.FBL3N_classified = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == selected_related_party]
 
-    st.dataframe(filtered_df)
+    st.dataframe(st.session_state.FBL3N_classified)
 
     
     # # Calcular la suma de las filas seleccionadas
