@@ -80,6 +80,34 @@ if file is not None:
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_FBL3N_classified)
     st.dataframe(merged_FBL3N_classified)
+    st.dataframe(
+       merged_FBL3N_classified, 
+       show_header=True,  
+       show_index=True,
+    
+       header_cell_color= "blue",  
+       header_font_color="white",
+    
+       rows_font_color="black",
+       even_row_cell_color="white",
+       odd_row_cell_color="lightblue",
+    
+       columns_with_header_style=[0],  # which rows must be shown using header style, [0] = df.index if show_index==True
+       rows_with_header_style=[0],  # same for rows, [0] = header if show_index=True
+    
+       columns_with_bold_font=[],  # font text in bold for these rows and columns: 
+       rows_with_bold_font=[],   # used to highlight special rows and cols such as "average", "median", etc.
+    
+       max_row_number=None,   # if set, create pagination
+    
+       format_decimals=2,   # more complex formats should be managed in df
+       invalid_numbers_representation="-",  # if set, non-numbers like pd.NA, np.nan, None are visualized using this string
+    
+       ...
+    )
+
+
+
     # pyg_html = pyg.walk(filtered_FBL3N_classified, return_html=True)
     # components.html = (pyg_html)
     
