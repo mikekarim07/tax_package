@@ -39,7 +39,7 @@ uploades_FBL3N_classified = st.sidebar.file_uploader("Upload FBL3N classified", 
 st.sidebar.divider()
 
 if uploades_FBL3N_classified:
-    FBL3N_classified = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
+    FBL3N_classified = pd.read_excel(uploades_FBL3N_classified, engine='openpyxl', sheet_name='FBL3N', 
                                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str,
                                         'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
     # FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
