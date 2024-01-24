@@ -65,55 +65,9 @@ if file is not None:
     related_party_filter = st.sidebar.multiselect("Seleccionar Related Party:", unique_related_parties)
 
     # Aplicar filtros
-    filtered_df = apply_filters(FBL3N_classified, company_code_filter, related_party_filter)
-
+    filtered_FBL3N_classified = apply_filters(FBL3N_classified, company_code_filter, related_party_filter)
+    merged_FBL3N_classified = pd.merge(filtered_FBL3N_classified, filtered_FBL3N_classified, left_on=Key_1, right_on=Key_2, suffixes=('_1', '_2'))
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_df)
+    st.dataframe(merged_FBL3N_classified)
 
-
-
-
-
-
-
-
-
-
-
-# #------------------ OLD CODE ---------------------#
-# # Definir una función para cargar el archivo y preprocesarlo
-# def load_FBL3N(uploaded_file):
-#     FBL3N_classified = pd.read_excel(uploaded_file, engine='openpyxl', sheet_name='FBL3N', dtype={'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str})
-#     return FBL3N_classified
-
-# # Definir una función para filtrar el DataFrame en función de las selecciones
-# # def filter_dataframe(FBL3N_full, selected_company_code, selected_related_party, selected_document_date):
-# #     filtered_df = FBL3N_full[(FBL3N_full['Company Code'] == selected_company_code) & (FBL3N_full['Related Party'] == selected_related_party) & (FBL3N_full['Document Date'] == selected_document_date)]
-# #     return filtered_df
-
-
-# uploaded_FBL3N_classified = st.file_uploader("Carga el archivo FBL3N mas actualizado que contenga la clasificación de los movimientos para poder entrenar el modelo de ML", type=["xlsx"], accept_multiple_files=False)
-
-# # Inicializar o cargar el DataFrame en st.session_state
-# if 'FBL3N_classified' not in st.session_state:
-#     st.session_state.FBL3N_classified = None
-
-# if st.session_state.FBL3N_classified is None and uploaded_FBL3N_classified is not None:
-#     st.session_state.FBL3N_classified = load_FBL3N(uploaded_FBL3N_classified)
-
-# if st.session_state.FBL3N_classified is not None:
-
-#     selected_company_code = st.selectbox("Selecciona el Company Code", options=st.session_state.FBL3N_classified['Company Code'].unique())
-#     # selected_related_party = st.selectbox("Selecciona el Related Party", options=FBL3N_classified['Related Party'].unique(),)
-#     # filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == selected_related_party]
-#     st.session_state.FBL3N_classified = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Company Code'] == selected_company_code]
-#     st.dataframe(st.session_state.FBL3N_classified)
-
-    
-#     # # Calcular la suma de las filas seleccionadas
-#     # selected_rows = filtered_df[filtered_df['Checkbox']]
-#     # total_sum = selected_rows['Amount in doc. curr.'].sum()  # Reemplaza 'TuColumnaNumerica' con el nombre real de la columna que deseas sumar
-
-#     # # Mostrar el DataFrame filtrado
-    
-#     # st.write(f"Suma de las filas seleccionadas: {total_sum}")
