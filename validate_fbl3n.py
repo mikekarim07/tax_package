@@ -80,17 +80,7 @@ if file is not None:
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_FBL3N_classified)
     st.dataframe(merged_FBL3N_classified)
-    st.dataframe(
-       merged_FBL3N_classified, 
-       show_header=True,  
-       show_index=True,
-    
-       header_cell_color= "blue",  
-       header_font_color="white",
-    
-       rows_font_color="black",
-       even_row_cell_color="white",
-       odd_row_cell_color="lightblue")
+    st.dataframe(merged_FBL3N_classified, show_header=True, show_index=True, header_cell_color= "blue", header_font_color="white", rows_font_color="black", even_row_cell_color="white", odd_row_cell_color="lightblue")
 
 
 
