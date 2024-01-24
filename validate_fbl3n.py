@@ -15,7 +15,7 @@ import xlsxwriter
 from xlsxwriter import Workbook
 import time
 import pygwalker as pyg
-
+import streamlit.components.v1 as components
 
 
 
@@ -74,5 +74,6 @@ if file is not None:
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_FBL3N_classified)
     # st.dataframe(merged_FBL3N_classified)
-    pyg.walk(filtered_FBL3N_classified)
-
+    pyg_html = pyg.walk(filtered_FBL3N_classified, return_html=True)
+    components.html = (pyg_html, height=1000, scrolling=True)
+    
