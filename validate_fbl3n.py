@@ -55,27 +55,15 @@ if st.session_state.FBL3N_classified is None and uploaded_FBL3N_classified is no
     st.session_state.FBL3N_classified = load_FBL3N(uploaded_FBL3N_classified)
 
 if st.session_state.FBL3N_classified is not None:
-    col1, col2 = st.columns.sidebar(2)
+    # col1, col2 = st.columns.sidebar(2)
 
-    with col1:
-        selected_company_code = st.selectbox.sidebar("Selecciona el Company Code", st.session_state.FBL3N_classified['Company Code'].unique())
-    with col2:
-        selected_related_party = st.selectbox.sidebar("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
-
+    # with col1:
+    selected_company_code = st.selectbox.sidebar("Selecciona el Company Code", st.session_state.FBL3N_classified['Company Code'].unique())
     filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Company Code'] == selected_company_code]
+    # with col2:
+    selected_related_party = st.selectbox.sidebar("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
     filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == selected_related_party]
 
-    # Obtener las fechas únicas que cumplen con los filtros
-    # unique_dates = filtered_df['Document Date'].unique()
-
-    # Agregar un st.selectbox para seleccionar 'Document Date' basado en las fechas únicas
-    # with col3:
-    #     selected_document_date = st.selectbox("Selecciona la Document Date", unique_dates)
-
-    # # filtered_df = filtered_df[filtered_df['Document Date'] == selected_document_date]
-    # filtered_df['Checkbox'] = [False] * len(filtered_df)
-    # filtered_df = st.data_editor(filtered_df)
-    # # Mostrar el DataFrame filtrado
     st.dataframe(filtered_df)
 
     
