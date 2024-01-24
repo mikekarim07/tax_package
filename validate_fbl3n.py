@@ -40,9 +40,9 @@ def load_FBL3N(uploaded_file):
     return FBL3N_classified
 
 # Definir una función para filtrar el DataFrame en función de las selecciones
-def filter_dataframe(FBL3N_full, selected_company_code, selected_related_party, selected_document_date):
-    filtered_df = FBL3N_full[(FBL3N_full['Company Code'] == selected_company_code) & (FBL3N_full['Related Party'] == selected_related_party) & (FBL3N_full['Document Date'] == selected_document_date)]
-    return filtered_df
+# def filter_dataframe(FBL3N_full, selected_company_code, selected_related_party, selected_document_date):
+#     filtered_df = FBL3N_full[(FBL3N_full['Company Code'] == selected_company_code) & (FBL3N_full['Related Party'] == selected_related_party) & (FBL3N_full['Document Date'] == selected_document_date)]
+#     return filtered_df
 
 
 uploaded_FBL3N_classified = st.file_uploader("Carga el archivo FBL3N mas actualizado que contenga la clasificación de los movimientos para poder entrenar el modelo de ML", type=["xlsx"], accept_multiple_files=False)
@@ -55,16 +55,12 @@ if st.session_state.FBL3N_classified is None and uploaded_FBL3N_classified is no
     st.session_state.FBL3N_classified = load_FBL3N(uploaded_FBL3N_classified)
 
 if st.session_state.FBL3N_classified is not None:
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns.sidebar(2)
 
-    # Agregar un st.selectbox para seleccionar 'Company Code'
     with col1:
-        selected_company_code = st.selectbox("Selecciona el Company Code", st.session_state.FBL3N_classified['Company Code'].unique())
-        # selected_company_code = st.multiselect("Selecciona los Company Codes", options=st.session_state.FBL3N_classified['Company Code'].unique(),)
-
-    # Agregar un st.selectbox para seleccionar 'Related Party'
+        selected_company_code = st.selectbox.sidebar("Selecciona el Company Code", st.session_state.FBL3N_classified['Company Code'].unique())
     with col2:
-        selected_related_party = st.selectbox("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
+        selected_related_party = st.selectbox.sidebar("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
 
     filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Company Code'] == selected_company_code]
     filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == selected_related_party]
