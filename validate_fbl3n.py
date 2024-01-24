@@ -54,5 +54,5 @@ if uploades_FBL3N_classified:
 
     company_codes = st.sidebar.selectbox("Select Company Codes", FBL3N_classified['Company Code'].unique())
     related_parties = st.sidebar.selectbox("Select Related Parties", FBL3N_classified['Related Party'].unique())
-    FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'].isin(company_codes) & FBL3N_classified['Related Party'].isin(related_parties)]
+    FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'] == company_codes]
     st.dataframe(FBL3N_classified)
