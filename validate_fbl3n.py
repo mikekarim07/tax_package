@@ -58,10 +58,10 @@ if st.session_state.FBL3N_classified is not None:
     # col1, col2 = st.columns.sidebar(2)
 
     # with col1:
-    selected_company_code = st.selectbox.sidebar("Selecciona el Company Code", st.session_state.FBL3N_classified['Company Code'].unique())
+    selected_company_code = st.selectbox("Selecciona el Company Code", st.session_state.FBL3N_classified['Company Code'].unique())
     filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Company Code'] == selected_company_code]
     # with col2:
-    selected_related_party = st.selectbox.sidebar("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
+    selected_related_party = st.selectbox("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
     filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == selected_related_party]
 
     st.dataframe(filtered_df)
