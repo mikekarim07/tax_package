@@ -68,10 +68,7 @@ if file is not None:
     filtered_FBL3N_classified = apply_filters(FBL3N_classified, company_code_filter, related_party_filter)
     merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=(' sell', ' purchase'))
     st.write(merged_FBL3N_classified.columns)
-    filtered_merged_FBL3N_classified = merged_FBL3N_classified[
-    (merged_FBL3N_classified['Company Code sell'].isin(company_codes)) & 
-    (merged_FBL3N_classified['Related Party purchase'].isin(related_parties))
-]
+    filtered_merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code sell'].isin(company_code_filter)) & (merged_FBL3N_classified['Related Party purchase'].isin(related_party_filter))]
 
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_FBL3N_classified)
