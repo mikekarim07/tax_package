@@ -16,6 +16,7 @@ from xlsxwriter import Workbook
 import time
 import pygwalker as pyg
 import streamlit.components.v1 as components
+from pygwalker.api.streamlit import init_streamlit_comm, get_streamlit_html
 
 
 
@@ -36,13 +37,13 @@ st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/imag
 st.subheader('Related Party Operations validations')
 
 # Función para cargar el DataFrame desde el archivo Excel
-@st.cache
+@st.cache_data
 def load_data(file):
     FBL3N_classified = pd.read_excel(file, sheet_name='FBL3N')
     return FBL3N_classified
 
 # Función para aplicar filtros
-@st.cache
+@st.cache_data
 def apply_filters(FBL3N_classified, company_codes, related_parties):
     if company_codes:
         FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'].isin(company_codes)]
