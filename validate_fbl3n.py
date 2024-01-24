@@ -51,9 +51,9 @@ if 'FBL3N_classified' not in st.session_state:
 if st.session_state.FBL3N_classified is None and uploades_FBL3N_classified is not None:
     st.session_state.FBL3N_classified = load_data(uploades_FBL3N_classified)
 
-    company_codes = st.sidebar.selectbox("Select Company Codes", FBL3N_classified['Company Code'].unique())
+    company_codes = st.sidebar.selectbox("Select Company Codes", st.session_state.FBL3N_classified['Company Code'].unique())
     
-    FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'] == company_codes]
-    related_parties = st.sidebar.selectbox("Select Related Parties", FBL3N_classified['Related Party'].unique())
-    FBL3N_classified = FBL3N_classified[FBL3N_classified['Related Party'] == related_parties]
-    st.dataframe(FBL3N_classified)
+    st.session_state.FBL3N_classified = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Company Code'] == company_codes]
+    related_parties = st.sidebar.selectbox("Select Related Parties", st.session_state.FBL3N_classified['Related Party'].unique())
+    st.session_state.FBL3N_classified = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == related_parties]
+    st.dataframe(st.session_state.FBL3N_classified)
