@@ -69,6 +69,6 @@ if file is not None:
     merged_FBL3N_classified = filtered_FBL3N_classified.merge(filtered_FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer')
     # merged_FBL3N_classified = pd.merge(filtered_FBL3N_classified, filtered_FBL3N_classified, left_on=Key_1, right_on=Key_2, suffixes=('_1', '_2'))
     # Mostrar el DataFrame filtrado
-    st.dataframe(filtered_df)
+    st.dataframe(filtered_FBL3N_classified)
     st.dataframe(merged_FBL3N_classified)
 
