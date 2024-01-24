@@ -66,7 +66,8 @@ if file is not None:
 
     # Aplicar filtros
     filtered_FBL3N_classified = apply_filters(FBL3N_classified, company_code_filter, related_party_filter)
-    merged_FBL3N_classified = pd.merge(filtered_FBL3N_classified, filtered_FBL3N_classified, left_on=Key_1, right_on=Key_2, suffixes=('_1', '_2'))
+    merged_FBL3N_classified = filtered_FBL3N_classified.merge(filtered_FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer')
+    # merged_FBL3N_classified = pd.merge(filtered_FBL3N_classified, filtered_FBL3N_classified, left_on=Key_1, right_on=Key_2, suffixes=('_1', '_2'))
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_df)
     st.dataframe(merged_FBL3N_classified)
