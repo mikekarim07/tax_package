@@ -45,11 +45,11 @@ def load_data(file):
 
 # Función para aplicar filtros
 @st.cache
-def apply_filters(df, company_code, related_party):
-    if company_code:
-        df = df[df['Company Code'] == company_code]
-    if related_party:
-        df = df[df['Related Party'] == related_party]
+def apply_filters(df, company_codes, related_parties):
+    if company_codes:
+        df = df[df['Company Code'].isin(company_codes)]
+    if related_parties:
+        df = df[df['Related Party'].isin(related_parties)]
     return df
 
 # Cargar el archivo Excel
