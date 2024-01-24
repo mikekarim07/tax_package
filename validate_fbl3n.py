@@ -58,9 +58,9 @@ if st.session_state.FBL3N_classified is not None:
 
     selected_company_code = st.selectbox("Selecciona el Company Code", st.session_state.FBL3N_classified['Company Code'].unique())
     selected_related_party = st.selectbox("Selecciona el Related Party", options=st.session_state.FBL3N_classified['Related Party'].unique(),)
-    FBL3N_classified = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == selected_related_party]
+    filtered_df = st.session_state.FBL3N_classified[st.session_state.FBL3N_classified['Related Party'] == selected_related_party]
 
-    st.dataframe(FBL3N_classified)
+    st.dataframe(filtered_df)
 
     
     # # Calcular la suma de las filas seleccionadas
