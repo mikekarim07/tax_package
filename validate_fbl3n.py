@@ -34,38 +34,35 @@ st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/imag
 # st.header('Tax Package Model')
 st.subheader('Related Party Operations validations')
 
-import streamlit as st
-import pandas as pd
-
 # Función para cargar el DataFrame desde el archivo Excel
 @st.cache
 def load_data(file):
-    df = pd.read_excel(file, sheet_name='FBL3N')
-    return df
+    FBL3N_classified = pd.read_excel(file, sheet_name='FBL3N')
+    return FBL3N_classified
 
 # Función para aplicar filtros
 @st.cache
-def apply_filters(df, company_codes, related_parties):
+def apply_filters(FBL3N_classified, company_codes, related_parties):
     if company_codes:
-        df = df[df['Company Code'].isin(company_codes)]
+        FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'].isin(company_codes)]
     if related_parties:
-        df = df[df['Related Party'].isin(related_parties)]
-    return df
+        FBL3N_classified = FBL3N_classified[FBL3N_classified['Related Party'].isin(related_parties)]
+    return FBL3N_classified
 
 # Cargar el archivo Excel
 file = st.file_uploader("Subir archivo Excel", type=["xlsx"])
 
 if file is not None:
     # Cargar el DataFrame desde el archivo Excel
-    df = load_data(file)
+    FBL3N_classified = load_data(file)
 
     # Obtener los valores únicos de las columnas "Company Code" y "Related Party"
-    unique_company_codes = df['Company Code'].unique()
-    unique_related_parties = df['Related Party'].unique()
+    unique_company_codes = FBL3N_classified['Company Code'].unique()
+    unique_related_parties = FBL3N_classified['Related Party'].unique()
 
     # Filtros
-    company_code_filter = st.multiselect("Seleccionar Company Code:", unique_company_codes)
-    related_party_filter = st.multiselect("Seleccionar Related Party:", unique_related_parties)
+    company_code_filter = st.sidebar.multiselect("Seleccionar Company Code:", unique_company_codes)
+    related_party_filter = st.sidebar.multiselect("Seleccionar Related Party:", unique_related_parties)
 
     # Aplicar filtros
     filtered_df = apply_filters(df, company_code_filter, related_party_filter)
