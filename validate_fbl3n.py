@@ -34,23 +34,22 @@ st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/imag
 # st.header('Tax Package Model')
 st.subheader('Related Party Operations validations')
 
+def load_data(uploaded_file):
+    FBL3N_classified = pd.read_excel(uploades_FBL3N_classified, engine='openpyxl', sheet_name='FBL3N', 
+                               dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str,
+                                        'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
+    return FBL3N_classified
+
+
 # st.divider()
 uploades_FBL3N_classified = st.sidebar.file_uploader("Upload FBL3N classified", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.divider()
 
-if uploades_FBL3N_classified:
-    FBL3N_classified = pd.read_excel(uploades_FBL3N_classified, engine='openpyxl', sheet_name='FBL3N', 
-                               dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Text': str,
-                                        'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
-    # FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
-    #             dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Document Number': str,
-    #                     'Text': str, 'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
-    # accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
-    #             dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
-    # subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
-    #               dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
-    #                      'Code_RP': str, 'Code_Desc_RP': str,})
+if 'FBL3N_classified' not in st.session_state:
+    st.session_state.FBL3N_classified = None
 
+if st.session_state.FBL3N_classified is None and uploades_FBL3N_classified is not None:
+    st.session_state.FBL3N_classified = load_data(uploades_FBL3N_classified)
 
     company_codes = st.sidebar.selectbox("Select Company Codes", FBL3N_classified['Company Code'].unique())
     
