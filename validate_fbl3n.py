@@ -54,8 +54,8 @@ if 'FBL3N_classified' not in st.session_state:
 if st.session_state.FBL3N_classified is None and uploaded_FBL3N_classified is not None:
     st.session_state.FBL3N_classified = load_FBL3N(uploaded_FBL3N_classified)
 
-if st.session_state.FBL3N_full is not None:
-    col1, col2, col3 = st.columns(3)
+if st.session_state.FBL3N_classified is not None:
+    col1, col2 = st.columns(2)
 
     # Agregar un st.selectbox para seleccionar 'Company Code'
     with col1:
