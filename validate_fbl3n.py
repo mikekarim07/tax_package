@@ -80,24 +80,9 @@ if file is not None:
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_FBL3N_classified)
     st.dataframe(merged_FBL3N_classified)
-    edited_df = st.data_editor(merged_FBL3N_classified,
-    # column_config={
-    #     "command": "Streamlit Command",
-    #     "rating": st.column_config.NumberColumn(
-    #         "Your rating",
-    #         help="How much do you like this command (1-5)?",
-    #         min_value=1,
-    #         max_value=5,
-    #         step=1,
-    #         format="%d ⭐",
-    #     ),
-    #     "is_widget": "Widget ?",
-    # },
-    disabled=["Related Party sell", "Company Code sell"],
-    hide_index=True,
-)
-
-
+    edited_df = st.data_editor(merged_FBL3N_classified, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
+    FBL3N_classified.update(edited_df)
+    st.dataframe(FBL3N_classified)
 
     # pyg_html = pyg.walk(filtered_FBL3N_classified, return_html=True)
     # components.html = (pyg_html)
