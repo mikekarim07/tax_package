@@ -46,7 +46,7 @@ def load_data(file):
 
 upload_FBL3N = st.file_uploader("Upload the FBL3N file categorized for validation", type=["xlsx"])
 
-if file is not None:
+if upload_FBL3N is not None:
     # Cargar el DataFrame desde el archivo Excel
     FBL3N_classified = load_data(upload_FBL3N)
 
