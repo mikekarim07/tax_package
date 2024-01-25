@@ -58,11 +58,11 @@ if file is not None:
     if not company_code_filter and not related_party_filter:
             # Mostrar todo el DataFrame sin filtros
             st.dataframe(FBL3N_classified)
-        else:
-            # Aplicar filtros si hay selecciones
-            filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter)) & (FBL3N_classified['Related Party'].isin(related_party_filter))]
-            # Mostrar el DataFrame filtrado
-            st.dataframe(filtered_FBL3N_classified)
+    else:
+        # Aplicar filtros si hay selecciones
+        filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter)) & (FBL3N_classified['Related Party'].isin(related_party_filter))]
+        # Mostrar el DataFrame filtrado
+        st.dataframe(filtered_FBL3N_classified)
 
 
 
