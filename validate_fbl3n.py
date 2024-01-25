@@ -71,7 +71,7 @@ if file is not None:
     # filtered_FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'].isin(company_code_filter)]
     filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter)) & (FBL3N_classified['Related Party'].isin(related_party_filter))]
     # merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=(' sell', ' purchase'))
-    merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=(' sell', ' purchase'))
+    merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' purchase'))
     st.write(merged_FBL3N_classified.columns)
     merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code sell'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code purchase'].isin(related_party_filter))]
     
