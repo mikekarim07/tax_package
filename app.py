@@ -388,7 +388,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         label="Download FBL3N Classified excel file",
         data=excel_buffer.getvalue(),
         file_name=file_name_fbl3n,  # Puedes cambiar el nombre del archivo según tus necesidades
-        key='download_button'
+        key='download_button_fbl3n'
     )
     
     excel_buffer_zla = BytesIO()
@@ -398,5 +398,5 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         label="Download ZLAAUDIT Grouped File",
         data=excel_buffer_zla.getvalue(),
         file_name=file_name_zlaaudit,  # Puedes cambiar el nombre del archivo según tus necesidades
-        key='download_button'
+        key='download_button_zlaaudit'
     )
