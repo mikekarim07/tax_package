@@ -74,11 +74,11 @@ if file is not None:
     merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' purchase'))
     st.write(merged_FBL3N_classified.columns)
     # merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code sell'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code purchase'].isin(related_party_filter))]
-    merged_FBL3N_classified_filtered= merged_FBL3N_classified[(merged_FBL3N_classified['Company Code'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code purchase'].isin(related_party_filter))]
+    merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code purchase'].isin(related_party_filter))]
     
     # columns_to_eliminate = ['CONCAT sell', 'Subcode 2 sell', 'Document Date sell', 'Amount in local currency sell', 'Local Currency sell', 'Key_1 sell', 'Key_2 sell', 'CONCAT purchase', 'Document Date purchase', 'Amount in local currency purchase', 'Local Currency purchase', 'Key_1 purchase', 'Key_2 purchase', 'Subcode 2 purchase']
     columns_to_eliminate = ['Subcode 2', 'Document Date', 'Amount in local currency', 'Local Currency', 'Key_1', 'Key_2', 'CONCAT purchase', 'Document Date purchase', 'Amount in local currency purchase', 'Local Currency purchase', 'Key_1 purchase', 'Key_2 purchase', 'Subcode 2 purchase']
-    merged_FBL3N_classified_filtered = merged_FBL3N_classified_filtered.drop(columns=columns_to_eliminate)
+    merged_FBL3N_classified = merged_FBL3N_classified.drop(columns=columns_to_eliminate)
     
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_FBL3N_classified)
