@@ -44,27 +44,35 @@ def load_data(file):
     return FBL3N_classified
 
 
-# Cargar el archivo Excel
-file = st.file_uploader("Upload the FBL3N file categorized for validation", type=["xlsx"])
+upload_FBL3N = st.file_uploader("Upload the FBL3N file categorized for validation", type=["xlsx"])
 
 if file is not None:
     # Cargar el DataFrame desde el archivo Excel
-    FBL3N_classified = load_data(file)
+    FBL3N_classified = load_data(upload_FBL3N)
 
-    # # Obtener los valores únicos de las columnas "Company Code" y "Related Party"
-    # unique_company_codes = FBL3N_classified['Company Code'].unique()
-    # unique_related_parties = FBL3N_classified['Related Party'].unique()
-
-    # Filtros
+    #----- Create Company Code Filters
     company_code_filter = st.sidebar.multiselect("Seleccionar Company Code:", FBL3N_classified['Company Code'].unique())
     related_party_filter = st.sidebar.multiselect("Seleccionar Related Party:", FBL3N_classified['Related Party'].unique())
-    st.write(company_code_filter)
     
-    # Aplicar filtros
-    # filtered_FBL3N_classified = apply_filters(FBL3N_classified, company_code_filter, related_party_filter)
-    # filtered_FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'].isin(company_code_filter)]
+
+    if not company_code_filter and not related_party_filter:
+            # Mostrar todo el DataFrame sin filtros
+            st.dataframe(FBL3N_classified)
+        else:
+            # Aplicar filtros si hay selecciones
+            filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter)) & (FBL3N_classified['Related Party'].isin(related_party_filter))]
+            # Mostrar el DataFrame filtrado
+            st.dataframe(filtered_FBL3N_classified)
+
+
+
+
     
-    filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter)) & (FBL3N_classified['Related Party'].isin(related_party_filter))]
+    # # Aplicar filtros
+    # # filtered_FBL3N_classified = apply_filters(FBL3N_classified, company_code_filter, related_party_filter)
+    # # filtered_FBL3N_classified = FBL3N_classified[FBL3N_classified['Company Code'].isin(company_code_filter)]
+    
+    # filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter)) & (FBL3N_classified['Related Party'].isin(related_party_filter))]
     # merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=(' sell', ' purchase'))
     merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' purchase'))
     st.write(merged_FBL3N_classified.columns)
