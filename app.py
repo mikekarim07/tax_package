@@ -54,10 +54,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
                 dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Document Number': str,
                         'Text': str, 'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
 
-    # ZLAAUDIT = pd.read_excel(uploaded_ZLAAUDIT, engine='openpyxl', sheet_name='ZLAAUDIT',
-    #             dtype = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document Number': str, 'Business Area': str,
-    #                     'Document type': str, 'Tax Code': str, 'Line item': str, 'Posting Key': str, 'Account': str, 'Assignment': str,
-    #                     'User Name': str, 'Reference': str, 'Document Header Text': str, 'Currency': str, 'Local Currency': str,})
+    ZLAAUDIT = pd.read_excel(uploaded_ZLAAUDIT, engine='openpyxl', sheet_name='ZLAAUDIT',
+                dtype = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document Number': str, 'Business Area': str,
+                        'Document type': str, 'Tax Code': str, 'Line item': str, 'Posting Key': str, 'Account': str, 'Assignment': str,
+                        'User Name': str, 'Reference': str, 'Document Header Text': str, 'Currency': str, 'Local Currency': str,})
 
     accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
                 dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
@@ -368,10 +368,18 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     processing_time02 = end_time02 - start_time02
     processing_time_formatted02 = "{:.4f}".format(processing_time02)
     st.info(f'Subcodes has been assigned to the new FBL3N dataset according to the Machine Learning Model in: {processing_time_formatted02} seconds')
+
+    #----- ZLAAUDIT Agrupado
+    Sdos_Fin_Accounts = saldos_financieros['Debit Account'].unique()
+    ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['Account'].isin(Sdos_Fin_Accounts)]
+    ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(['Company Code', 'Document Number', 'Account', 'Posting Key', 'Currency'])['Amount in foreign cur.'].sum().reset_index()
+
+    
 #--------------
 
     current_datetime = datetime.now().strftime('%y%m%d_%H%M')
-    file_name = f'FBL3N_{current_datetime}.xlsx'
+    file_name_fbl3n = f'FBL3N_Categorized_{current_datetime}.xlsx'
+    file_name_zlaaudit = f'ZLAAUDIT_Grouped_{current_datetime}.xlsx'
     
     excel_buffer = BytesIO()
     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
@@ -379,6 +387,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     st.download_button(
         label="Download FBL3N Classified excel file",
         data=excel_buffer.getvalue(),
-        file_name=file_name,  # Puedes cambiar el nombre del archivo según tus necesidades
+        file_name=file_name_fbl3n,  # Puedes cambiar el nombre del archivo según tus necesidades
+        key='download_button'
+    )
+    
+    excel_buffer_zla = BytesIO()
+    ZLAAUDIT_grouped.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT')
+# Descargar el archivo Excel en Streamlit
+    st.download_button(
+        label="Download ZLAAUDIT Grouped File",
+        data=excel_buffer_zla.getvalue(),
+        file_name=file_name_zlaaudit,  # Puedes cambiar el nombre del archivo según tus necesidades
         key='download_button'
     )
