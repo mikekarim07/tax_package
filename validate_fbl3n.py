@@ -80,7 +80,22 @@ if file is not None:
     # Mostrar el DataFrame filtrado
     st.dataframe(filtered_FBL3N_classified)
     st.dataframe(merged_FBL3N_classified)
-    st.dataframe(merged_FBL3N_classified, show_header=True, show_index=True, header_cell_color= "blue", header_font_color="white", rows_font_color="black", even_row_cell_color="white", odd_row_cell_color="lightblue")
+    edited_df = st.data_editor(merged_FBL3N_classified,
+    # column_config={
+    #     "command": "Streamlit Command",
+    #     "rating": st.column_config.NumberColumn(
+    #         "Your rating",
+    #         help="How much do you like this command (1-5)?",
+    #         min_value=1,
+    #         max_value=5,
+    #         step=1,
+    #         format="%d ⭐",
+    #     ),
+    #     "is_widget": "Widget ?",
+    # },
+    disabled=["Related Party sell", "Company Code sell"],
+    hide_index=True,
+)
 
 
 
