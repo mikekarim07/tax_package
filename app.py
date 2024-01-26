@@ -373,7 +373,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     Sdos_Fin_Accounts = saldos_financieros['Debit Account'].unique()
     ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['Account'].isin(Sdos_Fin_Accounts)]
     # ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(['Company Code', 'Document Number', 'Account', 'Posting Key', 'Currency', 'Local Currency'])[['Amount in foreign cur.', 'Debit/credit amount']].sum().reset_index()
-    ZLAAUDIT_grouped = ZLAAUDIT_grouped.groupby(['Company Code', 'Document Number', 'Account', 'Posting Key', 'Currency', 'Local Currency']).agg({'Amount in foreign cur.':'sum','Debit/credit amount':'sum'})
+    ZLAAUDIT_grouped = pd.dataframe(ZLAAUDIT_grouped.groupby(['Company Code', 'Document Number', 'Account', 'Posting Key', 'Currency', 'Local Currency'])[['Amount in foreign cur.', 'Debit/credit amount']].sum())
 
     
 #--------------
