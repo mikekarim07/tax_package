@@ -379,9 +379,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         saldos_financieros = pd.read_excel(uploaded_SdosFin, engine='openpyxl', sheet_name='SaldosFin_MX',
                       dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
                              'Type': str, 'Balance': str,})
-        # Sdos_Fin_Accounts = saldos_financieros['Concat'].unique()
-        # ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)]
-        # ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
+        Sdos_Fin_Accounts = saldos_financieros['Concat'].unique()
+        ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)]
+        ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
 
 
         #Cuentas unicas de Impuestos en Saldos Financieros
@@ -407,6 +407,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     
     excel_buffer = BytesIO()
     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
+    ZLAAUDIT_grouped_tax.to_excel(excel_buffer, index=False, sheet_name='ZLAAUDIT_Tax')
 # Descargar el archivo Excel en Streamlit
     st.download_button(
         label="Download FBL3N Classified excel file",
@@ -417,6 +418,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     
     excel_buffer_zla = BytesIO()
     ZLAAUDIT_grouped.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT')
+    
 # Descargar el archivo Excel en Streamlit
     st.download_button(
         label="Download ZLAAUDIT Grouped File",
