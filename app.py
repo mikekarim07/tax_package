@@ -379,10 +379,23 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
         saldos_financieros = pd.read_excel(uploaded_SdosFin, engine='openpyxl', sheet_name='SaldosFin_MX',
                       dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
                              'Type': str, 'Balance': str,})
-        Sdos_Fin_Accounts = saldos_financieros['Concat'].unique()
-        ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)]
-        ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
+        # Sdos_Fin_Accounts = saldos_financieros['Concat'].unique()
+        # ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)]
+        # ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
 
+
+        #Cuentas unicas de Impuestos en Saldos Financieros
+        Sdos_Fin_Accounts_tax = saldos_financieros[['Concat', 'Type']].drop_duplicates()
+        Sdos_Fin_Accounts_tax = Sdos_Fin_Accounts_tax[Sdos_Fin_Accounts_tax ['Type'] == 'Cuentas de Impuestos']
+        ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts_tax['Concat'])]
+        ZLAAUDIT_filtrado_tax = ZLAAUDIT_filtrado_tax.merge(Sdos_Fin_Accounts_tax, left_on="CONCAT_2", right_on='Concat', how='left')
+        ZLAAUDIT_grouped_tax = ZLAAUDIT_filtrado_tax.groupby(by=['CONCAT', 'Account', 'Local Currency', 'Type'], as_index=False).agg({'Debit/credit amount': 'sum'})
+        FBL3N_new = FBL3N_new.merge(ZLAAUDIT_grouped_tax, left_on="CONCAT", right_on='CONCAT', how='left', suffixes=('', '_taxes'))
+        delete_colsfromzla = ['Account_taxes', 'Local Currency_taxes', 'Type']
+        FBL3N_new = FBL3N_new.drop(columns=delete_colsfromzla)
+        FBL3N_new.rename(columns={'Debit/credit amount': 'Taxes'}, inplace=True)
+        
+        
     
 #--------------
 
