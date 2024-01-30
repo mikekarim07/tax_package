@@ -407,7 +407,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     
     excel_buffer = BytesIO()
     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
-    ZLAAUDIT_grouped_tax.to_excel(excel_buffer, index=False, sheet_name='ZLAAUDIT_Tax')
+    # ZLAAUDIT_grouped_tax.to_excel(excel_buffer, index=False, sheet_name='ZLAAUDIT_Tax')
 # Descargar el archivo Excel en Streamlit
     st.download_button(
         label="Download FBL3N Classified excel file",
