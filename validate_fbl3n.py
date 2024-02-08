@@ -52,7 +52,7 @@ if upload_FBL3N is not None:
 
     #----- Create Company Code Filters
     # company_code_filter = st.sidebar.multiselect("Select Company Code:", FBL3N_classified['Company Code'].unique())
-    company_code_filter = st.sidebar.seletbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    company_code_filter = st.sidebar.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
     
     if not company_code_filter:
         # Mostrar todo el DataFrame sin filtros
