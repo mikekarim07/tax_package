@@ -55,7 +55,7 @@ if upload_FBL3N is not None:
     # related_party_filter = st.sidebar.multiselect("Seleccionar Related Party:", FBL3N_classified['Related Party'].unique())
     
 
-    if not company_code_filter and not related_party_filter:
+    if not company_code_filter:
             # Mostrar todo el DataFrame sin filtros
             st.dataframe(FBL3N_classified)
     else:
