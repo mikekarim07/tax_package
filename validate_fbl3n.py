@@ -55,37 +55,38 @@ if upload_FBL3N is not None:
     
     if not company_code_filter:
         # Mostrar todo el DataFrame sin filtros
-        FBL3N_classified
-        # st.write('FBL3N unfiltered')
-        # st.dataframe(FBL3N_classified)
+        FBL3N_merged_unfiltered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
+        st.write('FBL3N merged & unfiltered')
+        st.dataframe(FBL3N_classified_unfiltered)
     else:
-        FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter))]
+        FBL3N_merged_filtered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
+        FBL3N_merged_filtered = FBL3N_merged_filtered[(FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) & (FBL3N_merged_filtered['Company Code'] == None) & (FBL3N_merged_filtered['Related Party purchase'].isin(company_code_filter)) & (FBL3N_merged_filtered['Related Party purchase'] == None)]
         # Mostrar el DataFrame filtrado
-        # st.write('FBL3N filtered')
-        # st.dataframe(filtered_FBL3N_classified)
+        st.write('FBL3N merged & filtered')
+        st.dataframe(FBL3N_merged_filtered)
 
-    merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
-    # st.write(merged_FBL3N_classified.columns)
-    st.write('FBL3N merged unfiltered')
-    st.dataframe(merged_FBL3N_classified)
+    # merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
+    # # st.write(merged_FBL3N_classified.columns)
+    # st.write('FBL3N merged unfiltered')
+    # st.dataframe(merged_FBL3N_classified)
     
-    merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code'] == None) & (merged_FBL3N_classified['Related Party purchase'].isin(company_code_filter))]
+    # merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code'] == None) & (merged_FBL3N_classified['Related Party purchase'].isin(company_code_filter))]
     
     
-    columns_to_eliminate = ['Subcode 2', 'Document Date', 'Amount in local currency', 'Local Currency', 'Key_1', 'Key_2', 'CONCAT expense', 'Document Date expense', 'Amount in local currency expense', 'Local Currency expense', 'Key_1 expense', 'Key_2 expense', 'Subcode 2 expense']
-    merged_FBL3N_classified = merged_FBL3N_classified.drop(columns=columns_to_eliminate)
+    # columns_to_eliminate = ['Subcode 2', 'Document Date', 'Amount in local currency', 'Local Currency', 'Key_1', 'Key_2', 'CONCAT expense', 'Document Date expense', 'Amount in local currency expense', 'Local Currency expense', 'Key_1 expense', 'Key_2 expense', 'Subcode 2 expense']
+    # merged_FBL3N_classified = merged_FBL3N_classified.drop(columns=columns_to_eliminate)
     
-    # Mostrar el DataFrame filtrado
-    st.write('FBL3N filtered')
-    st.dataframe(filtered_FBL3N_classified)
-    st.write('FBL3N merged filtered')
-    st.dataframe(merged_FBL3N_classified)
-    edited_df = st.data_editor(merged_FBL3N_classified, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
-    FBL3N_classified.update(merged_FBL3N_classified)
-    st.dataframe(FBL3N_classified)
+    # # Mostrar el DataFrame filtrado
+    # st.write('FBL3N filtered')
+    # st.dataframe(filtered_FBL3N_classified)
+    # st.write('FBL3N merged filtered')
+    # st.dataframe(merged_FBL3N_classified)
+    # edited_df = st.data_editor(merged_FBL3N_classified, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
+    # FBL3N_classified.update(merged_FBL3N_classified)
+    # st.dataframe(FBL3N_classified)
 
-    # pyg_html = pyg.walk(filtered_FBL3N_classified, return_html=True)
-    # components.html = (pyg_html)
+    # # pyg_html = pyg.walk(filtered_FBL3N_classified, return_html=True)
+    # # components.html = (pyg_html)
     
 
 
