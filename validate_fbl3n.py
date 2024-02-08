@@ -44,7 +44,7 @@ def load_data(file):
     return FBL3N_classified
 
 
-upload_FBL3N = st.file_uploader("Upload the FBL3N file categorized for validation", type=["xlsx"])
+upload_FBL3N = st.sidebar.file_uploader("Upload the FBL3N file categorized for validation", type=["xlsx"])
 
 if upload_FBL3N is not None:
     # Cargar el DataFrame desde el archivo Excel
@@ -52,7 +52,7 @@ if upload_FBL3N is not None:
 
     #----- Create Company Code Filters
     company_code_filter = st.sidebar.multiselect("Seleccionar Company Code:", FBL3N_classified['Company Code'].unique())
-    related_party_filter = st.sidebar.multiselect("Seleccionar Related Party:", FBL3N_classified['Related Party'].unique())
+    # related_party_filter = st.sidebar.multiselect("Seleccionar Related Party:", FBL3N_classified['Related Party'].unique())
     
 
     if not company_code_filter and not related_party_filter:
@@ -61,6 +61,7 @@ if upload_FBL3N is not None:
     else:
         # Aplicar filtros si hay selecciones
         filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter)) & (FBL3N_classified['Related Party'].isin(related_party_filter))]
+        filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter))]
         # Mostrar el DataFrame filtrado
         st.dataframe(filtered_FBL3N_classified)
 
