@@ -75,6 +75,7 @@ if upload_FBL3N is not None:
         # FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'].isin(company_code_filter)) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
         FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'] == company_code_filter) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'] == company_code_filter) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
         # FBL3N_merged_filtered = [[
+        FBL3N_merged_filtered = FBL3N_merged_filtered.fillna('')
         # Apply conditional formatting using the style.apply() function
         styled_df = FBL3N_merged_filtered.style.apply(lambda x: x.apply(highlight_rows, axis=1), axis=None)
         
