@@ -38,13 +38,12 @@ st.subheader('Related Party Operations validations')
 
 
 def highlight_rows(val):
-    if FBL3N_merged_filtered['Subcode'] == 0:
+    if val['Subcode expense'] == 0:
         return 'background-color: yellow'
-    elif FBL3N_merged_filtered['Subcode'] == 300:
+    elif val['Subcode expense'] == 300:
         return 'background-color: lightgreen'
     else:
         return ''
-
 
 
 
