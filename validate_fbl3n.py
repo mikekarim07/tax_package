@@ -77,6 +77,7 @@ if upload_FBL3N is not None:
     # merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=(' sell', ' purchase'))
     merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' purchase'))
     st.write(merged_FBL3N_classified.columns)
+    st.write('FBL3N merged unfiltered')
     st.dataframe(merged_FBL3N_classified)
     # merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code sell'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code purchase'].isin(related_party_filter))]
     merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code'].isin(company_code_filter)) & (merged_FBL3N_classified['Related Party purchase'].isin(company_code_filter))]
@@ -88,7 +89,9 @@ if upload_FBL3N is not None:
     merged_FBL3N_classified = merged_FBL3N_classified.drop(columns=columns_to_eliminate)
     
     # Mostrar el DataFrame filtrado
+    st.write('FBL3N filtered')
     st.dataframe(filtered_FBL3N_classified)
+    st.write('FBL3N merged filtered')
     st.dataframe(merged_FBL3N_classified)
     edited_df = st.data_editor(merged_FBL3N_classified, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
     FBL3N_classified.update(merged_FBL3N_classified)
