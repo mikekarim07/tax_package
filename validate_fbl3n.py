@@ -54,15 +54,17 @@ if upload_FBL3N is not None:
     company_code_filter = st.sidebar.multiselect("Seleccionar Company Code:", FBL3N_classified['Company Code'].unique())
     
     if not company_code_filter:
-            # Mostrar todo el DataFrame sin filtros
-            st.dataframe(FBL3N_classified)
+        # Mostrar todo el DataFrame sin filtros
+        st.write('FBL3N unfiltered')
+        st.dataframe(FBL3N_classified)
     else:
         filtered_FBL3N_classified = FBL3N_classified[(FBL3N_classified['Company Code'].isin(company_code_filter))]
         # Mostrar el DataFrame filtrado
+        st.write('FBL3N filtered')
         st.dataframe(filtered_FBL3N_classified)
 
     merged_FBL3N_classified = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
-    st.write(merged_FBL3N_classified.columns)
+    # st.write(merged_FBL3N_classified.columns)
     st.write('FBL3N merged unfiltered')
     st.dataframe(merged_FBL3N_classified)
     
