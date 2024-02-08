@@ -60,10 +60,11 @@ if upload_FBL3N is not None:
         st.dataframe(FBL3N_merged_unfiltered)
     else:
         FBL3N_merged_filtered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
-        FBL3N_merged_filtered = FBL3N_merged_filtered[(FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) & (FBL3N_merged_filtered['Company Code'] == None) & (FBL3N_merged_filtered['Related Party purchase'].isin(company_code_filter)) & (FBL3N_merged_filtered['Related Party purchase'] == None)]
+        FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party purchase'].isin(company_code_filter)) | (FBL3N_merged_filtered['Related Party purchase'].isna()))]
         # Mostrar el DataFrame filtrado
         st.write('FBL3N merged & filtered')
         st.dataframe(FBL3N_merged_filtered)
+
 
 
 
