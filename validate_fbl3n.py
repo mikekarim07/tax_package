@@ -66,7 +66,7 @@ if upload_FBL3N is not None:
     st.write('FBL3N merged unfiltered')
     st.dataframe(merged_FBL3N_classified)
     
-    merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code'].isin(company_code_filter)) & merged_FBL3N_classified['Company Code'] == None) & (merged_FBL3N_classified['Related Party purchase'].isin(company_code_filter))]
+    merged_FBL3N_classified = merged_FBL3N_classified[(merged_FBL3N_classified['Company Code'].isin(company_code_filter)) & (merged_FBL3N_classified['Company Code'] == None) & (merged_FBL3N_classified['Related Party purchase'].isin(company_code_filter))]
     
     
     columns_to_eliminate = ['Subcode 2', 'Document Date', 'Amount in local currency', 'Local Currency', 'Key_1', 'Key_2', 'CONCAT expense', 'Document Date expense', 'Amount in local currency expense', 'Local Currency expense', 'Key_1 expense', 'Key_2 expense', 'Subcode 2 expense']
