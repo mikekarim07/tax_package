@@ -51,7 +51,8 @@ if upload_FBL3N is not None:
     FBL3N_classified = load_data(upload_FBL3N)
 
     #----- Create Company Code Filters
-    company_code_filter = st.sidebar.multiselect("Seleccionar Company Code:", FBL3N_classified['Company Code'].unique())
+    # company_code_filter = st.sidebar.multiselect("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    company_code_filter = st.sidebar.seletbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
     
     if not company_code_filter:
         # Mostrar todo el DataFrame sin filtros
@@ -60,7 +61,8 @@ if upload_FBL3N is not None:
         st.dataframe(FBL3N_merged_unfiltered)
     else:
         FBL3N_merged_filtered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
-        FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'].isin(company_code_filter)) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
+        # FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'].isin(company_code_filter)) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
+        FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'] == company_code_filter) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'] == company_code_filter) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
         # Mostrar el DataFrame filtrado
         st.write('FBL3N merged & filtered')
         st.dataframe(FBL3N_merged_filtered)
