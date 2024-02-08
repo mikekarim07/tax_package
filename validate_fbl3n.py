@@ -77,11 +77,11 @@ if upload_FBL3N is not None:
         # FBL3N_merged_filtered = [[
         FBL3N_merged_filtered = FBL3N_merged_filtered.fillna('')
         # Apply conditional formatting using the style.apply() function
-        styled_df = FBL3N_merged_filtered.style.apply(lambda x: x.apply(highlight_rows, axis=1), axis=None)
+        # styled_df = FBL3N_merged_filtered.style.apply(lambda x: x.apply(highlight_rows, axis=1), axis=None)
         
         # Display the styled DataFrame in Streamlit
-        st.write('FBL3N merged & filtered with conditinal formatting')
-        st.dataframe(styled_df, unsafe_allow_html=True)
+        # st.write('FBL3N merged & filtered with conditinal formatting')
+        # st.dataframe(styled_df, unsafe_allow_html=True)
 
 
         edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
