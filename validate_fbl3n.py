@@ -70,8 +70,10 @@ if upload_FBL3N is not None:
     doc_num_filter = st.text_input("Introduce the Document number you want to see the information")
     CC_info = FBL3N_merged_filtered[FBL3N_merged_filtered['Document Number'] == doc_num_filter]
     CC_info = CC_info[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Posting period']]
+    st.caption(CC_info)
+    st.json(CC_info)
     st.write(CC_info)
-
+    st.magic(CC_info)
     
     st.write('Dataframe actualizado')
     st.dataframe(FBL3N_merged)
