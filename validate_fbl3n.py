@@ -62,9 +62,12 @@ if upload_FBL3N is not None:
     FBL3N_classified = load_data(upload_FBL3N)
     FBL3N_merged = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
     edited_df = st.data_editor(FBL3N_merged, disabled=["Related Party sell", "Company Code sell"], hide_index=False)
-    FBL3N_merged.update(FBL3N_merged)
+    FBL3N_merged.update(edited_df)
     st.write('Dataframe actualizado')
     st.dataframe(FBL3N_merged)
+
+
+
     # #----- Create Company Code Filters
     # # company_code_filter = st.sidebar.multiselect("Select Company Code:", FBL3N_classified['Company Code'].unique())
     # company_code_filter = st.sidebar.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
