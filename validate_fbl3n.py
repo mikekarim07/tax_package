@@ -67,13 +67,17 @@ if upload_FBL3N is not None and uploaded_masters is not None:
     #----- Cargar el DataFrame desde el archivo Excel
     FBL3N_classified = load_data(upload_FBL3N)
     subcodes = load_data1(uploaded_masters)
+    
     #----- Crear un nuevo dataframe con base en el Dataframe original (FBL3N_classified) que se cruce a si mismo con base en las columnas Key_1 y Key_2
     FBL3N_merged = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
+    
     #----- Crear un selectbox para realizar un filtro con base en el company code
-    company_code_filter = st.sidebar.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    company_code_filter = st.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    
     #----- Crear un nuevo dataframe con base en el dataframe previo y cruzado con el filtro aplicado
     FBL3N_merged_filtered = FBL3N_merged[((FBL3N_merged['Company Code'] == company_code_filter) | (FBL3N_merged['Company Code'].isna())) & ((FBL3N_merged['Related Party expense'] == company_code_filter) | (FBL3N_merged['Related Party expense'].isna()))]
     FBL3N_merged_filtered = FBL3N_merged_filtered.merge(subcodes, left_on="Subcode", right_on='Code', how='left')
+    
     #----- Funcion para analizar si la conciliacion entre datos es correcta en cuanto a subcodes se refiere
     def sc_ok(row):
         if row['Subcode expense'] == row['Code_RP']:
@@ -81,6 +85,7 @@ if upload_FBL3N is not None and uploaded_masters is not None:
         else:
             return 'Not Ok'
     FBL3N_merged_filtered['Validation'] = FBL3N_merged_filtered.apply(sc_ok, axis=1)
+    
     #----- Crear checkbox o toggle para filtrar por columna validation
     filter_toggle = st.toggle("Filter only Not Matching rows", value=False)
     
@@ -92,9 +97,6 @@ if upload_FBL3N is not None and uploaded_masters is not None:
         # Display all records if toggle is off
         FBL3N_merged_filtered = FBL3N_merged_filtered
 
-
-
-    
     edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=False)
     FBL3N_merged.update(edited_df)
     col1, col2 = st.columns(2)
