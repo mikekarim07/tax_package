@@ -72,7 +72,12 @@ if upload_FBL3N is not None and uploaded_masters is not None:
     FBL3N_merged = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
     
     #----- Crear un selectbox para realizar un filtro con base en el company code
-    company_code_filter = st.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    col1, col2 = st.columns([.2,.8])
+    with col1:
+        company_code_filter = st.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    with col2:
+        st.text()
+    
     
     #----- Crear un nuevo dataframe con base en el dataframe previo y cruzado con el filtro aplicado
     FBL3N_merged_filtered = FBL3N_merged[((FBL3N_merged['Company Code'] == company_code_filter) | (FBL3N_merged['Company Code'].isna())) & ((FBL3N_merged['Related Party expense'] == company_code_filter) | (FBL3N_merged['Related Party expense'].isna()))]
