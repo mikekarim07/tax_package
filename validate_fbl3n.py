@@ -81,8 +81,8 @@ if upload_FBL3N is not None and uploaded_masters is not None:
     with col2:
        st.text("Introduce the Document number you want to see the information")
            
-    CC_info = FBL3N_merged_filtered[FBL3N_merged_filtered['Document Number'] == doc_num_filter]
-    RP_info = FBL3N_merged_filtered[FBL3N_merged_filtered['Document Number'] == doc_num_filter]
+    CC_info = edited_df[edited_df['Document Number'] == doc_num_filter]
+    RP_info = edited_df[edited_df['Document Number'] == doc_num_filter]
     CC_info = CC_info[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Posting period']].T
     RP_info = RP_info[['CONCAT expense', 'Subcode expense', 'Related Party expense', 'Company Code expense', 'Document Number expense', 'Document Type expense', 'Account expense', 'Text expense', 'Reference expense', 'Document Header Text expense', 'User Name expense', 'Posting period expense']].T    
     col1, col2 = st.columns(2)
