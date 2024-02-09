@@ -60,37 +60,34 @@ upload_FBL3N = st.sidebar.file_uploader("Upload the FBL3N file categorized for v
 if upload_FBL3N is not None:
     # Cargar el DataFrame desde el archivo Excel
     FBL3N_classified = load_data(upload_FBL3N)
-
-    #----- Create Company Code Filters
-    # company_code_filter = st.sidebar.multiselect("Select Company Code:", FBL3N_classified['Company Code'].unique())
-    company_code_filter = st.sidebar.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    FBL3N_merged = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
+    edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
+    FBL3N_merged.update(FBL3N_merged)
+    st.write('Dataframe actualizado')
+    st.dataframe(FBL3N_merged)
+    # #----- Create Company Code Filters
+    # # company_code_filter = st.sidebar.multiselect("Select Company Code:", FBL3N_classified['Company Code'].unique())
+    # company_code_filter = st.sidebar.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
     
-    if not company_code_filter:
-        # Mostrar todo el DataFrame sin filtros
-        FBL3N_merged_unfiltered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
-        st.write('FBL3N merged & unfiltered')
-        st.dataframe(FBL3N_merged_unfiltered)
-    else:
-        FBL3N_merged_filtered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
-        # FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'].isin(company_code_filter)) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
-        FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'] == company_code_filter) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'] == company_code_filter) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
-        # FBL3N_merged_filtered = [[
-        FBL3N_merged_filtered = FBL3N_merged_filtered.fillna('')
-        # Apply conditional formatting using the style.apply() function
-        # styled_df = FBL3N_merged_filtered.style.apply(lambda x: x.apply(highlight_rows, axis=1), axis=None)
+    # if not company_code_filter:
+    #     # Mostrar todo el DataFrame sin filtros
+    #     FBL3N_merged_unfiltered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
+    #     st.write('FBL3N merged & unfiltered')
+    #     st.dataframe(FBL3N_merged_unfiltered)
+    # else:
+    #     FBL3N_merged_filtered = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
+    #     # FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'].isin(company_code_filter)) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'].isin(company_code_filter)) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
+    #     FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Company Code'] == company_code_filter) | (FBL3N_merged_filtered['Company Code'].isna())) & ((FBL3N_merged_filtered['Related Party expense'] == company_code_filter) | (FBL3N_merged_filtered['Related Party expense'].isna()))]
+    #     # FBL3N_merged_filtered = [[
+    #     FBL3N_merged_filtered = FBL3N_merged_filtered.fillna('')
         
-        # Display the styled DataFrame in Streamlit
-        # st.write('FBL3N merged & filtered with conditinal formatting')
-        # st.dataframe(styled_df, unsafe_allow_html=True)
-
-
-        edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
-        FBL3N_classified.update(merged_FBL3N_classified)
+    #     edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
+    #     FBL3N_classified.update(merged_FBL3N_classified)
 
         
-        # Mostrar el DataFrame filtrado
-        st.write('FBL3N merged & filtered')
-        st.dataframe(FBL3N_merged_filtered)
+    #     # Mostrar el DataFrame filtrado
+    #     st.write('FBL3N merged & filtered')
+    #     st.dataframe(FBL3N_merged_filtered)
 
 
 
