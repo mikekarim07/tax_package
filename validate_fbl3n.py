@@ -80,7 +80,7 @@ if upload_FBL3N is not None:
     col1, col2 = st.columns(2)
     with col1:
         st.write(CC_info)
-        st.write({['CONCAT'],['Subcode']})
+        st.write(CC_info[['CONCAT', 'Subcode']])
     with col2:
         st.write(RP_info)
     
