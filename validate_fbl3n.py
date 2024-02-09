@@ -61,7 +61,7 @@ if upload_FBL3N is not None:
     # Cargar el DataFrame desde el archivo Excel
     FBL3N_classified = load_data(upload_FBL3N)
     FBL3N_merged = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
-    edited_df = st.data_editor(FBL3N_merged, disabled=["Related Party sell", "Company Code sell"], hide_index=True)
+    edited_df = st.data_editor(FBL3N_merged, disabled=["Related Party sell", "Company Code sell"], hide_index=False)
     FBL3N_merged.update(FBL3N_merged)
     st.write('Dataframe actualizado')
     st.dataframe(FBL3N_merged)
