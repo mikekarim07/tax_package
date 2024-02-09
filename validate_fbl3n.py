@@ -101,7 +101,7 @@ if upload_FBL3N is not None and uploaded_masters is not None:
     with col1:
        doc_num_filter = st.text_input("Introduce the Document number you want to see the information")
     with col2:
-       st.text("Introduce the Document number you want to see the information")
+       st.write("")
            
     CC_info = edited_df[edited_df['Document Number'] == doc_num_filter]
     RP_info = edited_df[edited_df['Document Number'] == doc_num_filter]
