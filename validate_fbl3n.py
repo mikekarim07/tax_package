@@ -67,13 +67,25 @@ if upload_FBL3N is not None:
     FBL3N_merged_filtered = FBL3N_merged[((FBL3N_merged['Company Code'] == company_code_filter) | (FBL3N_merged['Company Code'].isna())) & ((FBL3N_merged['Related Party expense'] == company_code_filter) | (FBL3N_merged['Related Party expense'].isna()))]
     edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=False)
     FBL3N_merged.update(edited_df)
-    doc_num_filter = st.text_input("Introduce the Document number you want to see the information")
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+       doc_num_filter = st.text_input("Introduce the Document number you want to see the information")
+    with col2:
+       
+    with col3:
+       
+    with col4:
+           
     CC_info = FBL3N_merged_filtered[FBL3N_merged_filtered['Document Number'] == doc_num_filter]
     RP_info = FBL3N_merged_filtered[FBL3N_merged_filtered['Document Number'] == doc_num_filter]
     CC_info = CC_info[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Posting period']].T
     RP_info = RP_info[['CONCAT expense', 'Subcode expense', 'Related Party expense', 'Company Code expense', 'Document Number expense', 'Document Type expense', 'Account expense', 'Text expense', 'Reference expense', 'Document Header Text expense', 'User Name expense', 'Posting period expense']].T    
-    st.write(CC_info)
-    st.write(RP_info)
+    col1, col2 = st.columns(2)
+    with col1:
+       st.write(CC_info)
+    with col2:
+        st.write(RP_info)
+    
     st.write('Dataframe actualizado')
     st.dataframe(FBL3N_merged)
 
