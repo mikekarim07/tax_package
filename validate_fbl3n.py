@@ -79,7 +79,8 @@ if upload_FBL3N is not None:
     RP_info = RP_info[['CONCAT expense', 'Subcode expense', 'Related Party expense', 'Company Code expense', 'Document Number expense', 'Document Type expense', 'Account expense', 'Text expense', 'Reference expense', 'Document Header Text expense', 'User Name expense', 'Posting period expense']].T    
     col1, col2 = st.columns(2)
     with col1:
-       st.write(CC_info)
+        st.write(CC_info)
+        st.write({['CONCAT'],['Subcode']})
     with col2:
         st.write(RP_info)
     
