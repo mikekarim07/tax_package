@@ -97,7 +97,7 @@ if upload_FBL3N is not None and uploaded_masters is not None:
         rp_filter = st.selectbox("Select Related Party:", FBL3N_merged_filtered['Related Party'].unique())
     with col2a:
         st.write('')
-    FBL3N_merged_filtered = FBL3N_merged[((FBL3N_merged['Related Party'] == rp_filter) | (FBL3N_merged['Related Party'].isna())) & ((FBL3N_merged['Company Code expense'] == rp_filter) | (FBL3N_merged['Company Code expense'].isna()))]
+    FBL3N_merged_filtered = FBL3N_merged_filtered[((FBL3N_merged_filtered['Related Party'] == rp_filter) | (FBL3N_merged_filtered['Related Party'].isna())) & ((FBL3N_merged_filtered['Company Code expense'] == rp_filter) | (FBL3N_merged_filtered['Company Code expense'].isna()))]
     
     #----- Crear checkbox o toggle para filtrar por columna validation
     filter_toggle = st.toggle("Filter only Not Matching rows", value=False)
