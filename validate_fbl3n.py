@@ -54,11 +54,19 @@ def load_data(file):
                                         'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
     return FBL3N_classified
 
-upload_FBL3N = st.sidebar.file_uploader("Upload the FBL3N file categorized for validation", type=["xlsx"])
+def load_data1(file):
+    subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
+                  dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
+                         'Code_RP': str, 'Code_Desc_RP': str,})
+    return subcodes
 
-if upload_FBL3N is not None:
+upload_FBL3N = st.sidebar.file_uploader("Upload the FBL3N file categorized for validation", type=["xlsx"])
+uploaded_masters = st.sidebar.file_uploader("Upload masters file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
+
+if upload_FBL3N is not None and uploaded_masters is not None:
     #----- Cargar el DataFrame desde el archivo Excel
     FBL3N_classified = load_data(upload_FBL3N)
+    subcodes = load_data1(uploaded_masters)
     #----- Crear un nuevo dataframe con base en el Dataframe original (FBL3N_classified) que se cruce a si mismo con base en las columnas Key_1 y Key_2
     FBL3N_merged = FBL3N_classified.merge(FBL3N_classified, left_on="Key_1", right_on='Key_2', how='outer', suffixes=('', ' expense'))
     #----- Crear un selectbox para realizar un filtro con base en el company code
@@ -80,12 +88,13 @@ if upload_FBL3N is not None:
     col1, col2 = st.columns(2)
     with col1:
         st.write(CC_info)
-        st.write(CC_info[['CONCAT', 'Subcode']])
+        # st.write(CC_info[['CONCAT', 'Subcode']])
     with col2:
         st.write(RP_info)
     
     st.write('Dataframe actualizado')
     st.dataframe(FBL3N_merged)
+    st.dataframe(subcodes)
 
 
 
