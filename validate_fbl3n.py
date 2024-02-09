@@ -76,7 +76,7 @@ if upload_FBL3N is not None and uploaded_masters is not None:
     with col1:
         company_code_filter = st.selectbox("Select Company Code:", FBL3N_classified['Company Code'].unique())
     with col2:
-        st.write('test')
+        st.write('Nada')
     
     
     #----- Crear un nuevo dataframe con base en el dataframe previo y cruzado con el filtro aplicado
