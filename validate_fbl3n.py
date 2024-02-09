@@ -67,6 +67,10 @@ if upload_FBL3N is not None:
     FBL3N_merged_filtered = FBL3N_merged[((FBL3N_merged['Company Code'] == company_code_filter) | (FBL3N_merged['Company Code'].isna())) & ((FBL3N_merged['Related Party expense'] == company_code_filter) | (FBL3N_merged['Related Party expense'].isna()))]
     edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=False)
     FBL3N_merged.update(edited_df)
+    st.write(['CONCAT', 'CONCAT expense'])
+
+
+    
     st.write('Dataframe actualizado')
     st.dataframe(FBL3N_merged)
 
