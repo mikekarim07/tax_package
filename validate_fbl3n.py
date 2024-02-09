@@ -81,6 +81,19 @@ if upload_FBL3N is not None and uploaded_masters is not None:
         else:
             return 'Not Ok'
     FBL3N_merged_filtered['Validation'] = FBL3N_merged_filtered.apply(sc_ok, axis=1)
+    #----- Crear checkbox o toggle para filtrar por columna validation
+    filter_toggle = st.toggle("Filter only Not Matching rows", value=False)
+    
+    # Apply filter based on the toggle state
+    if filter_toggle:
+        # Filter DataFrame where 'Validation' is 'Not Ok'
+        FBL3N_merged_filtered = FBL3N_merged_filtered[FBL3N_merged_filtered['Validation'] == 'Not Ok']
+    else:
+        # Display all records if toggle is off
+        FBL3N_merged_filtered = FBL3N_merged_filtered
+
+
+
     
     edited_df = st.data_editor(FBL3N_merged_filtered, disabled=["Related Party sell", "Company Code sell"], hide_index=False)
     FBL3N_merged.update(edited_df)
