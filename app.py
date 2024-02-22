@@ -449,35 +449,66 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
 #         data=excel_buffer_zla.getvalue(),
 #         file_name=file_name_zlaaudit,
 #         key='download_button_zlaaudit'
+# #     )
+    
+    
+    
+
+
+#     file_name_fbl3n = f'FBL3N_Classified_{current_datetime}.xlsx'
+#     file_name_zlaaudit = f'ZLAAUDIT_{current_datetime}.xlsx'
+#     zip_file_name = f'Tax Package files {current_datetime}.zip'
+    
+#     # Crear un archivo ZIP y agregar los archivos Excel
+#     with BytesIO() as zip_buffer:
+#         with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+#             # Crear y guardar el archivo FBL3N
+#             excel_buffer_fbl3n = BytesIO()
+#             FBL3N_new.to_excel(excel_buffer_fbl3n, index=False, sheet_name='FBL3N')
+#             zip_file.writestr(file_name_fbl3n, excel_buffer_fbl3n.getvalue())
+    
+#             # Crear y guardar el archivo ZLAAUDIT
+#             excel_buffer_zla = BytesIO()
+#             with pd.ExcelWriter(excel_buffer_zla, engine='xlsxwriter') as writer:
+#                 ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT')
+#                 ZLAAUDIT_KLA.to_excel(writer, index=False, sheet_name='ZLAAUDIT_LA')
+#             zip_file.writestr(file_name_zlaaudit, excel_buffer_zla.getvalue())
+    
+#     # Descargar el archivo ZIP en Streamlit con un solo botón
+#     st.download_button(
+#         label="Download ZIP File",
+#         data=zip_buffer.getvalue(),
+#         file_name=zip_file_name,
+#         key='download_button_zip'
 #     )
-    
-    
-    
+
+
 
 
     file_name_fbl3n = f'FBL3N_Classified_{current_datetime}.xlsx'
     file_name_zlaaudit = f'ZLAAUDIT_{current_datetime}.xlsx'
-    zip_file_name = f'Tax Package files {current_datetime}.zip'
     
-    # Crear un archivo ZIP y agregar los archivos Excel
-    with BytesIO() as zip_buffer:
-        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
-            # Crear y guardar el archivo FBL3N
-            excel_buffer_fbl3n = BytesIO()
-            FBL3N_new.to_excel(excel_buffer_fbl3n, index=False, sheet_name='FBL3N')
-            zip_file.writestr(file_name_fbl3n, excel_buffer_fbl3n.getvalue())
     
-            # Crear y guardar el archivo ZLAAUDIT
-            excel_buffer_zla = BytesIO()
-            with pd.ExcelWriter(excel_buffer_zla, engine='xlsxwriter') as writer:
-                ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT')
-                ZLAAUDIT_KLA.to_excel(writer, index=False, sheet_name='ZLAAUDIT_LA')
-            zip_file.writestr(file_name_zlaaudit, excel_buffer_zla.getvalue())
+    # Crear y guardar el archivo FBL3N
+    excel_buffer_fbl3n = BytesIO()
+    with pd.ExcelWriter(excel_buffer_fbl3n, engine='xlsxwriter') as writer:
+        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N')
+        ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT_LA')
     
-    # Descargar el archivo ZIP en Streamlit con un solo botón
+    # Descargar el archivo Excel en Streamlit
     st.download_button(
-        label="Download ZIP File",
-        data=zip_buffer.getvalue(),
-        file_name=zip_file_name,
-        key='download_button_zip'
+        label="Download FBL3N Classified excel file",
+        data=excel_buffer_fbl3n.getvalue(),
+        file_name=file_name_fbl3n,  # Puedes cambiar el nombre del archivo según tus necesidades
+        key='download_button_fbl3n'
+    )
+    
+    excel_buffer_zla = BytesIO()
+    ZLAAUDIT_KLA.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT_LA')
+    # Descargar el archivo Excel en Streamlit
+    st.download_button(
+        label="Download ZLAAUDIT Grouped File",
+        data=excel_buffer_zla.getvalue(),
+        file_name=file_name_zlaaudit,  # Puedes cambiar el nombre del archivo según tus necesidades
+        key='download_button_zlaaudit'
     )
