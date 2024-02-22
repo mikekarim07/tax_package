@@ -425,13 +425,33 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     )
     
     excel_buffer_zla = BytesIO()
-    ZLAAUDIT_grouped.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT')
-    ZLAAUDIT_KLA.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT_LA')
+    # ZLAAUDIT_grouped.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT')
+    # ZLAAUDIT_KLA.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT_LA')
     
-# Descargar el archivo Excel en Streamlit
+    # #----- Descargar el archivo Excel en Streamlit
+    # st.download_button(
+    #     label="Download ZLAAUDIT Grouped File",
+    #     data=excel_buffer_zla.getvalue(),
+    #     file_name=file_name_zlaaudit,  # Puedes cambiar el nombre del archivo según tus necesidades
+    #     key='download_button_zlaaudit'
+    # )
+
+    with pd.ExcelWriter(excel_buffer_zla, engine='xlsxwriter') as writer:
+        # Guardar ZLAAUDIT_grouped en la hoja 'ZLAAUDIT'
+        ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT')
+    
+        # Guardar ZLAAUDIT_KLA en la hoja 'ZLAAUDIT_LA'
+        ZLAAUDIT_KLA.to_excel(writer, index=False, sheet_name='ZLAAUDIT_LA')
+    
+    # Descargar el archivo Excel en Streamlit
     st.download_button(
         label="Download ZLAAUDIT Grouped File",
         data=excel_buffer_zla.getvalue(),
-        file_name=file_name_zlaaudit,  # Puedes cambiar el nombre del archivo según tus necesidades
+        file_name=file_name_zlaaudit,
         key='download_button_zlaaudit'
     )
+    
+    
+    
+    
+    
