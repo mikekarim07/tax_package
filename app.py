@@ -403,7 +403,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
     #----- ZLAAUDIT KLA
     Cias_Mex = ["GIMX", "GSMX", "KCMX", "KLMX", "PRMX", "KLCM", "SAMX", "KSMX"]
     ZLAAUDIT_KLA = ZLAAUDIT[~ZLAAUDIT['Company Code'].isin(Cias_Mex)]
-    ZLAAUDIT_KLA = ZLAAUDIT_KLA[['CONCAT', 'CONCAT_2', 'Document Number', 'Document type', 'Tax Code', 'Line item', 'Posting Key', 'Posting period', 'Account', 'Assignment', 'User Name', 'Reference', 'Document Header Text', 'Posting Date', 'Entry Date', 'Document Date', 'Amount in foreign cur.', 'Currency', 'Debit/credit amount', 'Local Currency', 'review']]
+    ZLAAUDIT_KLA = ZLAAUDIT_KLA[['CONCAT', 'CONCAT_2', 'Company Code', 'Document Number', 'Document type', 'Tax Code', 'Line item', 'Posting Key', 'Posting period', 'Account', 'Assignment', 'User Name', 'Reference', 'Document Header Text', 'Posting Date', 'Entry Date', 'Document Date', 'Amount in foreign cur.', 'Currency', 'Debit/credit amount', 'Local Currency', 'review']]
      
 #--------------
 
