@@ -39,17 +39,17 @@ st.subheader('Tax Package - Related Party Operations Category Classification Mac
 
 start_time01 = time.time()
 st.sidebar.subheader('Historical Data')
-# uploaded_FBL3N_train = st.sidebar.file_uploader("Upload FBL3N file which contains historical data classified to train the Machine Learning Model", type=["xlsx"], accept_multiple_files=False)
-# st.sidebar.divider()
-# st.sidebar.subheader('New FBL3N Dataset')
-# uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
-# st.sidebar.subheader('ZLAAUDIT')
-# uploaded_ZLAAUDIT = st.sidebar.file_uploader("Upload the file which contains the ZLAAUDIT dataset", key="ZLAAUDIT", type=["xlsx"], accept_multiple_files=False)
-# st.sidebar.subheader('Saldos Financieros')
-# uploaded_SdosFin = st.sidebar.file_uploader("Upload the file which contains the SALDOS FINANCIEROS dataset", key="SaldosFinancieros", type=["xlsx"], accept_multiple_files=False)
-# st.sidebar.subheader('Masters')
-# uploaded_masters = st.sidebar.file_uploader("Upload masters file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
-# st.sidebar.divider()
+uploaded_FBL3N_train = st.sidebar.file_uploader("Upload FBL3N file which contains historical data classified to train the Machine Learning Model", type=["xlsx"], accept_multiple_files=False)
+st.sidebar.divider()
+st.sidebar.subheader('New FBL3N Dataset')
+uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
+st.sidebar.subheader('ZLAAUDIT')
+uploaded_ZLAAUDIT = st.sidebar.file_uploader("Upload the file which contains the ZLAAUDIT dataset", key="ZLAAUDIT", type=["xlsx"], accept_multiple_files=False)
+st.sidebar.subheader('Saldos Financieros')
+uploaded_SdosFin = st.sidebar.file_uploader("Upload the file which contains the SALDOS FINANCIEROS dataset", key="SaldosFinancieros", type=["xlsx"], accept_multiple_files=False)
+st.sidebar.subheader('Masters')
+uploaded_masters = st.sidebar.file_uploader("Upload masters file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
+st.sidebar.divider()
 if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded_SdosFin: #and uploaded_ZLAAUDIT:
     FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
                                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Document Number': str, 'Account': str, 'Text': str,
