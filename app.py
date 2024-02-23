@@ -385,44 +385,44 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
                   dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
                          'Type': str, 'Balance': str,})
     Sdos_Fin_Accounts = saldos_financieros['Concat'].unique()
-    ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)]
-    ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
+    # ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)]
+    # ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
 
 
     #Cuentas unicas de Impuestos en Saldos Financieros
-    Sdos_Fin_Accounts_tax = saldos_financieros[['Concat', 'Type']].drop_duplicates()
-    Sdos_Fin_Accounts_tax = Sdos_Fin_Accounts_tax[Sdos_Fin_Accounts_tax ['Type'] == 'Cuentas de Impuestos']
-    ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts_tax['Concat'])]
-    ZLAAUDIT_filtrado_tax = ZLAAUDIT_filtrado_tax.merge(Sdos_Fin_Accounts_tax, left_on="CONCAT_2", right_on='Concat', how='left')
-    ZLAAUDIT_grouped_tax = ZLAAUDIT_filtrado_tax.groupby(by=['CONCAT', 'Account', 'Local Currency', 'Type'], as_index=False).agg({'Debit/credit amount': 'sum'})
-    FBL3N_new = FBL3N_new.merge(ZLAAUDIT_grouped_tax, left_on="CONCAT", right_on='CONCAT', how='left', suffixes=('', '_taxes'))
-    delete_colsfromzla = ['Account_taxes', 'Local Currency_taxes', 'Type']
-    FBL3N_new = FBL3N_new.drop(columns=delete_colsfromzla)
-    FBL3N_new.rename(columns={'Debit/credit amount': 'Taxes'}, inplace=True)
+    # Sdos_Fin_Accounts_tax = saldos_financieros[['Concat', 'Type']].drop_duplicates()
+    # Sdos_Fin_Accounts_tax = Sdos_Fin_Accounts_tax[Sdos_Fin_Accounts_tax ['Type'] == 'Cuentas de Impuestos']
+    # ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts_tax['Concat'])]
+    # ZLAAUDIT_filtrado_tax = ZLAAUDIT_filtrado_tax.merge(Sdos_Fin_Accounts_tax, left_on="CONCAT_2", right_on='Concat', how='left')
+    # ZLAAUDIT_grouped_tax = ZLAAUDIT_filtrado_tax.groupby(by=['CONCAT', 'Account', 'Local Currency', 'Type'], as_index=False).agg({'Debit/credit amount': 'sum'})
+    # FBL3N_new = FBL3N_new.merge(ZLAAUDIT_grouped_tax, left_on="CONCAT", right_on='CONCAT', how='left', suffixes=('', '_taxes'))
+    # delete_colsfromzla = ['Account_taxes', 'Local Currency_taxes', 'Type']
+    # FBL3N_new = FBL3N_new.drop(columns=delete_colsfromzla)
+    # FBL3N_new.rename(columns={'Debit/credit amount': 'Taxes'}, inplace=True)
 
     #----- ZLAAUDIT KLA
-    Cias_Mex = ["GIMX", "GSMX", "KCMX", "KLMX", "PRMX", "KLCM", "SAMX", "KSMX"]
-    ZLAAUDIT_KLA = ZLAAUDIT[~ZLAAUDIT['Company Code'].isin(Cias_Mex)]
-    ZLAAUDIT_KLA = ZLAAUDIT_KLA[['CONCAT', 'CONCAT_2', 'Company Code', 'Document Number', 'Document type', 'Tax Code', 'Line item', 'Posting Key', 'Posting period', 'Account', 'Assignment', 'User Name', 'Reference', 'Document Header Text', 'Posting Date', 'Entry Date', 'Document Date', 'Amount in foreign cur.', 'Currency', 'Debit/credit amount', 'Local Currency', 'review']]
+    # Cias_Mex = ["GIMX", "GSMX", "KCMX", "KLMX", "PRMX", "KLCM", "SAMX", "KSMX"]
+    # ZLAAUDIT_KLA = ZLAAUDIT[~ZLAAUDIT['Company Code'].isin(Cias_Mex)]
+    # ZLAAUDIT_KLA = ZLAAUDIT_KLA[['CONCAT', 'CONCAT_2', 'Company Code', 'Document Number', 'Document type', 'Tax Code', 'Line item', 'Posting Key', 'Posting period', 'Account', 'Assignment', 'User Name', 'Reference', 'Document Header Text', 'Posting Date', 'Entry Date', 'Document Date', 'Amount in foreign cur.', 'Currency', 'Debit/credit amount', 'Local Currency', 'review']]
      
 #--------------
 
     current_datetime = datetime.now().strftime('%y%m%d_%H%M')
 
     
-#     file_name_fbl3n = f'FBL3N_Categorized_{current_datetime}.xlsx'
+    file_name_fbl3n = f'FBL3N_Categorized_{current_datetime}.xlsx'
 #     file_name_zlaaudit = f'ZLAAUDIT_Grouped_{current_datetime}.xlsx'
     
-#     excel_buffer = BytesIO()
-#     FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
+    excel_buffer = BytesIO()
+    FBL3N_new.to_excel(excel_buffer, index=False, sheet_name='FBL3N')
 #     # ZLAAUDIT_grouped_tax.to_excel(excel_buffer, index=False, sheet_name='ZLAAUDIT_Tax')
 # # Descargar el archivo Excel en Streamlit
-#     st.download_button(
-#         label="Download FBL3N Classified excel file",
-#         data=excel_buffer.getvalue(),
-#         file_name=file_name_fbl3n,  # Puedes cambiar el nombre del archivo según tus necesidades
-#         key='download_button_fbl3n'
-#     )
+    st.download_button(
+        label="Download FBL3N Classified excel file",
+        data=excel_buffer.getvalue(),
+        file_name=file_name_fbl3n,  # Puedes cambiar el nombre del archivo según tus necesidades
+        key='download_button_fbl3n'
+    )
     
 #     excel_buffer_zla = BytesIO()
 #     # ZLAAUDIT_grouped.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT')
@@ -485,30 +485,30 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters: #and upload
 
 
 
-    file_name_fbl3n = f'FBL3N_Classified_{current_datetime}.xlsx'
-    file_name_zlaaudit = f'ZLAAUDIT_{current_datetime}.xlsx'
+    # file_name_fbl3n = f'FBL3N_Classified_{current_datetime}.xlsx'
+    # file_name_zlaaudit = f'ZLAAUDIT_{current_datetime}.xlsx'
     
     
-    # Crear y guardar el archivo FBL3N
-    excel_buffer_fbl3n = BytesIO()
-    with pd.ExcelWriter(excel_buffer_fbl3n, engine='xlsxwriter') as writer:
-        FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N')
-        ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT_LA')
+    # # Crear y guardar el archivo FBL3N
+    # excel_buffer_fbl3n = BytesIO()
+    # with pd.ExcelWriter(excel_buffer_fbl3n, engine='xlsxwriter') as writer:
+    #     FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N')
+    #     ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT_LA')
     
-    # Descargar el archivo Excel en Streamlit
-    st.download_button(
-        label="Download FBL3N Classified excel file",
-        data=excel_buffer_fbl3n.getvalue(),
-        file_name=file_name_fbl3n,  # Puedes cambiar el nombre del archivo según tus necesidades
-        key='download_button_fbl3n'
-    )
+    # # Descargar el archivo Excel en Streamlit
+    # st.download_button(
+    #     label="Download FBL3N Classified excel file",
+    #     data=excel_buffer_fbl3n.getvalue(),
+    #     file_name=file_name_fbl3n,  # Puedes cambiar el nombre del archivo según tus necesidades
+    #     key='download_button_fbl3n'
+    # )
     
-    excel_buffer_zla = BytesIO()
-    ZLAAUDIT_KLA.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT_LA')
-    # Descargar el archivo Excel en Streamlit
-    st.download_button(
-        label="Download ZLAAUDIT Grouped File",
-        data=excel_buffer_zla.getvalue(),
-        file_name=file_name_zlaaudit,  # Puedes cambiar el nombre del archivo según tus necesidades
-        key='download_button_zlaaudit'
-    )
+    # excel_buffer_zla = BytesIO()
+    # ZLAAUDIT_KLA.to_excel(excel_buffer_zla, index=False, sheet_name='ZLAAUDIT_LA')
+    # # Descargar el archivo Excel en Streamlit
+    # st.download_button(
+    #     label="Download ZLAAUDIT Grouped File",
+    #     data=excel_buffer_zla.getvalue(),
+    #     file_name=file_name_zlaaudit,  # Puedes cambiar el nombre del archivo según tus necesidades
+    #     key='download_button_zlaaudit'
+    # )
