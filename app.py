@@ -182,69 +182,121 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new[NA_Fill_CoCd] = FBL3N_new[NA_Fill_CoCd].fillna('')
     #----- Evaluar si quitar el cruzar la tabla con Subcodes (creo que no la estoy usando para nada, y al final las elimino)
     # FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
+
     #---------------Funciones para subcodes fijas-------------------
-    def sc_121_1(row):
-        if row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("1176"):
+    def sc_121(row):
+        if (row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("117")) or (row['Document Header Text'].startswith("117") and row['Document Type'].startswith("RV")) or row['Reference'].startswith("00016-"):
             return "121"
         else:
             return ''
 
-    def sc_121_2(row):
-        if row['Reference'].startswith("00016-") and (row['Document Header Text'].startswith("1176") or row['Document Header Text'].startswith("8")):
-            return "121"
-        else:
-            return ''
-
-    def sc_121_3(row):
-        if row['Reference'].startswith("1176") and row['Document Type'].startswith("RV"):
-            return "121"
-        else:
-            return ''
-
-    def sc_221_1(row):
-        if row['Reference'].startswith("1176") and row['Document Type'].startswith("RN"):
+    def sc_221(row):
+        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and (row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE"))) or (row['Reference'].startswith("CR")):
             return "221"
         else:
             return ''
-
-    def sc_221_2(row):
-        if row['Reference'].startswith("CR"):
-            return "221"
-        else:
-            return ''
-
     
     def sc_150(row):
     # Verificar las condiciones
-        if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['Company Code']) + str(row['CoCd'])):
+        if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['Company Code']) + str(row['CoCd'])) and row['Document Type'].startswith("YH"):
             return "150"
         else:
             return ''
 
     def sc_250(row):
     # Verificar las condiciones
-        if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['CoCd']) + str(row['Company Code'])):
+        if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['CoCd']) + str(row['Company Code'])) and row['Document Type'].startswith("SA"):
             return "250"
         else:
             return ''
 
-    def sc_300_1(row):
+    def sc_300(row):
     # Verificar las condiciones
-        if "wf-batch" in str(row['User Name']).lower():
+        if ("wf-batch" in str(row['User Name']).lower()) or (row['Document Type'].startswith("DZ") or row['Document Type'].startswith("KZ") or row['Document Type'].startswith("ZP") or row['Document Type'].startswith("KA")) or (row['Document Number'].startswith("14") or row['Document Number'].startswith("21") or row['Document Number'].startswith("20")) or (row['Account'].startswith("1556251210") or row['Account'].startswith("1556251270") or row['Account'].startswith("1556251300") or row['Account'].startswith("1556251400") or row['Account'].startswith("1556251450") or row['Account'].startswith("1556251470")) or ((row['Company Code'].startswith("KLMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("SAMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("GIMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("GSMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("KSMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("PRMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("KLCM") and row['Account'].startswith("1556251390"))):
             return "300"
         else:
             return ''
 
+    def sc_301(row):
+        if ("valuation" in str(row['Text']).lower() or ("revaluacion" in str(row['Text']).lower())):
+            return "301"
+        else:
+            return ''
+
+    def sc_214(row):
+        if (row['Account'].startswith("1556160000") or row['Account'].startswith("155626000")):
+            return "214"
+        else:
+            return ''
+
+    def sc_601(row):
+        if (row['Document Header Text'].startswith("601") or row['Text'].startswith("601")):
+            return "601"
+        else:
+            return ''
+
+    def sc_610(row):
+        if (row['Document Header Text'].startswith("610") or row['Text'].startswith("610")):
+            return "610"
+        else:
+            return ''
+
+    def sc_620(row):
+        if (row['Document Header Text'].startswith("620") or row['Text'].startswith("620")):
+            return "620"
+        else:
+            return ''
+
+    def sc_120(row):
+        if (row['Document Header Text'].startswith("120") or row['Text'].startswith("120")):
+            return "120"
+        else:
+            return ''
+
+    def sc_220(row):
+        if (row['Document Header Text'].startswith("220") or row['Text'].startswith("220")):
+            return "220"
+        else:
+            return ''
+
+    def sc_110(row):
+        if (row['Text'].startswith("110") or row['Text'].startswith("111")):
+            return "110"
+        else:
+            return ''
+
+    def sc_210(row):
+        if (row['Text'].startswith("210") or row['Text'].startswith("211")):
+            return "210"
+        else:
+            return ''
+
+    def sc_400(row):
+        if (row['Text'].startswith("400")):
+            return "400"
+        else:
+            return ''
+
     
-    FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121_1, axis=1)
-    FBL3N_new['SC_2'] = FBL3N_new.apply(sc_121_2, axis=1)
-    FBL3N_new['SC_3'] = FBL3N_new.apply(sc_121_3, axis=1)
-    FBL3N_new['SC_4'] = FBL3N_new.apply(sc_221_1, axis=1)
-    FBL3N_new['SC_5'] = FBL3N_new.apply(sc_221_2, axis=1)
-    FBL3N_new['SC_6'] = FBL3N_new.apply(sc_150, axis=1)
-    FBL3N_new['SC_7'] = FBL3N_new.apply(sc_250, axis=1)
-    FBL3N_new['SC_8'] = FBL3N_new.apply(sc_300_1, axis=1)
+    
+    FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121, axis=1)
+    FBL3N_new['SC_2'] = FBL3N_new.apply(sc_221, axis=1)
+    FBL3N_new['SC_3'] = FBL3N_new.apply(sc_150, axis=1)
+    FBL3N_new['SC_4'] = FBL3N_new.apply(sc_250, axis=1)
+    FBL3N_new['SC_5'] = FBL3N_new.apply(sc_300, axis=1)
+    FBL3N_new['SC_6'] = FBL3N_new.apply(sc_301, axis=1)
+    FBL3N_new['SC_7'] = FBL3N_new.apply(sc_214, axis=1)
+    FBL3N_new['SC_8'] = FBL3N_new.apply(sc_601, axis=1)
+    FBL3N_new['SC_9'] = FBL3N_new.apply(sc_610, axis=1)
+    FBL3N_new['SC_10'] = FBL3N_new.apply(sc_620, axis=1)
+    FBL3N_new['SC_11'] = FBL3N_new.apply(sc_120, axis=1)
+    FBL3N_new['SC_12'] = FBL3N_new.apply(sc_220, axis=1)
+    FBL3N_new['SC_13'] = FBL3N_new.apply(sc_110, axis=1)
+    FBL3N_new['SC_14'] = FBL3N_new.apply(sc_210, axis=1)
+    FBL3N_new['SC_15'] = FBL3N_new.apply(sc_400, axis=1)
+    
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8']
+     + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15']
 
     def Subcode_Correction(row):
     # Verificar las condiciones
