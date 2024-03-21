@@ -365,7 +365,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 
                                 'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
                                'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
-        FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
+        # FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
         columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
         FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
         
@@ -381,7 +381,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         st.write(FBL3N_new.columns)
         
         FBL3N_new = FBL3N_new[['CONCAT', 'Subcode',  'Subcode 2', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
-                               'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date', 'Status', 'V']]
+                               'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
+                              'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13', 'SC_14', 'SC_15', 'SC_concat',
+                               'SC_Fix', 'Subcode_td', 'Subcode_assigned']]
         date_columns = ['Document Date', 'Posting Date']
         # Convert to datetime and then extract the date
         FBL3N_new[date_columns] = FBL3N_new[date_columns].apply(pd.to_datetime).apply(lambda x: x.dt.date)
