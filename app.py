@@ -191,7 +191,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_221(row):
-        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and (row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE"))) or (row['Reference'].startswith("CR")):
+        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and (row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE") or ~("wf-batch" in str(row['User Name']).lower()) or (row['Reference'].startswith("CR") or ~row['Document Header Text'].startswith("220") or ~row['Text'].startswith("220"))):
             return "221"
         else:
             return ''
@@ -260,13 +260,14 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_110(row):
-        if (row['Text'].startswith("110") or row['Text'].startswith("111")):
+        if (row['Text'].startswith("110") or row['Text'].startswith("111")) and ("loan int" not in str(row['Document Header Text']).lower() and ~row['Document Type'].startswith("YH")):
+
             return "110"
         else:
             return ''
 
     def sc_210(row):
-        if (row['Text'].startswith("210") or row['Text'].startswith("211")):
+        if (row['Text'].startswith("210") or row['Text'].startswith("211")) and (~row['Account'].startswith("1556160000") or ~row['Account'].startswith("1556160000") or ("loan int" not in str(row['Document Header Text']).lower())):
             return "210"
         else:
             return ''
