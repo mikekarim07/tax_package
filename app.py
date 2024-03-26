@@ -82,7 +82,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     #----- Step 2: Delete rows with no Subcode (either NA or blank)
     FBL3N_full.dropna(subset=['Subcode'], how='any', inplace=True)
-
+    FBL3N_full = FBL3N_full[FBL3N_full['Subcode'] != 0]
     #----- Step 3: Create a new column "ML"
     FBL3N_full['CONCAT'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str))
     FBL3N_full['ML'] = FBL3N_full['Company Code'] + ' ' + FBL3N_full['Document Type'] + ' ' + FBL3N_full['Account'] + ' ' + FBL3N_full['Text'] + ' ' + FBL3N_full['Reference'] + ' ' + FBL3N_full['Document Header Text'] + ' ' + FBL3N_full['User Name'] + ' ' + FBL3N_full['Tax Code']
