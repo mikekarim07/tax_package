@@ -191,7 +191,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_221(row):
-        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and (row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE") or ~("wf-batch" in str(row['User Name']).lower()) or (row['Reference'].startswith("CR") or ~row['Document Header Text'].startswith("220") or ~row['Text'].startswith("220"))):
+        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5")
+                                                                                              and (row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")
+                                                                                                   or ~("wf-batch" in str(row['User Name']).lower()) or (row['Reference'].startswith("CR")
+                                                                                                                                                         or ~row['Document Header Text'].startswith("220") or ~row['Text'].startswith("220")))):
             return "221"
         else:
             return ''
