@@ -250,13 +250,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_120(row):
-        if (row['Document Header Text'].startswith("120") or row['Text'].startswith("120")) and (not (row['Text'].startswith("620"))):
+        if (row['Document Header Text'].startswith("120") or row['Text'].startswith("120")) and (not (row['Document Header Text'].startswith("620"))):
             return "120"
         else:
             return ''
 
     def sc_220(row):
-        if (row['Document Header Text'].startswith("220") or row['Text'].startswith("220")) and (not (row['Text'].startswith("620"))):
+        if (row['Document Header Text'].startswith("220") or row['Text'].startswith("220")) and (not (row['Document Header Text'].startswith("620"))):
             return "220"
         else:
             return ''
