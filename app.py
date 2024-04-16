@@ -269,7 +269,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_210(row):
-        if (row['Text'].startswith("210") or row['Text'].startswith("211")) and (~row['Account'].startswith("1556160000") or ~row['Account'].startswith("1556260000") or ("loan int" not in str(row['Document Header Text']).lower())):
+        if (row['Text'].startswith("210") or row['Text'].startswith("211")) and (not (row['Account'].startswith("1556160000") or row['Account'].startswith("1556260000") or ("loan int" in str(row['Document Header Text']).lower()))):
             return "210"
         else:
             return ''
