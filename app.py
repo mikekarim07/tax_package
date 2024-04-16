@@ -191,7 +191,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_221(row):
-        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and ((row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")))) or (row['Text'].startswith("221")) or ("interim" in str(row['Document Header Text']).lower()):
+        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and ((row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")))) or (row['Text'].startswith("221")): # or ("interim" in str(row['Document Header Text']).lower()
             return "221"
         else:
             return ''
