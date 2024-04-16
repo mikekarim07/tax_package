@@ -185,13 +185,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     #---------------Funciones para subcodes fijas-------------------
     def sc_121(row):
-        if (row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("117")) or (row['Document Header Text'].startswith("117") and row['Document Type'].startswith("RV")) or row['Reference'].startswith("00016-"):
+        if (row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("117")) or (row['Document Header Text'].startswith("117") and row['Document Type'].startswith("RV")) or row['Reference'].startswith("00016-") or (row['Text'].startswith("121")):
             return "121"
         else:
             return ''
 
     def sc_221(row):
-        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and ((row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")))):
+        if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and ((row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")))) or (row['Text'].startswith("221")) or ("117" in row['Document Header Text']):
             return "221"
         else:
             return ''
