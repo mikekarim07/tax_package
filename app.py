@@ -232,13 +232,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_601(row):
-        if (row['Document Header Text'].startswith("601") or row['Text'].startswith("601")):
+        if (row['Document Header Text'].startswith("601") or row['Text'].startswith("601")) and (row['Reference'].startswith(str(row['Company Code']))):
             return "601"
         else:
             return ''
 
     def sc_610(row):
-        if (row['Document Header Text'].startswith("610") or row['Text'].startswith("610")):
+        if (row['Document Header Text'].startswith("610") or row['Text'].startswith("610")) and (not (row['Reference'].startswith(str(row['Company Code'])))):
             return "610"
         else:
             return ''
