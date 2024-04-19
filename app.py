@@ -44,6 +44,8 @@ st.sidebar.subheader('New FBL3N Dataset')
 uploaded_new_FBL3N = st.sidebar.file_uploader("Upload the file which contains the new dataset to be classified", key="new_FBL3N", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.subheader('ZLAAUDIT')
 uploaded_ZLAAUDIT = st.sidebar.file_uploader("Upload the file which contains the ZLAAUDIT dataset", key="ZLAAUDIT", type=["xlsx"], accept_multiple_files=False)
+st.sidebar.subheader('FB03')
+uploaded_FB03 = st.sidebar.file_uploader("Upload the file which contains the FB03 dataset", key="FB03", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.subheader('Saldos Financieros')
 uploaded_SdosFin = st.sidebar.file_uploader("Upload the file which contains the SALDOS FINANCIEROS dataset", key="SaldosFinancieros", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.subheader('Masters')
@@ -72,6 +74,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     saldos_financieros = pd.read_excel(uploaded_SdosFin, engine='openpyxl', sheet_name='SaldosFin_MX',
                   dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
                          'Type': str, 'Balance': str,})
+    
+    fb03 = pd.read_excel(uploaded_FB03, engine='openpyxl', sheet_name='FB03',
+                  dtype={'CoCd': str, 'DocumentNo': str, 'Reversal': str, 'Key_Doc': str,
+                         'Key_Rev': str, 'Doc. Date': str,})
 
     ######----------MACHINE LEARNING MODEL----------######
     #-----Stage 1: Clean dataset, to get unique records and avoid NA, to have a clean Dataset to run the Machine Learning Model
@@ -182,8 +188,15 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new[NA_Fill_CoCd] = FBL3N_new[NA_Fill_CoCd].fillna('')
     #----- Evaluar si quitar el cruzar la tabla con Subcodes (creo que no la estoy usando para nada, y al final las elimino)
     # FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
+    
+    
+    
+    #---------------FB03-------------
+    
+    # fb03 = 
 
     #---------------Funciones para subcodes fijas-------------------
+    
     def sc_121(row):
         if (row['Reference'].startswith("00015-") and row['Document Header Text'].startswith("117")) or (row['Document Header Text'].startswith("117") and row['Document Type'].startswith("RV")) or row['Reference'].startswith("00016-") or (row['Text'].startswith("121")):
             return "121"
