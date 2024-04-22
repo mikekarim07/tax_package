@@ -194,9 +194,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #---------------FB03-------------
     fb03_NA_Fill_Columns = ['Reversal']
     fb03 = fb03.dropna(subset=fb03_NA_Fill_Columns)
-    fb03['Key_1'] = fb03['CoCd'] + fb03['DocumentNo']
-    fb03['Key_2'] = fb03['CoCd'] + fb03['Reversal']
-    fb03_cols_elim = ['User', 'CoCd', 'Doc.Header Text', 'DocumentNo', 'Year', 'Reference', 
+    fb03['Key_Concat'] = fb03['CoCd'] + fb03['DocumentNo']
+    fb03['Key_Reversal'] = fb03['CoCd'] + fb03['Reversal']
+    fb03_cols_elim = ['User', 'CoCd', 'Doc.Header Text', 'DocumentNo', 'Year', 'Reference', 'Type',
                                 'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 'Period',
                                'Time', 'LCurr', 'Crcy']
     fb03 = fb03.drop(columns=fb03_cols_elim)
