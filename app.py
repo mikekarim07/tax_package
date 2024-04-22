@@ -75,7 +75,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                   dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
                          'Type': str, 'Balance': str,})
     
-    fb03 = pd.read_excel(uploaded_FB03, engine='openpyxl', sheet_name='FB03',
+    fb03 = pd.read_excel(uploaded_FB03, engine='openpyxl', sheet_name='Sheet1',
                   dtype={'CoCd': str, 'DocumentNo': str, 'Reversal': str, 'Key_Doc': str,
                          'Key_Rev': str, 'Doc. Date': str,})
 
