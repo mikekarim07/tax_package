@@ -408,7 +408,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                                'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
                               'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13', 'SC_14', 'SC_15', 'SC_concat',
                                'SC_Fix', 'Subcode_ML', 'Subcode_td', 'Subcode_assigned', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal']]
-        date_columns = ['Document Date', 'Posting Date']
+        date_columns = ['Document Date', 'Posting Date', 'Doc. Date', 'Entered', 'Pstng Date']
         # Convert to datetime and then extract the date
         FBL3N_new[date_columns] = FBL3N_new[date_columns].apply(pd.to_datetime).apply(lambda x: x.dt.date)
 
