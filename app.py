@@ -193,7 +193,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     #---------------FB03-------------
     fb03_NA_Fill_Columns = ['Reversal']
-    fb03[fb03_NA_Fill_Columns] = fb03[fb03_NA_Fill_Columns].fillna('')
+    fb03[fb03_NA_Fill_Columns] = fb03[fb03_NA_Fill_Columns].dropna('')
 
 
 
