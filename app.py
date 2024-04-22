@@ -200,7 +200,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                                 'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 'Period',
                                'Time', 'LCurr', 'Crcy']
     fb03 = fb03.drop(columns=fb03_cols_elim)
-    
+    FBL3N_new = FBL3N_new.merge(fb03, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
     st.dataframe(fb03)
 
