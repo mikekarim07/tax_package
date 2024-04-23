@@ -197,9 +197,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     fb03['Key_Concat'] = fb03['CoCd'] + fb03['DocumentNo']
     fb03['Key_Reversal'] = fb03['CoCd'] + fb03['Reversal']
     fb03_cols_elim = ['User', 'CoCd', 'Doc.Header Text', 'DocumentNo', 'Year', 'Reference', 'Type',
-                                'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 'Period',
+                                'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 
                                'Time', 'LCurr', 'Crcy']
     fb03 = fb03.drop(columns=fb03_cols_elim)
+    fb03 = fb03.merge(fb03, left_on='Key_Concat', right_on='Key_Reversal', suffixes=('', '_Rev'))
+
+    
     FBL3N_new = FBL3N_new.merge(fb03, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
     st.dataframe(fb03)
