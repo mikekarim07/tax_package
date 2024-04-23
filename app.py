@@ -200,12 +200,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                                 'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 
                                'Time', 'LCurr', 'Crcy']
     fb03 = fb03.drop(columns=fb03_cols_elim)
-    fb03 = fb03.merge(fb03, left_on='Key_Concat', right_on='Key_Reversal', suffixes=('', '_Rev'))
+    fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', suffixes=('', '_Rev'))
 
     
     FBL3N_new = FBL3N_new.merge(fb03, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
-    st.dataframe(fb03)
+    st.dataframe(fb03_merged)
 
     #---------------Funciones para subcodes fijas-------------------
     
