@@ -305,6 +305,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         else:
             return ''
 
+    def sc_0(row):
+        if (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472")):
+            return "0"
+        else:
+            return ''
+
     
     
     FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121, axis=1)
@@ -322,8 +328,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_13'] = FBL3N_new.apply(sc_110, axis=1)
     FBL3N_new['SC_14'] = FBL3N_new.apply(sc_210, axis=1)
     FBL3N_new['SC_15'] = FBL3N_new.apply(sc_400, axis=1)
+    FBL3N_new['SC_16'] = FBL3N_new.apply(sc_0, axis=1)
     
-    FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15']
+    FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16']
 
     def Subcode_Correction(row):
     # Verificar las condiciones
