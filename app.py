@@ -225,7 +225,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     def sc_150(row):
     # Verificar las condiciones
         # if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['Company Code']) + str(row['CoCd'])) and row['Document Type'].startswith("YH"):
-        if "loan int" in str(row['Document Header Text']).lower() and row['Document Type'].startswith("YH"):
+        if "loan int" in str(row['Document Header Text']).lower() and (row['Document Type'].startswith("YH") or row['Document Type'].startswith("DR")):
             return "150"
         else:
             return ''
