@@ -287,7 +287,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_110(row):
-        if (row['Text'].startswith("110") or row['Text'].startswith("111")) and (not ("loan int" in str(row['Document Header Text']).lower() or row['Document Header Text'].startswith("620"))):
+        if (row['Text'].startswith("110") or row['Text'].startswith("111")) and (not ("loan int" in str(row['Document Header Text']).lower())) or (row['Text'].startswith("110") or row['Text'].startswith("111")) and (not (row['Document Header Text'].startswith("620"))):
 
             return "110"
         else:
@@ -417,7 +417,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         # FBL3N_new = FBL3N_new[['CONCAT', 'Subcode',  'Subcode 2', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
         #                        'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
         #                       'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13', 'SC_14', 'SC_15', 'SC_concat',
-        #                        'SC_Fix', 'Subcode_ML', 'Subcode_td', 'Subcode_assigned', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal']]
+        #                        'SC_Fix', 'Subcode_ML', 'Subcode_td', 'Subcode_assigned', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev']]
         FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
                                'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
                                'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
