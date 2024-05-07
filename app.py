@@ -225,7 +225,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     def sc_150(row):
     # Verificar las condiciones
         # if "loan int" in str(row['Document Header Text']).lower() and row['Reference'].startswith(str(row['Company Code']) + str(row['CoCd'])) and row['Document Type'].startswith("YH"):
-        if "loan int" in str(row['Document Header Text']).lower() and (row['Document Type'].startswith("YH") or row['Document Type'].startswith("DR")):
+        if ("loan int" in str(row['Document Header Text']).lower() and (row['Document Type'].startswith("YH") or row['Document Type'].startswith("DR"))) or ("loan int" in str(row['Document Header Text']).lower() and (row['Document Type'].startswith("SA")) and (row['Account'].startswith("1556250021"))):
             return "150"
         else:
             return ''
@@ -332,6 +332,33 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16']
 
+    #-----
+    
+    def buscar_referencia(reference, df):
+        # Convierte la columna "Reference" en una lista para facilitar la búsqueda
+        referencias = df['Reference'].tolist()
+        
+        # Verifica si la referencia está en la lista de referencias
+        if reference in referencias:
+            # Encuentra la fila donde se encuentra la referencia en la columna "Reference"
+            fila_referencia = df[df['Reference'] == reference]
+            
+            # Obtiene el valor de la columna "SC" de esa fila
+            valor_sc = fila_referencia['SC'].iloc[0]
+            
+            return valor_sc
+        else:
+            return ''
+    
+    # Ejemplo de uso:
+    # Suponiendo que tienes el DataFrame df y quieres buscar la referencia '123' en la columna "Reference"
+    # Puedes llamar a la función así:
+    resultado = buscar_referencia('123', df)
+    
+    # Imprime el resultado
+    print(resultado)
+
+    #-----
     def Subcode_Correction(row):
     # Verificar las condiciones
         if row['SC_concat'] != '' and (row['SC_concat'] != row['Subcode_ML'] ):
