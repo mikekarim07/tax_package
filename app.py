@@ -334,29 +334,29 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     #-----
     
-    def buscar_referencia(reference, df):
-        # Convierte la columna "Reference" en una lista para facilitar la búsqueda
-        referencias = df['Reference'].tolist()
+    # def buscar_referencia(reference, df):
+    #     # Convierte la columna "Reference" en una lista para facilitar la búsqueda
+    #     referencias = df['Reference'].tolist()
         
-        # Verifica si la referencia está en la lista de referencias
-        if reference in referencias:
-            # Encuentra la fila donde se encuentra la referencia en la columna "Reference"
-            fila_referencia = df[df['Reference'] == reference]
+    #     # Verifica si la referencia está en la lista de referencias
+    #     if reference in referencias:
+    #         # Encuentra la fila donde se encuentra la referencia en la columna "Reference"
+    #         fila_referencia = df[df['Reference'] == reference]
             
-            # Obtiene el valor de la columna "SC" de esa fila
-            valor_sc = fila_referencia['SC'].iloc[0]
+    #         # Obtiene el valor de la columna "SC" de esa fila
+    #         valor_sc = fila_referencia['SC'].iloc[0]
             
-            return valor_sc
-        else:
-            return ''
+    #         return valor_sc
+    #     else:
+    #         return ''
     
-    # Ejemplo de uso:
-    # Suponiendo que tienes el DataFrame df y quieres buscar la referencia '123' en la columna "Reference"
-    # Puedes llamar a la función así:
-    resultado = buscar_referencia('123', df)
+    # # Ejemplo de uso:
+    # # Suponiendo que tienes el DataFrame df y quieres buscar la referencia '123' en la columna "Reference"
+    # # Puedes llamar a la función así:
+    # resultado = buscar_referencia('123', df)
     
-    # Imprime el resultado
-    print(resultado)
+    # # Imprime el resultado
+    # print(resultado)
 
     #-----
     def Subcode_Correction(row):
