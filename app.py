@@ -20,7 +20,7 @@ import time
 
 
 st.set_page_config(
-    page_title="Tax Package ML Classification Model",
+    page_title="Tax Package ML Classification Model ",
     page_icon="📈",
     layout="wide",
     initial_sidebar_state="expanded",
