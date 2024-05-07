@@ -232,7 +232,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     def sc_250(row):
     # Verificar las condiciones
-        if "loan int" in str(row['Document Header Text']).lower() and row['Document Type'].startswith("SA"):
+        if "loan int" in str(row['Document Header Text']).lower() and row['Document Type'].startswith("SA") and (not(row['Account'].startswith("1556250021"))):
             return "250"
         else:
             return ''
