@@ -335,18 +335,18 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     #-----
     
-    def fix_01(reference, FBL3N_new):
-        # Filtrar el DataFrame para encontrar la fila donde el "Document Number" coincide con la "Reference"
-        filtro = FBL3N_new['Document Number'] == reference
-        fila_encontrada = FBL3N_new[filtro]
+    # def fix_01(reference, FBL3N_new):
+    #     # Filtrar el DataFrame para encontrar la fila donde el "Document Number" coincide con la "Reference"
+    #     filtro = FBL3N_new['Document Number'] == reference
+    #     fila_encontrada = FBL3N_new[filtro]
     
-        # Si se encuentra una fila que cumple la condición, devolver el valor de la columna "Subcode"
-        if not fila_encontrada.empty:
-            subcode = fila_encontrada.iloc[0]['Subcode']
-            return subcode
-        else:
-            return ''
-    FBL3N_new['SC_17'] = FBL3N_new.apply(fix_01, axis=1)
+    #     # Si se encuentra una fila que cumple la condición, devolver el valor de la columna "Subcode"
+    #     if not fila_encontrada.empty:
+    #         subcode = fila_encontrada.iloc[0]['Subcode']
+    #         return subcode
+    #     else:
+    #         return ''
+    # FBL3N_new['SC_17'] = FBL3N_new.apply(fix_01, axis=1)
     #-----
     def Subcode_Correction(row):
     # Verificar las condiciones
@@ -434,7 +434,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         #                        'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
         #                       'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13', 'SC_14', 'SC_15', 'SC_concat',
         #                        'SC_Fix', 'Subcode_ML', 'Subcode_td', 'Subcode_assigned', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev']]
-        FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'SC_17', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
+        FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
                                'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
                                'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
         date_columns = ['Document Date', 'Posting Date', 'Doc. Date', 'Entered', 'Pstng Date']
