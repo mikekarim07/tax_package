@@ -287,7 +287,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_110(row):
-        if (row['Text'].startswith("110") or row['Text'].startswith("111")) and (not ("loan int" in str(row['Document Header Text']).lower())) or (row['Text'].startswith("110") or row['Text'].startswith("111")) and (not (row['Document Header Text'].startswith("620"))):
+        if ((row['Text'].startswith("110") or row['Text'].startswith("111")) 
+        and (not("loan int" in str(row['Document Header Text']).lower()))) or ((row['Text'].startswith("110") or row['Text'].startswith("111")) and (not(row['Document Header Text'].startswith("620")))):
 
             return "110"
         else:
