@@ -217,7 +217,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     def sc_221(row):
         if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and ((row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")))
-                                                                                              and (not (row['Text'].startswith("220") or row['User Name'].startswith("WF-BATCH")))) or (row['Text'].startswith("221")) or (row['Document Header Text'].startswith("Interim")):
+                                                                                              and (not (row['Text'].startswith("220") or row['User Name'].startswith("WF-BATCH")))) or (row['Text'].startswith("221")) or (row['Document Header Text'].startswith("Interim")) or (row['User Name'].startswith("WF-BATCH") and (row['Document Type'].startswith("RE")):
             return "221"
         else:
             return ''
@@ -239,7 +239,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     def sc_300(row):
     # Verificar las condiciones
-        if ("wf-batch" in str(row['User Name']).lower()) or (row['Text'].startswith("300")) or (row['Document Type'].startswith("DZ") or row['Document Type'].startswith("KZ") or row['Document Type'].startswith("ZP") or row['Document Type'].startswith("KA")) or (row['Document Number'].startswith("14") or row['Document Number'].startswith("21") or row['Document Number'].startswith("20")) or (row['Account'].startswith("1556251210") or row['Account'].startswith("1556251270") or row['Account'].startswith("1556251300") or row['Account'].startswith("1556251400") or row['Account'].startswith("1556251450") or row['Account'].startswith("1556251470")) or ((row['Company Code'].startswith("KLMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("SAMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("GIMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("GSMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("KSMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("PRMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("KLCM") and row['Account'].startswith("1556251390"))):
+        if ("wf-batch" in str(row['User Name']).lower() and row['Document Type'].startswith("SA")) or (row['Text'].startswith("300")) or (row['Document Type'].startswith("DZ") or row['Document Type'].startswith("KZ") or row['Document Type'].startswith("ZP") or row['Document Type'].startswith("KA")) or (row['Document Number'].startswith("14") or row['Document Number'].startswith("21") or row['Document Number'].startswith("20")) or (row['Account'].startswith("1556251210") or row['Account'].startswith("1556251270") or row['Account'].startswith("1556251300") or row['Account'].startswith("1556251400") or row['Account'].startswith("1556251450") or row['Account'].startswith("1556251470")) or ((row['Company Code'].startswith("KLMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("SAMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("GIMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("GSMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("KSMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("PRMX") and row['Account'].startswith("1556251390")) or (row['Company Code'].startswith("KLCM") and row['Account'].startswith("1556251390"))):
             return "300"
         else:
             return ''
@@ -287,14 +287,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_110(row):
-        # if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and (("loan int" not in str(row['Document Header Text']).lower()))) or ((row['Text'].startswith("110") or row['Text'].startswith("111")) and (not(row['Document Header Text'].startswith("620")))):
-        if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and not ("loan int" in str(row['Document Header Text']).lower()) and not ((row['Document Header Text'].startswith("620")))):
+        if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and not ("loan int" in str(row['Document Header Text']).lower()) and not ((row['Document Header Text'].startswith("620")))) or (row['Company Code'].startswith("KPRS") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
             return "110"
         else:
             return ''
 
     def sc_210(row):
-        if (row['Text'].startswith("210") or row['Text'].startswith("211")) and (not (row['Account'].startswith("1556160000") or row['Account'].startswith("1556260000") or ("loan int" in str(row['Document Header Text']).lower()))):
+        if ((row['Text'].startswith("210") or row['Text'].startswith("211")) and (not (row['Account'].startswith("1556160000") or row['Account'].startswith("1556260000") or ("loan int" in str(row['Document Header Text']).lower())))) or (row['Company Code'].startswith("KCAR") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
             return "210"
         else:
             return ''
@@ -306,7 +305,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_0(row):
-        if (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472")):
+        if (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472")) or (row['Account'].startswith("1556250440") and (row['Document Type'].startswith("RE") or row['Document Type'].startswith("RN") or row['Document Type'].startswith("KG") or row['Document Type'].startswith("KR"))):
             return "0"
         else:
             return ''
