@@ -217,7 +217,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     def sc_221(row):
         if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and ((row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")))
-                                                                                              and (not (row['Text'].startswith("220") or row['User Name'].startswith("WF-BATCH")))) or (row['Text'].startswith("221")) or (row['Document Header Text'].startswith("Interim")) or (row['User Name'].startswith("WF-BATCH") and row['Document Type'].startswith("RE")):
+                                                                                              and (not (row['Text'].startswith("220") or row['User Name'].startswith("WF-BATCH"))) and (not (row['Account'].startswith("1556250302") or row['Account'].startswith("1556250440")))) or (row['Text'].startswith("221")) or (row['Document Header Text'].startswith("Interim")) or (row['User Name'].startswith("WF-BATCH") and row['Document Type'].startswith("RE") and (not (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472") or row['Account'].startswith("1556250440")))):
             return "221"
         else:
             return ''
@@ -269,7 +269,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_620(row):
-        if (row['Document Header Text'].startswith("620") or row['Text'].startswith("620")):
+        if (row['Document Header Text'].startswith("620") or row['Text'].startswith("620")) and (not (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472") or row['Account'].startswith("1556250440"))):
             return "620"
         else:
             return ''
