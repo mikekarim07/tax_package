@@ -251,8 +251,14 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return ''
 
     def sc_214(row):
-        if (row['Account'].startswith("1556160000") or row['Account'].startswith("1556260000")) and (not (row['Text'].startswith("300"))):
+        if (row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300"))):
             return "214"
+        else:
+            return ''
+
+    def sc_114(row):
+        if ((row['Account'].startswith("1556260000") and row['Text'].startswith("110"))) and (not (row['Text'].startswith("300"))):
+            return "114"
         else:
             return ''
 
@@ -328,8 +334,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_14'] = FBL3N_new.apply(sc_210, axis=1)
     FBL3N_new['SC_15'] = FBL3N_new.apply(sc_400, axis=1)
     FBL3N_new['SC_16'] = FBL3N_new.apply(sc_0, axis=1)
+    FBL3N_new['SC_17'] = FBL3N_new.apply(sc_114, axis=1)
     
-    FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16']
+    FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16'] + FBL3N_new['SC_17']
 
     #-----
     
@@ -410,9 +417,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
         
             
-        columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 
-                                'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
-                               'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
+        # columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 
+        #                         'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
+        #                        'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
         # FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
         columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
         FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
@@ -430,7 +437,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         
         # FBL3N_new = FBL3N_new[['CONCAT', 'Subcode',  'Subcode 2', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
         #                        'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
-        #                       'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13', 'SC_14', 'SC_15', 'SC_concat',
+        #                       'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13', 'SC_14', 'SC_15', 'SC_16', 'SC_17', 'SC_concat',
         #                        'SC_Fix', 'Subcode_ML', 'Subcode_td', 'Subcode_assigned', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev']]
         FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
                                'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
