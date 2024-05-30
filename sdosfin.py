@@ -78,7 +78,7 @@ if uploaded_KCMX is not None:
     
     # Seleccionar la hoja de Excel
     sheet_names_KCMX.insert(0, "Select")
-    sheet_KCMX = st.sidebar.selectbox("Select the sheet which contains KCMX P&L", sheet_names_KCMX)
+    sheet_PnL_KCMX = st.sidebar.selectbox("Select the sheet which contains KCMX P&L", sheet_names_KCMX)
     sheet_AccBal_KCMX = st.sidebar.selectbox("Select the sheet which contains KCMX Account Balances", sheet_names_KCMX)
 st.sidebar.divider()
 
@@ -89,7 +89,7 @@ if uploaded_KLMX is not None:
     
     # Seleccionar la hoja de Excel
     sheet_names_KLMX.insert(0, "Select")
-    sheet_KLMX = st.sidebar.selectbox("Select the sheet which contains KLMX P&L", sheet_names_KLMX)
+    sheet_PnL_KLMX = st.sidebar.selectbox("Select the sheet which contains KLMX P&L", sheet_names_KLMX)
     sheet_AccBal_KLMX = st.sidebar.selectbox("Select the sheet which contains KLMX Account Balances", sheet_names_KLMX)
 st.sidebar.divider()
 
@@ -100,7 +100,7 @@ if uploaded_PRMX is not None:
     
     # Seleccionar la hoja de Excel
     sheet_names_PRMX.insert(0, "Select")
-    sheet_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX P&L", sheet_names_PRMX)
+    sheet_PnL_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX P&L", sheet_names_PRMX)
     sheet_AccBal_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX Account Balances", sheet_names_PRMX)
 st.sidebar.divider()
 
