@@ -136,7 +136,7 @@ with tab1:
 
     with subtab2:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
-            col1, col2, col3, col4, col5 = st.cols(5)
+            col1, col2, col3, col4, col5 = st.columns(5)
             with col1:
                 sheet_AccBal_GIMX = st.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
                 GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
