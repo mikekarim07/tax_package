@@ -119,6 +119,7 @@ with tab1:
                 col_desc_GIMX = pd.to_numeric(col_desc_GIMX, errors='coerce')
             with col2:
                 col_balance_GIMX = st.selectbox("Select columns which contains GIMX P&L Balance", col_options_GIMX)
+                col_balance_GIMX = pd.to_numeric(col_balance_GIMX, errors='coerce')
             if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
                 GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_desc_GIMX]]
                 # GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
