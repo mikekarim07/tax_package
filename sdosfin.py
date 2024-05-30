@@ -39,13 +39,13 @@ st.subheader('Tax Package - Financial Statements Consolidation for Tax Package')
 @st.cache_data
 def get_sheet_names(file):
     # Leer todas las hojas del archivo y devolver sus nombres
-    excel_file = pd.ExcelFile(file, engine='openpyxl', header=None)
+    excel_file = pd.ExcelFile(file, engine='openpyxl')
     return excel_file.sheet_names
 
 @st.cache_data
 def load_sheet(file, sheet_name):
     # Leer una hoja específica del archivo de Excel
-    return pd.read_excel(file, engine='openpyxl', sheet_name=sheet_name)
+    return pd.read_excel(file, engine='openpyxl', sheet_name=sheet_name, header=None)
 
 
 
