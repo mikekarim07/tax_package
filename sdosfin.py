@@ -103,6 +103,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 
 with tab1:
     subtab1, subtab2 = st.tabs(['PnL','Accounts'])
+    sheet_AccBal_GIMX = st.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
     with subtab1:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
             GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
@@ -142,7 +143,7 @@ with tab1:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
             col1, col2, col3, col4, col5 = st.columns(5)
             with col1:
-                sheet_AccBal_GIMX = st.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
+                
                 GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
             with col2:
                 col_cuenta_GIMX = st.number_input("Ingresa el numero de columna que contiene la Cuenta de GIMX", step=1)
