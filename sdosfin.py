@@ -105,7 +105,7 @@ with tab1:
     if uploaded_GIMX and sheet_GIMX is not "Select":
         GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
         # column_descGIMX = st.text_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=None)
-        column_descGIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX")
+        column_descGIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
         # column_balGIMX = st.text_input("Ingresa el numero de columna que contiene el saldo final de GIMX")
         column_balGIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX")
         GIMX_PnL = GIMX_PnL.iloc[:, [column_descGIMX, column_balGIMX]]
