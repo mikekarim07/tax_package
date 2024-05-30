@@ -59,44 +59,44 @@ if uploaded_GIMX is not None:
     sheet_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX P&L", sheet_names_GIMX)
 st.sidebar.divider()
 
-uploaded_GSMX = st.sidebar.file_uploader("Upload GIMX Financial Statements", type=["xlsx"])
+uploaded_GSMX = st.sidebar.file_uploader("Upload GSMX Financial Statements", type=["xlsx"])
 if uploaded_GSMX is not None:
     # Obtener nombres de las hojas del archivo
     sheet_names_GSMX = get_sheet_names(uploaded_GSMX)
     
     # Seleccionar la hoja de Excel
     sheet_names_GSMX.insert(0, "Select")
-    sheet_GSMX = st.sidebar.selectbox("Seleccionar hoja del reporte de pagos que contiene los datos para procesar", sheet_names_GSMX)
+    sheet_GSMX = st.sidebar.selectbox("Select the sheet which contains GSMX P&L", sheet_names_GSMX)
 st.sidebar.divider()
 
-uploaded_KCMX = st.sidebar.file_uploader("Upload GIMX Financial Statements", type=["xlsx"])
+uploaded_KCMX = st.sidebar.file_uploader("Upload KCMX Financial Statements", type=["xlsx"])
 if uploaded_RepPagos is not None:
     # Obtener nombres de las hojas del archivo
     sheet_names_KCMX = get_sheet_names(uploaded_KCMX)
     
     # Seleccionar la hoja de Excel
     sheet_names_KCMX.insert(0, "Select")
-    sheet_KCMX = st.sidebar.selectbox("Seleccionar hoja del reporte de pagos que contiene los datos para procesar", sheet_names_KCMX)
+    sheet_KCMX = st.sidebar.selectbox("Select the sheet which contains KCMX P&L", sheet_names_KCMX)
 st.sidebar.divider()
 
-uploaded_KLMX = st.sidebar.file_uploader("Upload GIMX Financial Statements", type=["xlsx"])
+uploaded_KLMX = st.sidebar.file_uploader("Upload KLMX Financial Statements", type=["xlsx"])
 if uploaded_RepPagos is not None:
     # Obtener nombres de las hojas del archivo
     sheet_names_KLMX = get_sheet_names(uploaded_KLMX)
     
     # Seleccionar la hoja de Excel
     sheet_names_KLMX.insert(0, "Select")
-    sheet_KLMX = st.sidebar.selectbox("Seleccionar hoja del reporte de pagos que contiene los datos para procesar", sheet_names_KLMX)
+    sheet_KLMX = st.sidebar.selectbox("Select the sheet which contains KLMX P&L", sheet_names_KLMX)
 st.sidebar.divider()
 
-uploaded_PRMX = st.sidebar.file_uploader("Upload GIMX Financial Statements", type=["xlsx"])
+uploaded_PRMX = st.sidebar.file_uploader("Upload PRMX Financial Statements", type=["xlsx"])
 if uploaded_RepPagos is not None:
     # Obtener nombres de las hojas del archivo
     sheet_names_PRMX = get_sheet_names(uploaded_PRMX)
     
     # Seleccionar la hoja de Excel
     sheet_names_PRMX.insert(0, "Select")
-    sheet_PRMX = st.sidebar.selectbox("Seleccionar hoja del reporte de pagos que contiene los datos para procesar", sheet_names_PRMX)
+    sheet_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX P&L", sheet_names_PRMX)
 st.sidebar.divider()
 
 
