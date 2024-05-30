@@ -106,7 +106,7 @@ with tab1:
         GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
         col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
         col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
-        GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', df_original.columns[col_balance_GIMX]: 'Balance'})
+        GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
 
         # GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
         GIMX_PnL["Income Rows"] = ''
