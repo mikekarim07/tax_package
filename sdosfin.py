@@ -120,7 +120,7 @@ with tab1:
                 col_balance_GIMX = st.selectbox("Select columns which contains GIMX P&L Balance", col_options_GIMX)
             if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
                 GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_desc_GIMX]]
-                GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
+                # GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
         
                 # GIMX_PnL["Income Rows"] = ''
                 # GIMX_PnL['Balance'] = pd.to_numeric(GIMX_PnL['Balance'], errors='coerce')
