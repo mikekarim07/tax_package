@@ -123,7 +123,11 @@ with tab1:
                 col_balance_GIMX = col_balance_GIMX.astype(float)
                 st.write(col_balance_GIMX)
             if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
-                GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_desc_GIMX]]
+                GIMX_PnL.rename(columns={col_desc_GIMX: "Descripcion", col_balance_GIMX: "Balance"}, inplace=True)
+                
+                
+                
+                # GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_desc_GIMX]]
                 # GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
         
                 # GIMX_PnL["Income Rows"] = ''
