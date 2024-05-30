@@ -70,7 +70,7 @@ if uploaded_GSMX is not None:
 st.sidebar.divider()
 
 uploaded_KCMX = st.sidebar.file_uploader("Upload KCMX Financial Statements", type=["xlsx"])
-if uploaded_RepPagos is not None:
+if uploaded_KCMX is not None:
     # Obtener nombres de las hojas del archivo
     sheet_names_KCMX = get_sheet_names(uploaded_KCMX)
     
@@ -80,7 +80,7 @@ if uploaded_RepPagos is not None:
 st.sidebar.divider()
 
 uploaded_KLMX = st.sidebar.file_uploader("Upload KLMX Financial Statements", type=["xlsx"])
-if uploaded_RepPagos is not None:
+if uploaded_KLMX is not None:
     # Obtener nombres de las hojas del archivo
     sheet_names_KLMX = get_sheet_names(uploaded_KLMX)
     
@@ -90,7 +90,7 @@ if uploaded_RepPagos is not None:
 st.sidebar.divider()
 
 uploaded_PRMX = st.sidebar.file_uploader("Upload PRMX Financial Statements", type=["xlsx"])
-if uploaded_RepPagos is not None:
+if uploaded_PRMX is not None:
     # Obtener nombres de las hojas del archivo
     sheet_names_PRMX = get_sheet_names(uploaded_PRMX)
     
