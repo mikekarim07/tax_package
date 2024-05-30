@@ -106,8 +106,12 @@ with tab1:
     with subtab1:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
             GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
-            col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
-            col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
+            col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
+            with col1:
+                col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
+            with col2:
+                col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
+                
             if col_desc_GIMX is not col_balance_GIMX:
                 GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
                 GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
