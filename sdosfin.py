@@ -123,7 +123,7 @@ with tab1:
         GIMX_PnL = edited_GIMX
         GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
         Total_Income = GIMX_PnL["Balance"].sum()
-
+        st.metric(label="Total Income", value=Total_Income)
 
         
         st.dataframe(GIMX_PnL)
