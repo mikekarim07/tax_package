@@ -103,7 +103,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 
 with tab1:
     if uploaded_GIMX and sheet_GIMX is not "Select":
-        GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
+        GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX, header=None)
         st.dataframe(GIMX_PnL)
 
 
