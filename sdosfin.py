@@ -290,9 +290,9 @@ with tab3:
                 
                 KCMX_PnL = edited_KCMX
                 KCMX_PnL = KCMX_PnL[KCMX_PnL['Income Rows'] == "True"]
+                KCMX_PnL['Description'] = KCMX_PnL['Description'].str.lower()
                 KCMX_Clasificacion = KCMX_PnL['Description'].unique()
-                KCMX_Clasificacion.str.lower()
-    
+                    
                 Total_Income = KCMX_PnL["Balance"].sum()
                 Total_Income = "{:,.2f}".format(Total_Income)
                 st.metric(label="Total Income", value=Total_Income)
