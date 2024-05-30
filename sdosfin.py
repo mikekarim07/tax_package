@@ -164,9 +164,6 @@ with tab1:
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
                 GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
                 GIMX_Balances = GIMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
-                
-                GIMX_Balances = GIMX_Balances.iloc[:, [col_cuenta_GIMX, col_clasificacion_GIMX, col_rubro_GIMX, col_saldo_GIMX]]
-                GIMX_Balances = GIMX_Balances.rename(columns={GIMX_Balances.columns[col_cuenta_GIMX]: 'Cuenta', GIMX_Balances.columns[col_clasificacion_GIMX]: 'Clasificacion', GIMX_Balances.columns[col_rubro_GIMX]: 'Rubro', GIMX_Balances.columns[col_saldo_GIMX]: 'Saldo'})
                 GIMX_Balances = GIMX_Balances[(GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)) & (GIMX_Balances['Saldo'] != 0)]
                 
                 
