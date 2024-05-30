@@ -113,6 +113,7 @@ with tab1:
                 }, disabled=[col_desc_GIMX, col_balance_GIMX], hide_index=True)
         GIMX_PnL = edited_GIMX
         GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
+        Total_Income = GIMX_PnL['1'].sum()
 
 
         
