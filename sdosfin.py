@@ -142,46 +142,11 @@ with tab1:
             GIMX_Balances.columns = GIMX_Balances.iloc[0]
             GIMX_Balances = GIMX_Balances[1:].reset_index(drop=True)
 
-            GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
+            # GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
 
             st.dataframe(GIMX_Balances)            
             
             
-            # GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
-            # col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
-            # col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
-            # GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
-            # GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
-    
-            # # GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
-            # GIMX_PnL["Income Rows"] = ''
-            # GIMX_PnL['Balance'] = pd.to_numeric(GIMX_PnL['Balance'], errors='coerce')
-            # GIMX_PnL['Balance'] = GIMX_PnL['Balance'].astype(float)
-            # # edited_GIMX = st.data_editor(GIMX_PnL, column_config={
-            # #             "Income Rows": st.column_config.CheckboxColumn(default=False)
-            # #         }, disabled=[col_desc_GIMX, col_balance_GIMX], hide_index=True)
-            # edited_GIMX = st.data_editor(GIMX_PnL, column_config={
-            #             "Income Rows": st.column_config.CheckboxColumn(default=False)
-            #         }, disabled=["Description", "Balance"], hide_index=True)
-    
-            
-            # GIMX_PnL = edited_GIMX
-            # GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
-            # Total_Income = GIMX_PnL["Balance"].sum()
-            # Total_Income = "{:,.2f}".format(Total_Income)
-            # st.metric(label="Total Income", value=Total_Income)
-    
-            
-            # st.dataframe(GIMX_PnL)
-    
-
-
-
-
-
-
-
-
 
 
 
