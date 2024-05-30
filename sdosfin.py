@@ -104,6 +104,23 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 with tab1:
     if uploaded_GIMX and sheet_GIMX is not "Select":
         GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
+
+
+        column_names = GIMX_PnL.iloc[0].tolist()
+        
+        # # Eliminar la primera fila del DataFrame
+        # df = df[1:]
+        
+        # Asignar los nombres de las columnas al DataFrame
+        GIMX_PnL.columns = column_names
+        
+        # Mostrar el DataFrame y la lista de nombres de columnas en la aplicación
+        st.write("Column Names:", column_names)
+        st.write(df)
+
+
+
+        
         st.dataframe(GIMX_PnL)
 
 
