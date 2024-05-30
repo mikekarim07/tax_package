@@ -322,8 +322,8 @@ with tab3:
             if (col_cuenta_KCMX is not "Select") and (col_clasificacion_KCMX is not "Select") and (col_rubro_KCMX is not "Select") and (col_saldo_KCMX is not "Select"):
                 KCMX_Balances.rename(columns={col_cuenta_KCMX: "Cuenta", col_clasificacion_KCMX: "Clasificacion", col_rubro_KCMX: "Rubro", col_saldo_KCMX: "Saldo"}, inplace=True)
                 KCMX_Balances = KCMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
-                KCMX_Balances = KCMX_Balances[(KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)) & (KCMX_Balances['Saldo'] != 0)]
-                
+                # KCMX_Balances = KCMX_Balances[(KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)) & (KCMX_Balances['Saldo'] != 0)]
+                KCMX_Balances = KCMX_Balances[KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)]
                 
                 Total_Income_Balance = KCMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
