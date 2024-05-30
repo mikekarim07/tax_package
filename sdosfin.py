@@ -147,19 +147,24 @@ with tab1:
 
     with subtab2:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
-            col1, col2, col3, col4, col5 = st.columns(5)
+            GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
+            cols_acc_bal_GIMX = GIMX_Balances.columns.tolist()
+            cols_acc_bal_GIMX.insert(0, "Select")
+            
+            col1, col2, col3, col4 = st.columns(4)
             with col1:
-                
-                GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
+                col_cuenta_GIMX = st.selectbox("Select the column which contains GIMX - Cuenta", cols_acc_bal_GIMX)
             with col2:
-                col_cuenta_GIMX = st.number_input("Ingresa el numero de columna que contiene la Cuenta de GIMX", step=1)
+                col_clasificacion_GIMX = st.selectbox("Select the column which contains GIMX - Clasificacion", cols_acc_bal_GIMX)
             with col3:
-                col_clasificacion_GIMX = st.number_input("Ingresa el numero de columna que contiene la clasificacion de GIMX", step=1)
+                col_rubro_GIMX = st.selectbox("Select the column which contains GIMX - Rubro", cols_acc_bal_GIMX)
             with col4:
-                col_rubro_GIMX = st.number_input("Ingresa el numero de columna que contiene el rubro de GIMX", step=1)
-            with col5:
-                col_saldo_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo de la cuenta de GIMX", step=1)
-            if (col_cuenta_GIMX is not col_clasificacion_GIMX) and (col_cuenta_GIMX is not col_rubro_GIMX) and (col_cuenta_GIMX is not col_saldo_GIMX):
+                col_saldo_GIMX = st.selectbox("Select the column which contains GIMX - Saldo", cols_acc_bal_GIMX)
+            
+            if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
+                GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
+                GIMX_PnL = GIMX_PnL[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                
                 GIMX_Balances = GIMX_Balances.iloc[:, [col_cuenta_GIMX, col_clasificacion_GIMX, col_rubro_GIMX, col_saldo_GIMX]]
                 GIMX_Balances = GIMX_Balances.rename(columns={GIMX_Balances.columns[col_cuenta_GIMX]: 'Cuenta', GIMX_Balances.columns[col_clasificacion_GIMX]: 'Clasificacion', GIMX_Balances.columns[col_rubro_GIMX]: 'Rubro', GIMX_Balances.columns[col_saldo_GIMX]: 'Saldo'})
                 GIMX_Balances = GIMX_Balances[(GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)) & (GIMX_Balances['Saldo'] != 0)]
