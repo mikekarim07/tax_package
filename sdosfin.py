@@ -56,7 +56,7 @@ if uploaded_GIMX is not None:
     
     # Seleccionar la hoja de Excel
     sheet_names_GIMX.insert(0, "Select")
-    sheet_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX P&L", sheet_names_GIMX)
+    sheet_PnL_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX P&L", sheet_names_GIMX)
 st.sidebar.divider()
 
 uploaded_GSMX = st.sidebar.file_uploader("Upload GSMX Financial Statements", type=["xlsx"])
@@ -105,7 +105,7 @@ with tab1:
     subtab1, subtab2 = st.tabs(['PnL','Accounts'])
     with subtab1:
         if uploaded_GIMX and sheet_GIMX is not "Select":
-            GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
+            GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
             col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
             col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
             GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
@@ -131,6 +131,41 @@ with tab1:
     
             
             st.dataframe(GIMX_PnL)
+
+    with subtab2:
+        if uploaded_GIMX and sheet_GIMX is not "Select":
+            sheet_AccBal_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
+            GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
+            st.dataframe(GIMX_Balances)            
+            
+            
+            # GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
+            # col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
+            # col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
+            # GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
+            # GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
+    
+            # # GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
+            # GIMX_PnL["Income Rows"] = ''
+            # GIMX_PnL['Balance'] = pd.to_numeric(GIMX_PnL['Balance'], errors='coerce')
+            # GIMX_PnL['Balance'] = GIMX_PnL['Balance'].astype(float)
+            # # edited_GIMX = st.data_editor(GIMX_PnL, column_config={
+            # #             "Income Rows": st.column_config.CheckboxColumn(default=False)
+            # #         }, disabled=[col_desc_GIMX, col_balance_GIMX], hide_index=True)
+            # edited_GIMX = st.data_editor(GIMX_PnL, column_config={
+            #             "Income Rows": st.column_config.CheckboxColumn(default=False)
+            #         }, disabled=["Description", "Balance"], hide_index=True)
+    
+            
+            # GIMX_PnL = edited_GIMX
+            # GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
+            # Total_Income = GIMX_PnL["Balance"].sum()
+            # Total_Income = "{:,.2f}".format(Total_Income)
+            # st.metric(label="Total Income", value=Total_Income)
+    
+            
+            # st.dataframe(GIMX_PnL)
+    
 
 
 
