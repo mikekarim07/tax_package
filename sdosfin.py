@@ -112,7 +112,7 @@ with tab1:
                     "Income Rows": st.column_config.CheckboxColumn(default=False)
                 }, disabled=[col_desc_GIMX, col_balance_GIMX], hide_index=True)
         GIMX_PnL = edited_GIMX
-        GIMX_PnL = GIMX_PnL[GIMX_PnL[3] == "True"]
+        GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
 
 
         
