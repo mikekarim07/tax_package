@@ -188,9 +188,11 @@ with tab2:
             GSMX_PnL = load_sheet(uploaded_GSMX, sheet_PnL_GSMX)
             col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
             with col1:
-                col_desc_GSMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GSMX", step=1)
+                col_options = GSMX_PnL.columns.tolist()
+                selected_columns = st.multiselect("Selecciona las columnas que quieres usar", col_options)
+                # col_desc_GSMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GSMX", step=1)
             with col2:
-                col_balance_GSMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GSMX", step=1)
+                # col_balance_GSMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GSMX", step=1)
                 
             if col_desc_GSMX is not col_balance_GSMX:
                 
