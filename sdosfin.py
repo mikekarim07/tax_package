@@ -107,17 +107,17 @@ st.sidebar.divider()
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 
 with tab1:
-    subtab1, subtab2 = st.tabs(['PnL','Accounts'])    
-    with subtab1:
+    subtab1_GIMX, subtab2_GIMX = st.tabs(['PnL','Accounts'])    
+    with subtab1_GIMX:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select" and sheet_AccBal_GIMX is not "Select":
             GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
             col_options_GIMX = GIMX_PnL.columns.tolist()
             col_options_GIMX.insert(0, "Select")
-            col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
-            with col1:
+            col1_GIMX, col2_GIMX, col3_GIMX =st.columns([0.2, 0.2, 0.6])
+            with col1_GIMX:
                 col_desc_GIMX = st.selectbox("Select columns which contains GIMX P&L Description", col_options_GIMX)
                                
-            with col2:
+            with col2_GIMX:
                 col_balance_GIMX = st.selectbox("Select columns which contains GIMX P&L Balance", col_options_GIMX)
                 
             if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
@@ -145,20 +145,20 @@ with tab1:
                 st.dataframe(GIMX_PnL)
             
 
-    with subtab2:
+    with subtab2_GIMX:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
             GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
             cols_acc_bal_GIMX = GIMX_Balances.columns.tolist()
             cols_acc_bal_GIMX.insert(0, "Select")
             
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
+            col1_GIMX, col2_GIMX, col3_GIMX, col4_GIMX = st.columns(4)
+            with col1_GIMX:
                 col_cuenta_GIMX = st.selectbox("Select the column which contains GIMX - Cuenta", cols_acc_bal_GIMX)
-            with col2:
+            with col2_GIMX:
                 col_clasificacion_GIMX = st.selectbox("Select the column which contains GIMX - Clasificacion", cols_acc_bal_GIMX)
-            with col3:
+            with col3_GIMX:
                 col_rubro_GIMX = st.selectbox("Select the column which contains GIMX - Rubro", cols_acc_bal_GIMX)
-            with col4:
+            with col4_GIMX:
                 col_saldo_GIMX = st.selectbox("Select the column which contains GIMX - Saldo", cols_acc_bal_GIMX)
             
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
@@ -186,17 +186,17 @@ with tab1:
 
 
 with tab2:
-    subtab1, subtab2 = st.tabs(['PnL','Accounts'])    
-    with subtab1:
+    subtab1_GSMX, subtab2_GSMX = st.tabs(['PnL','Accounts'])    
+    with subtab1_GSMX:
         if uploaded_GSMX and sheet_PnL_GSMX is not "Select" and sheet_AccBal_GSMX is not "Select":
             GSMX_PnL = load_sheet(uploaded_GSMX, sheet_PnL_GSMX)
             col_options_GSMX = GSMX_PnL.columns.tolist()
             col_options_GSMX.insert(0, "Select")
-            col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
-            with col1:
+            col1_GSMX, col2_GSMX, col3_GSMX =st.columns([0.2, 0.2, 0.6])
+            with col1_GSMX:
                 col_desc_GSMX = st.selectbox("Select columns which contains GSMX P&L Description", col_options_GSMX)
                                
-            with col2:
+            with col2_GSMX:
                 col_balance_GSMX = st.selectbox("Select columns which contains GSMX P&L Balance", col_options_GSMX)
                 
             if col_desc_GSMX is not "Select" and col_balance_GSMX is not "Select":
@@ -224,20 +224,20 @@ with tab2:
                 st.dataframe(GSMX_PnL)
             
 
-    with subtab2:
+    with subtab2_GSMX:
         if uploaded_GSMX and sheet_PnL_GSMX is not "Select":
             GSMX_Balances = load_sheet(uploaded_GSMX, sheet_AccBal_GSMX)
             cols_acc_bal_GSMX = GSMX_Balances.columns.tolist()
             cols_acc_bal_GSMX.insert(0, "Select")
             
-            col1, col2, col3, col4 = st.columns(4)
-            with col1:
+            col1_GSMX, col2_GSMX, col3_GSMX, col4_GSMX = st.columns(4)
+            with col1_GSMX:
                 col_cuenta_GSMX = st.selectbox("Select the column which contains GSMX - Cuenta", cols_acc_bal_GSMX)
-            with col2:
+            with col2_GSMX:
                 col_clasificacion_GSMX = st.selectbox("Select the column which contains GSMX - Clasificacion", cols_acc_bal_GSMX)
-            with col3:
+            with col3_GSMX:
                 col_rubro_GSMX = st.selectbox("Select the column which contains GSMX - Rubro", cols_acc_bal_GSMX)
-            with col4:
+            with col4_GSMX:
                 col_saldo_GSMX = st.selectbox("Select the column which contains GSMX - Saldo", cols_acc_bal_GSMX)
             
             if (col_cuenta_GSMX is not "Select") and (col_clasificacion_GSMX is not "Select") and (col_rubro_GSMX is not "Select") and (col_saldo_GSMX is not "Select"):
