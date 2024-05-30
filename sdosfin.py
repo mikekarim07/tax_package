@@ -57,6 +57,7 @@ if uploaded_GIMX is not None:
     # Seleccionar la hoja de Excel
     sheet_names_GIMX.insert(0, "Select")
     sheet_PnL_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX P&L", sheet_names_GIMX)
+    sheet_AccBal_GIMX = st.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
 st.sidebar.divider()
 
 uploaded_GSMX = st.sidebar.file_uploader("Upload GSMX Financial Statements", type=["xlsx"])
@@ -67,6 +68,7 @@ if uploaded_GSMX is not None:
     # Seleccionar la hoja de Excel
     sheet_names_GSMX.insert(0, "Select")
     sheet_PnL_GSMX = st.sidebar.selectbox("Select the sheet which contains GSMX P&L", sheet_names_GSMX)
+    sheet_AccBal_GSMX = st.selectbox("Select the sheet which contains GSMX Account Balances", sheet_names_GSMX)
 st.sidebar.divider()
 
 uploaded_KCMX = st.sidebar.file_uploader("Upload KCMX Financial Statements", type=["xlsx"])
@@ -77,6 +79,7 @@ if uploaded_KCMX is not None:
     # Seleccionar la hoja de Excel
     sheet_names_KCMX.insert(0, "Select")
     sheet_KCMX = st.sidebar.selectbox("Select the sheet which contains KCMX P&L", sheet_names_KCMX)
+    sheet_AccBal_KCMX = st.selectbox("Select the sheet which contains KCMX Account Balances", sheet_names_KCMX)
 st.sidebar.divider()
 
 uploaded_KLMX = st.sidebar.file_uploader("Upload KLMX Financial Statements", type=["xlsx"])
@@ -87,6 +90,7 @@ if uploaded_KLMX is not None:
     # Seleccionar la hoja de Excel
     sheet_names_KLMX.insert(0, "Select")
     sheet_KLMX = st.sidebar.selectbox("Select the sheet which contains KLMX P&L", sheet_names_KLMX)
+    sheet_AccBal_KLMX = st.selectbox("Select the sheet which contains KLMX Account Balances", sheet_names_KLMX)
 st.sidebar.divider()
 
 uploaded_PRMX = st.sidebar.file_uploader("Upload PRMX Financial Statements", type=["xlsx"])
@@ -97,15 +101,15 @@ if uploaded_PRMX is not None:
     # Seleccionar la hoja de Excel
     sheet_names_PRMX.insert(0, "Select")
     sheet_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX P&L", sheet_names_PRMX)
+    sheet_AccBal_PRMX = st.selectbox("Select the sheet which contains PRMX Account Balances", sheet_names_PRMX)
 st.sidebar.divider()
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 
 with tab1:
-    subtab1, subtab2 = st.tabs(['PnL','Accounts'])
-    sheet_AccBal_GIMX = st.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
+    subtab1, subtab2 = st.tabs(['PnL','Accounts'])    
     with subtab1:
-        if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
+        if uploaded_GIMX and sheet_PnL_GIMX is not "Select" and sheet_AccBal_GIMX is not "Select":
             GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
             col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
             with col1:
