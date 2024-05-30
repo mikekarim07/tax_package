@@ -111,14 +111,14 @@ with tab1:
     with subtab1:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select" and sheet_AccBal_GIMX is not "Select":
             GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
-            col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
+            col1, col2 =st.columns([0.4, 0.6])
             with col1:
-                col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
-            with col2:
-                col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
-                
-            if col_desc_GIMX is not col_balance_GIMX:
-                GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
+                col_options_GIMX = GIMX_PnL.columns.tolist()
+                col_options_GIMX.insert(0, "Select")
+                col_desc_GIMX = st.selectbox("Select columns which contains GIMX P&L Description", col_options_GIMX)
+                col_balance_GIMX = st.selectbox("Select columns which contains GIMX P&L Balance", col_options_GIMX)
+            if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
+                GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_desc_GIMX]]
                 GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
         
                 GIMX_PnL["Income Rows"] = ''
@@ -186,76 +186,76 @@ with tab1:
 
 
 
-with tab2:
-    subtab1, subtab2 = st.tabs(['PnL','Accounts'])
-    with subtab1:
-        if uploaded_GSMX and sheet_PnL_GSMX is not "Select":
-            GSMX_PnL = load_sheet(uploaded_GSMX, sheet_PnL_GSMX)
-            col_options = GSMX_PnL.columns.tolist()
-            selected_columns = st.multiselect("Selecciona las columnas que quieres usar", col_options)
-            if selected_columns:
-            # Filtrar las columnas seleccionadas
-                GSMX_PnL = GSMX_PnL[selected_columns]
-            st.dataframe(GSMX_PnL)
-    #         col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
-    #         with col1:
+# with tab2:
+#     subtab1, subtab2 = st.tabs(['PnL','Accounts'])
+#     with subtab1:
+#         if uploaded_GSMX and sheet_PnL_GSMX is not "Select":
+#             GSMX_PnL = load_sheet(uploaded_GSMX, sheet_PnL_GSMX)
+#             col_options = GSMX_PnL.columns.tolist()
+#             selected_columns = st.multiselect("Selecciona las columnas que quieres usar", col_options)
+#             if selected_columns:
+#             # Filtrar las columnas seleccionadas
+#                 GSMX_PnL = GSMX_PnL[selected_columns]
+#             st.dataframe(GSMX_PnL)
+#     #         col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
+#     #         with col1:
             
-    #             col_desc_GSMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GSMX", step=1)
-    #         with col2:
-    #             col_balance_GSMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GSMX", step=1)
+#     #             col_desc_GSMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GSMX", step=1)
+#     #         with col2:
+#     #             col_balance_GSMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GSMX", step=1)
                 
-    #         if col_desc_GSMX is not col_balance_GSMX:
+#     #         if col_desc_GSMX is not col_balance_GSMX:
                 
-    #             GSMX_PnL = GSMX_PnL.iloc[:, [col_desc_GSMX, col_balance_GSMX]]
-    #             GSMX_PnL = GSMX_PnL.rename(columns={GSMX_PnL.columns[col_desc_GSMX]: 'Description', GSMX_PnL.columns[col_balance_GSMX]: 'Balance'})
+#     #             GSMX_PnL = GSMX_PnL.iloc[:, [col_desc_GSMX, col_balance_GSMX]]
+#     #             GSMX_PnL = GSMX_PnL.rename(columns={GSMX_PnL.columns[col_desc_GSMX]: 'Description', GSMX_PnL.columns[col_balance_GSMX]: 'Balance'})
         
-    #             GSMX_PnL["Income Rows"] = ''
-    #             GSMX_PnL['Balance'] = pd.to_numeric(GSMX_PnL['Balance'], errors='coerce')
-    #             GSMX_PnL['Balance'] = GSMX_PnL['Balance'].astype(float)
-    #             edited_GSMX = st.data_editor(GSMX_PnL, column_config={
-    #                         "Income Rows": st.column_config.CheckboxColumn(default=False)
-    #                     }, disabled=["Description", "Balance"], hide_index=True)
+#     #             GSMX_PnL["Income Rows"] = ''
+#     #             GSMX_PnL['Balance'] = pd.to_numeric(GSMX_PnL['Balance'], errors='coerce')
+#     #             GSMX_PnL['Balance'] = GSMX_PnL['Balance'].astype(float)
+#     #             edited_GSMX = st.data_editor(GSMX_PnL, column_config={
+#     #                         "Income Rows": st.column_config.CheckboxColumn(default=False)
+#     #                     }, disabled=["Description", "Balance"], hide_index=True)
         
                 
-    #             GSMX_PnL = edited_GSMX
-    #             GSMX_PnL = GSMX_PnL[GSMX_PnL['Income Rows'] == "True"]
-    #             GSMX_Clasificacion = GSMX_PnL['Description'].unique()
+#     #             GSMX_PnL = edited_GSMX
+#     #             GSMX_PnL = GSMX_PnL[GSMX_PnL['Income Rows'] == "True"]
+#     #             GSMX_Clasificacion = GSMX_PnL['Description'].unique()
     
-    #             Total_Income = GSMX_PnL["Balance"].sum()
-    #             Total_Income = "{:,.2f}".format(Total_Income)
-    #             st.metric(label="Total Income", value=Total_Income)
+#     #             Total_Income = GSMX_PnL["Balance"].sum()
+#     #             Total_Income = "{:,.2f}".format(Total_Income)
+#     #             st.metric(label="Total Income", value=Total_Income)
         
                 
-    #             st.dataframe(GSMX_PnL)
-    #         else:
-    #             st.dataframe(GSMX_PnL)
+#     #             st.dataframe(GSMX_PnL)
+#     #         else:
+#     #             st.dataframe(GSMX_PnL)
             
 
-    # with subtab2:
-    #     if uploaded_GSMX and sheet_PnL_GSMX is not "Select":
-    #         col1, col2, col3, col4, col5 = st.columns(5)
-    #         with col1:
-    #             sheet_AccBal_GSMX = st.selectbox("Select the sheet which contains GSMX Account Balances", sheet_names_GSMX)
-    #             GSMX_Balances = load_sheet(uploaded_GSMX, sheet_AccBal_GSMX)
-    #         with col2:
-    #             col_cuenta_GSMX = st.number_input("Ingresa el numero de columna que contiene la Cuenta de GSMX", step=1)
-    #         with col3:
-    #             col_clasificacion_GSMX = st.number_input("Ingresa el numero de columna que contiene la clasificacion de GSMX", step=1)
-    #         with col4:
-    #             col_rubro_GSMX = st.number_input("Ingresa el numero de columna que contiene el rubro de GSMX", step=1)
-    #         with col5:
-    #             col_saldo_GSMX = st.number_input("Ingresa el numero de columna que contiene el saldo de la cuenta de GSMX", step=1)
-    #         if (col_cuenta_GSMX is not col_clasificacion_GSMX) and (col_cuenta_GSMX is not col_rubro_GSMX) and (col_cuenta_GSMX is not col_saldo_GSMX):
-    #             GSMX_Balances = GSMX_Balances.iloc[:, [col_cuenta_GSMX, col_clasificacion_GSMX, col_rubro_GSMX, col_saldo_GSMX]]
-    #             GSMX_Balances = GSMX_Balances.rename(columns={GSMX_Balances.columns[col_cuenta_GSMX]: 'Cuenta', GSMX_Balances.columns[col_clasificacion_GSMX]: 'Clasificacion', GSMX_Balances.columns[col_rubro_GSMX]: 'Rubro', GSMX_Balances.columns[col_saldo_GSMX]: 'Saldo'})
-    #             GSMX_Balances = GSMX_Balances[(GSMX_Balances['Clasificacion'].isin(GSMX_Clasificacion)) & (GSMX_Balances['Saldo'] != 0)]
+#     # with subtab2:
+#     #     if uploaded_GSMX and sheet_PnL_GSMX is not "Select":
+#     #         col1, col2, col3, col4, col5 = st.columns(5)
+#     #         with col1:
+#     #             sheet_AccBal_GSMX = st.selectbox("Select the sheet which contains GSMX Account Balances", sheet_names_GSMX)
+#     #             GSMX_Balances = load_sheet(uploaded_GSMX, sheet_AccBal_GSMX)
+#     #         with col2:
+#     #             col_cuenta_GSMX = st.number_input("Ingresa el numero de columna que contiene la Cuenta de GSMX", step=1)
+#     #         with col3:
+#     #             col_clasificacion_GSMX = st.number_input("Ingresa el numero de columna que contiene la clasificacion de GSMX", step=1)
+#     #         with col4:
+#     #             col_rubro_GSMX = st.number_input("Ingresa el numero de columna que contiene el rubro de GSMX", step=1)
+#     #         with col5:
+#     #             col_saldo_GSMX = st.number_input("Ingresa el numero de columna que contiene el saldo de la cuenta de GSMX", step=1)
+#     #         if (col_cuenta_GSMX is not col_clasificacion_GSMX) and (col_cuenta_GSMX is not col_rubro_GSMX) and (col_cuenta_GSMX is not col_saldo_GSMX):
+#     #             GSMX_Balances = GSMX_Balances.iloc[:, [col_cuenta_GSMX, col_clasificacion_GSMX, col_rubro_GSMX, col_saldo_GSMX]]
+#     #             GSMX_Balances = GSMX_Balances.rename(columns={GSMX_Balances.columns[col_cuenta_GSMX]: 'Cuenta', GSMX_Balances.columns[col_clasificacion_GSMX]: 'Clasificacion', GSMX_Balances.columns[col_rubro_GSMX]: 'Rubro', GSMX_Balances.columns[col_saldo_GSMX]: 'Saldo'})
+#     #             GSMX_Balances = GSMX_Balances[(GSMX_Balances['Clasificacion'].isin(GSMX_Clasificacion)) & (GSMX_Balances['Saldo'] != 0)]
                 
                 
-    #             Total_Income_Balance = GSMX_Balances["Saldo"].sum()
-    #             Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-    #             st.metric(label="Total Income", value=Total_Income_Balance)
+#     #             Total_Income_Balance = GSMX_Balances["Saldo"].sum()
+#     #             Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
+#     #             st.metric(label="Total Income", value=Total_Income_Balance)
                 
-    #             st.dataframe(GSMX_Balances)
-    #         else:
-    #             st.dataframe(GSMX_Balances)
+#     #             st.dataframe(GSMX_Balances)
+#     #         else:
+#     #             st.dataframe(GSMX_Balances)
 
