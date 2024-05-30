@@ -111,7 +111,7 @@ with tab1:
 
         # GIMX_PnL = GIMX_PnL.iloc[:, [col_desc_GIMX, col_balance_GIMX]]
         GIMX_PnL["Income Rows"] = ''
-        GIMX_PnL['Balance'] = GIMX_PnL['Balance'].astype(float)
+        GIMX_PnL['Balance'] = pd.to_numeric(GIMX_PnL['Balance'], errors='coerce')
         # edited_GIMX = st.data_editor(GIMX_PnL, column_config={
         #             "Income Rows": st.column_config.CheckboxColumn(default=False)
         #         }, disabled=[col_desc_GIMX, col_balance_GIMX], hide_index=True)
