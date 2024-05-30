@@ -39,7 +39,7 @@ st.subheader('Tax Package - Financial Statements Consolidation for Tax Package')
 @st.cache_data
 def get_sheet_names(file):
     # Leer todas las hojas del archivo y devolver sus nombres
-    excel_file = pd.ExcelFile(file, engine='openpyxl')
+    excel_file = pd.ExcelFile(file, engine='openpyxl', header=None)
     return excel_file.sheet_names
 
 @st.cache_data
@@ -103,7 +103,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 
 with tab1:
     if uploaded_GIMX and sheet_GIMX is not "Select":
-        GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX, header=None)
+        GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
         st.dataframe(GIMX_PnL)
 
 
