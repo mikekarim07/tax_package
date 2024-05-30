@@ -32,7 +32,7 @@ st.set_page_config(
 
 st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/images/logo.svg", width=120)
 # st.header('Machine Learnig Model')
-st.subheader('Tax Package - Saldos Financieros')
+st.subheader('Tax Package - Financial Statements Consolidation for Tax Package')
 
 # st.divider()
 
