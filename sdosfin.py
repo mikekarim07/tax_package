@@ -111,11 +111,12 @@ with tab1:
     with subtab1:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select" and sheet_AccBal_GIMX is not "Select":
             GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
-            col1, col2 =st.columns([0.4, 0.6])
+            col_options_GIMX = GIMX_PnL.columns.tolist()
+            col_options_GIMX.insert(0, "Select")
+            col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
             with col1:
-                col_options_GIMX = GIMX_PnL.columns.tolist()
-                col_options_GIMX.insert(0, "Select")
                 col_desc_GIMX = st.selectbox("Select columns which contains GIMX P&L Description", col_options_GIMX)
+            with col2:
                 col_balance_GIMX = st.selectbox("Select columns which contains GIMX P&L Balance", col_options_GIMX)
             if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
                 GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_desc_GIMX]]
