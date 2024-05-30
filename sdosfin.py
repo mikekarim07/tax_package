@@ -111,6 +111,7 @@ with tab1:
         edited_GIMX = st.data_editor(GIMX_PnL, column_config={
                     "Income Rows": st.column_config.CheckboxColumn(default=False)
                 }, disabled=[col_desc_GIMX, col_balance_GIMX], hide_index=True)
+        GIMX_PnL = edited_GIMX
 
 
         
