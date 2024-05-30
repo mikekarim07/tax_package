@@ -146,17 +146,14 @@ with tab1:
                 GIMX_Balances = GIMX_Balances.iloc[:, [col_cuenta_GIMX, col_clasificacion_GIMX, col_rubro_GIMX, col_saldo_GIMX]]
                 GIMX_Balances = GIMX_Balances.rename(columns={GIMX_Balances.columns[col_cuenta_GIMX]: 'Cuenta', GIMX_Balances.columns[col_clasificacion_GIMX]: 'Clasificacion', GIMX_Balances.columns[col_rubro_GIMX]: 'Rubro', GIMX_Balances.columns[col_saldo_GIMX]: 'Saldo'})
                 GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
+                
+                Total_Income_Balance = GIMX_Balances["Saldo"].sum()
+                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
+                st.metric(label="Total Income", value=Total_Income_Balance)
+                
                 st.dataframe(GIMX_Balances)
             else:
                 st.dataframe(GIMX_Balances)
-            
-            # GIMX_Balances = GIMX_Balances.iloc[3:]
-            # GIMX_Balances.columns = GIMX_Balances.iloc[0]
-            # GIMX_Balances = GIMX_Balances[1:].reset_index(drop=True)
-
-            # GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
-
-            # st.dataframe(GIMX_Balances)            
             
             
 
