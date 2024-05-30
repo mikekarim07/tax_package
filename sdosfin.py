@@ -116,6 +116,7 @@ with tab1:
             col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
             with col1:
                 col_desc_GIMX = st.selectbox("Select columns which contains GIMX P&L Description", col_options_GIMX)
+                col_desc_GIMX = pd.to_numeric(col_desc_GIMX, errors='coerce')
             with col2:
                 col_balance_GIMX = st.selectbox("Select columns which contains GIMX P&L Balance", col_options_GIMX)
             if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
