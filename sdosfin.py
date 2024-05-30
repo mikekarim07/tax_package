@@ -201,7 +201,7 @@ with tab2:
                 
             if col_desc_GSMX is not "Select" and col_balance_GSMX is not "Select":
                 GSMX_PnL.rename(columns={col_desc_GSMX: "Description", col_balance_GSMX: "Balance"}, inplace=True)
-                GSMX_PnL = GIMX_PnL[['Description', 'Balance']]
+                GSMX_PnL = GSMX_PnL[['Description', 'Balance']]
                 GSMX_PnL["Income Rows"] = ''
                 GSMX_PnL['Balance'] = pd.to_numeric(GSMX_PnL['Balance'], errors='coerce')
                 GSMX_PnL['Balance'] = GSMX_PnL['Balance'].astype(float)
