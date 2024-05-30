@@ -104,7 +104,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 with tab1:
     subtab1, subtab2 = st.tabs(['PnL','Accounts'])
     with subtab1:
-        if uploaded_GIMX and sheet_GIMX is not "Select":
+        if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
             GIMX_PnL = load_sheet(uploaded_GIMX, sheet_PnL_GIMX)
             col_desc_GIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX", step=1)
             col_balance_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX", step=1)
