@@ -66,7 +66,7 @@ if uploaded_GSMX is not None:
     
     # Seleccionar la hoja de Excel
     sheet_names_GSMX.insert(0, "Select")
-    sheet_GSMX = st.sidebar.selectbox("Select the sheet which contains GSMX P&L", sheet_names_GSMX)
+    sheet_PnL_GSMX = st.sidebar.selectbox("Select the sheet which contains GSMX P&L", sheet_names_GSMX)
 st.sidebar.divider()
 
 uploaded_KCMX = st.sidebar.file_uploader("Upload KCMX Financial Statements", type=["xlsx"])
