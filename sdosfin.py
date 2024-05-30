@@ -140,7 +140,7 @@ with tab1:
             GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
             GIMX_Balances = GIMX_Balances.iloc[3:]
             GIMX_Balances.columns = GIMX_Balances.iloc[0]
-            GIMX_Balances = GIMX_Balances[1:].reset_index(drop=True)
+            # GIMX_Balances = GIMX_Balances[1:].reset_index(drop=True)
 
             # GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
 
