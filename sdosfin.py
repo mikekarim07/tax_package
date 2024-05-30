@@ -133,6 +133,7 @@ with tab1:
                 
                 GIMX_PnL = edited_GIMX
                 GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
+                GIMX_PnL['Description'] = GIMX_PnL['Description'].str.lower()
                 GIMX_Clasificacion = GIMX_PnL['Description'].unique()
     
                 Total_Income = GIMX_PnL["Balance"].sum()
@@ -164,6 +165,7 @@ with tab1:
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
                 GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
                 GIMX_Balances = GIMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                GIMX_Balances['Clasificacion'] = GIMX_Balances['Clasificacion'].str.lower()
                 GIMX_Balances = GIMX_Balances[(GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)) & (GIMX_Balances['Saldo'] != 0)]
                 
                 
@@ -212,6 +214,7 @@ with tab2:
                 
                 GSMX_PnL = edited_GSMX
                 GSMX_PnL = GSMX_PnL[GSMX_PnL['Income Rows'] == "True"]
+                GSMX_PnL['Description'] = GSMX_PnL['Description'].str.lower()
                 GSMX_Clasificacion = GSMX_PnL['Description'].unique()
     
                 Total_Income = GSMX_PnL["Balance"].sum()
@@ -243,6 +246,7 @@ with tab2:
             if (col_cuenta_GSMX is not "Select") and (col_clasificacion_GSMX is not "Select") and (col_rubro_GSMX is not "Select") and (col_saldo_GSMX is not "Select"):
                 GSMX_Balances.rename(columns={col_cuenta_GSMX: "Cuenta", col_clasificacion_GSMX: "Clasificacion", col_rubro_GSMX: "Rubro", col_saldo_GSMX: "Saldo"}, inplace=True)
                 GSMX_Balances = GSMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                GSMX_Balances['Clasificacion'] = GSMX_Balances['Clasificacion'].str.lower()
                 GSMX_Balances = GSMX_Balances[(GSMX_Balances['Clasificacion'].isin(GSMX_Clasificacion)) & (GSMX_Balances['Saldo'] != 0)]
                 
                 
@@ -368,6 +372,7 @@ with tab4:
                 
                 KLMX_PnL = edited_KLMX
                 KLMX_PnL = KLMX_PnL[KLMX_PnL['Income Rows'] == "True"]
+                KLMX_PnL['Description'] = KLMX_PnL['Description'].str.lower()
                 KLMX_Clasificacion = KLMX_PnL['Description'].unique()
     
                 Total_Income = KLMX_PnL["Balance"].sum()
@@ -399,6 +404,7 @@ with tab4:
             if (col_cuenta_KLMX is not "Select") and (col_clasificacion_KLMX is not "Select") and (col_rubro_KLMX is not "Select") and (col_saldo_KLMX is not "Select"):
                 KLMX_Balances.rename(columns={col_cuenta_KLMX: "Cuenta", col_clasificacion_KLMX: "Clasificacion", col_rubro_KLMX: "Rubro", col_saldo_KLMX: "Saldo"}, inplace=True)
                 KLMX_Balances = KLMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                KLMX_Balances['Clasificacion'] = KLMX_Balances['Clasificacion'].str.lower()
                 KLMX_Balances = KLMX_Balances[(KLMX_Balances['Clasificacion'].isin(KLMX_Clasificacion)) & (KLMX_Balances['Saldo'] != 0)]
                 
                 
@@ -443,6 +449,7 @@ with tab5:
                 
                 PRMX_PnL = edited_PRMX
                 PRMX_PnL = PRMX_PnL[PRMX_PnL['Income Rows'] == "True"]
+                PRMX_PnL['Description'] = PRMX_PnL['Description'].str.lower()
                 PRMX_Clasificacion = PRMX_PnL['Description'].unique()
     
                 Total_Income = PRMX_PnL["Balance"].sum()
@@ -474,6 +481,7 @@ with tab5:
             if (col_cuenta_PRMX is not "Select") and (col_clasificacion_PRMX is not "Select") and (col_rubro_PRMX is not "Select") and (col_saldo_PRMX is not "Select"):
                 PRMX_Balances.rename(columns={col_cuenta_PRMX: "Cuenta", col_clasificacion_PRMX: "Clasificacion", col_rubro_PRMX: "Rubro", col_saldo_PRMX: "Saldo"}, inplace=True)
                 PRMX_Balances = PRMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                KLMX_Balances['Clasificacion'] = KLMX_Balances['Clasificacion'].str.lower()
                 PRMX_Balances = PRMX_Balances[(PRMX_Balances['Clasificacion'].isin(PRMX_Clasificacion)) & (PRMX_Balances['Saldo'] != 0)]
                 
                 
