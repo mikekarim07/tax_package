@@ -122,21 +122,21 @@ with tab1:
                 GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_desc_GIMX]]
                 GIMX_PnL = GIMX_PnL.rename(columns={GIMX_PnL.columns[col_desc_GIMX]: 'Description', GIMX_PnL.columns[col_balance_GIMX]: 'Balance'})
         
-                GIMX_PnL["Income Rows"] = ''
-                GIMX_PnL['Balance'] = pd.to_numeric(GIMX_PnL['Balance'], errors='coerce')
-                GIMX_PnL['Balance'] = GIMX_PnL['Balance'].astype(float)
-                edited_GIMX = st.data_editor(GIMX_PnL, column_config={
-                            "Income Rows": st.column_config.CheckboxColumn(default=False)
-                        }, disabled=["Description", "Balance"], hide_index=True)
+                # GIMX_PnL["Income Rows"] = ''
+                # GIMX_PnL['Balance'] = pd.to_numeric(GIMX_PnL['Balance'], errors='coerce')
+                # GIMX_PnL['Balance'] = GIMX_PnL['Balance'].astype(float)
+                # edited_GIMX = st.data_editor(GIMX_PnL, column_config={
+                #             "Income Rows": st.column_config.CheckboxColumn(default=False)
+                #         }, disabled=["Description", "Balance"], hide_index=True)
         
                 
-                GIMX_PnL = edited_GIMX
-                GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
-                GIMX_Clasificacion = GIMX_PnL['Description'].unique()
+                # GIMX_PnL = edited_GIMX
+                # GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
+                # GIMX_Clasificacion = GIMX_PnL['Description'].unique()
     
-                Total_Income = GIMX_PnL["Balance"].sum()
-                Total_Income = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income)
+                # Total_Income = GIMX_PnL["Balance"].sum()
+                # Total_Income = "{:,.2f}".format(Total_Income)
+                # st.metric(label="Total Income", value=Total_Income)
         
                 
                 st.dataframe(GIMX_PnL)
