@@ -104,8 +104,10 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 with tab1:
     if uploaded_GIMX and sheet_GIMX is not "Select":
         GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
-        column_descGIMX = st.text_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX")
-        column_balGIMX = st.text_input("Ingresa el numero de columna que contiene el saldo final de GIMX")
+        # column_descGIMX = st.text_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX")
+        column_descGIMX = st.number_input("Ingresa el numero de columna que contiene los Conceptos de Ingresos de GIMX")
+        # column_balGIMX = st.text_input("Ingresa el numero de columna que contiene el saldo final de GIMX")
+        column_balGIMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GIMX")
         GIMX_PnL = GIMX_PnL.iloc[:, [column_descGIMX, column_balGIMX]]
 
 
