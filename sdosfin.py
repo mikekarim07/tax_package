@@ -99,7 +99,7 @@ if uploaded_PRMX is not None:
     sheet_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX P&L", sheet_names_PRMX)
 st.sidebar.divider()
 
-tab1, tab2, tab3, tab4, tab5 = = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 
 with tab1:
     if uploaded_GIMX and sheet_GIMX is not "Select":
