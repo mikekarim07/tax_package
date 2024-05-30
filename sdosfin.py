@@ -193,7 +193,9 @@ with tab2:
                 col_balance_GSMX = st.number_input("Ingresa el numero de columna que contiene el saldo final de GSMX", step=1)
                 
             if col_desc_GSMX is not col_balance_GSMX:
-                GSMX_PnL = GSMX_PnL.iloc[:, [col_desc_GSMX, col_balance_GSMX]]
+                cols_data = df.columns[[col_desc_GSMX, col_balance_GSMX]]
+                GSMX_PnL = GSMX_PnL[cols_data]
+                # GSMX_PnL = GSMX_PnL.iloc[:, [col_desc_GSMX, col_balance_GSMX]]
                 GSMX_PnL = GSMX_PnL.rename(columns={GSMX_PnL.columns[col_desc_GSMX]: 'Description', GSMX_PnL.columns[col_balance_GSMX]: 'Balance'})
         
                 GSMX_PnL["Income Rows"] = ''
