@@ -122,7 +122,7 @@ with tab1:
                 
             if col_desc_GIMX is not "Select" and col_balance_GIMX is not "Select":
                 GIMX_PnL.rename(columns={col_desc_GIMX: "Descripcion", col_balance_GIMX: "Balance"}, inplace=True)
-                GIMX_PnL = GIMX_PnL[[col_desc_GIMX, col_balance_GIMX]]
+                GIMX_PnL = GIMX_PnL[['Descripcion', 'Balance']]
                 
         
                 # GIMX_PnL["Income Rows"] = ''
