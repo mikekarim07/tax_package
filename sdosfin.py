@@ -304,7 +304,6 @@ with tab3:
 
     with subtab2_KCMX:
         if uploaded_KCMX and sheet_PnL_KCMX is not "Select":
-            st.write(KCMX_Clasificacion)
             KCMX_Balances = load_sheet(uploaded_KCMX, sheet_AccBal_KCMX)
             cols_acc_bal_KCMX = KCMX_Balances.columns.tolist()
             cols_acc_bal_KCMX.insert(0, "Select")
@@ -322,8 +321,8 @@ with tab3:
             if (col_cuenta_KCMX is not "Select") and (col_clasificacion_KCMX is not "Select") and (col_rubro_KCMX is not "Select") and (col_saldo_KCMX is not "Select"):
                 KCMX_Balances.rename(columns={col_cuenta_KCMX: "Cuenta", col_clasificacion_KCMX: "Clasificacion", col_rubro_KCMX: "Rubro", col_saldo_KCMX: "Saldo"}, inplace=True)
                 KCMX_Balances = KCMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
-                # KCMX_Balances = KCMX_Balances[(KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)) & (KCMX_Balances['Saldo'] != 0)]
-                KCMX_Balances = KCMX_Balances[KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)]
+                KCMX_Balances = KCMX_Balances[(KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)) & (KCMX_Balances['Saldo'] != 0)]
+                
                 
                 Total_Income_Balance = KCMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
