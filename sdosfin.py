@@ -144,7 +144,9 @@ with tab1:
             col_saldo_GIMX = st.number_input("Ingresa el numero de columna que contiene el saldo de la cuenta de GIMX", step=1)
             if (col_cuenta_GIMX is not col_clasificacion_GIMX) and (col_cuenta_GIMX is not col_rubro_GIMX) and (col_cuenta_GIMX is not col_saldo_GIMX):
                 GIMX_Balances = GIMX_Balances.iloc[:, [col_cuenta_GIMX, col_clasificacion_GIMX, col_rubro_GIMX, col_saldo_GIMX]]
-
+                st.dataframe(GIMX_Balances)
+            else:
+                st.dataframe(GIMX_Balances)
             
             # GIMX_Balances = GIMX_Balances.iloc[3:]
             # GIMX_Balances.columns = GIMX_Balances.iloc[0]
@@ -152,7 +154,7 @@ with tab1:
 
             # GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
 
-            st.dataframe(GIMX_Balances)            
+            # st.dataframe(GIMX_Balances)            
             
             
 
