@@ -43,9 +43,9 @@ def get_sheet_names(file):
     return excel_file.sheet_names
 
 @st.cache_data
-def load_sheet(file, sheet_name, dtype):
+def load_sheet(file, sheet_name):
     # Leer una hoja específica del archivo de Excel
-    return pd.read_excel(file, engine='openpyxl', sheet_name=sheet_name, dtype=dtype)
+    return pd.read_excel(file, engine='openpyxl', sheet_name=sheet_name)
 
 
 
