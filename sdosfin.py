@@ -254,3 +254,232 @@ with tab2:
             else:
                 st.dataframe(GSMX_Balances)
             
+
+
+
+
+
+
+
+
+
+with tab3:
+    subtab1_KCMX, subtab2_KCMX = st.tabs(['PnL','Accounts'])    
+    with subtab1_KCMX:
+        if uploaded_KCMX and sheet_PnL_KCMX is not "Select" and sheet_AccBal_KCMX is not "Select":
+            KCMX_PnL = load_sheet(uploaded_KCMX, sheet_PnL_KCMX)
+            col_options_KCMX = KCMX_PnL.columns.tolist()
+            col_options_KCMX.insert(0, "Select")
+            col1_KCMX, col2_KCMX, col3_KCMX =st.columns([0.2, 0.2, 0.6])
+            with col1_KCMX:
+                col_desc_KCMX = st.selectbox("Select columns which contains KCMX P&L Description", col_options_KCMX)
+                               
+            with col2_KCMX:
+                col_balance_KCMX = st.selectbox("Select columns which contains KCMX P&L Balance", col_options_KCMX)
+                
+            if col_desc_KCMX is not "Select" and col_balance_KCMX is not "Select":
+                KCMX_PnL.rename(columns={col_desc_KCMX: "Description", col_balance_KCMX: "Balance"}, inplace=True)
+                KCMX_PnL = KCMX_PnL[['Description', 'Balance']]
+                KCMX_PnL["Income Rows"] = ''
+                KCMX_PnL['Balance'] = pd.to_numeric(KCMX_PnL['Balance'], errors='coerce')
+                KCMX_PnL['Balance'] = KCMX_PnL['Balance'].astype(float)
+                edited_KCMX = st.data_editor(KCMX_PnL, column_config={
+                            "Income Rows": st.column_config.CheckboxColumn(default=False)
+                        }, disabled=["Description", "Balance"], hide_index=True)
+        
+                
+                KCMX_PnL = edited_KCMX
+                KCMX_PnL = KCMX_PnL[KCMX_PnL['Income Rows'] == "True"]
+                KCMX_Clasificacion = KCMX_PnL['Description'].unique()
+    
+                Total_Income = KCMX_PnL["Balance"].sum()
+                Total_Income = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income)
+        
+                
+                st.dataframe(KCMX_PnL)
+            else:
+                st.dataframe(KCMX_PnL)
+            
+
+    with subtab2_KCMX:
+        if uploaded_KCMX and sheet_PnL_KCMX is not "Select":
+            KCMX_Balances = load_sheet(uploaded_KCMX, sheet_AccBal_KCMX)
+            cols_acc_bal_KCMX = KCMX_Balances.columns.tolist()
+            cols_acc_bal_KCMX.insert(0, "Select")
+            
+            col1_KCMX, col2_KCMX, col3_KCMX, col4_KCMX = st.columns(4)
+            with col1_KCMX:
+                col_cuenta_KCMX = st.selectbox("Select the column which contains KCMX - Cuenta", cols_acc_bal_KCMX)
+            with col2_KCMX:
+                col_clasificacion_KCMX = st.selectbox("Select the column which contains KCMX - Clasificacion", cols_acc_bal_KCMX)
+            with col3_KCMX:
+                col_rubro_KCMX = st.selectbox("Select the column which contains KCMX - Rubro", cols_acc_bal_KCMX)
+            with col4_KCMX:
+                col_saldo_KCMX = st.selectbox("Select the column which contains KCMX - Saldo", cols_acc_bal_KCMX)
+            
+            if (col_cuenta_KCMX is not "Select") and (col_clasificacion_KCMX is not "Select") and (col_rubro_KCMX is not "Select") and (col_saldo_KCMX is not "Select"):
+                KCMX_Balances.rename(columns={col_cuenta_KCMX: "Cuenta", col_clasificacion_KCMX: "Clasificacion", col_rubro_KCMX: "Rubro", col_saldo_KCMX: "Saldo"}, inplace=True)
+                KCMX_Balances = KCMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                KCMX_Balances = KCMX_Balances[(KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)) & (KCMX_Balances['Saldo'] != 0)]
+                
+                
+                Total_Income_Balance = KCMX_Balances["Saldo"].sum()
+                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
+                st.metric(label="Total Income", value=Total_Income_Balance)
+                
+                st.dataframe(KCMX_Balances)
+            else:
+                st.dataframe(KCMX_Balances)
+            
+
+
+
+
+
+
+
+with tab4:
+    subtab1_KLMX, subtab2_KLMX = st.tabs(['PnL','Accounts'])    
+    with subtab1_KLMX:
+        if uploaded_KLMX and sheet_PnL_KLMX is not "Select" and sheet_AccBal_KLMX is not "Select":
+            KLMX_PnL = load_sheet(uploaded_KLMX, sheet_PnL_KLMX)
+            col_options_KLMX = KLMX_PnL.columns.tolist()
+            col_options_KLMX.insert(0, "Select")
+            col1_KLMX, col2_KLMX, col3_KLMX =st.columns([0.2, 0.2, 0.6])
+            with col1_KLMX:
+                col_desc_KLMX = st.selectbox("Select columns which contains KLMX P&L Description", col_options_KLMX)
+                               
+            with col2_KLMX:
+                col_balance_KLMX = st.selectbox("Select columns which contains KLMX P&L Balance", col_options_KLMX)
+                
+            if col_desc_KLMX is not "Select" and col_balance_KLMX is not "Select":
+                KLMX_PnL.rename(columns={col_desc_KLMX: "Description", col_balance_KLMX: "Balance"}, inplace=True)
+                KLMX_PnL = KLMX_PnL[['Description', 'Balance']]
+                KLMX_PnL["Income Rows"] = ''
+                KLMX_PnL['Balance'] = pd.to_numeric(KLMX_PnL['Balance'], errors='coerce')
+                KLMX_PnL['Balance'] = KLMX_PnL['Balance'].astype(float)
+                edited_KLMX = st.data_editor(KLMX_PnL, column_config={
+                            "Income Rows": st.column_config.CheckboxColumn(default=False)
+                        }, disabled=["Description", "Balance"], hide_index=True)
+        
+                
+                KLMX_PnL = edited_KLMX
+                KLMX_PnL = KLMX_PnL[KLMX_PnL['Income Rows'] == "True"]
+                KLMX_Clasificacion = KLMX_PnL['Description'].unique()
+    
+                Total_Income = KLMX_PnL["Balance"].sum()
+                Total_Income = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income)
+        
+                
+                st.dataframe(KLMX_PnL)
+            else:
+                st.dataframe(KLMX_PnL)
+            
+
+    with subtab2_KLMX:
+        if uploaded_KLMX and sheet_PnL_KLMX is not "Select":
+            KLMX_Balances = load_sheet(uploaded_KLMX, sheet_AccBal_KLMX)
+            cols_acc_bal_KLMX = KLMX_Balances.columns.tolist()
+            cols_acc_bal_KLMX.insert(0, "Select")
+            
+            col1_KLMX, col2_KLMX, col3_KLMX, col4_KLMX = st.columns(4)
+            with col1_KLMX:
+                col_cuenta_KLMX = st.selectbox("Select the column which contains KLMX - Cuenta", cols_acc_bal_KLMX)
+            with col2_KLMX:
+                col_clasificacion_KLMX = st.selectbox("Select the column which contains KLMX - Clasificacion", cols_acc_bal_KLMX)
+            with col3_KLMX:
+                col_rubro_KLMX = st.selectbox("Select the column which contains KLMX - Rubro", cols_acc_bal_KLMX)
+            with col4_KLMX:
+                col_saldo_KLMX = st.selectbox("Select the column which contains KLMX - Saldo", cols_acc_bal_KLMX)
+            
+            if (col_cuenta_KLMX is not "Select") and (col_clasificacion_KLMX is not "Select") and (col_rubro_KLMX is not "Select") and (col_saldo_KLMX is not "Select"):
+                KLMX_Balances.rename(columns={col_cuenta_KLMX: "Cuenta", col_clasificacion_KLMX: "Clasificacion", col_rubro_KLMX: "Rubro", col_saldo_KLMX: "Saldo"}, inplace=True)
+                KLMX_Balances = KLMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                KLMX_Balances = KLMX_Balances[(KLMX_Balances['Clasificacion'].isin(KLMX_Clasificacion)) & (KLMX_Balances['Saldo'] != 0)]
+                
+                
+                Total_Income_Balance = KLMX_Balances["Saldo"].sum()
+                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
+                st.metric(label="Total Income", value=Total_Income_Balance)
+                
+                st.dataframe(KLMX_Balances)
+            else:
+                st.dataframe(KLMX_Balances)
+            
+
+
+
+
+
+
+with tab5:
+    subtab1_PRMX, subtab2_PRMX = st.tabs(['PnL','Accounts'])    
+    with subtab1_PRMX:
+        if uploaded_PRMX and sheet_PnL_PRMX is not "Select" and sheet_AccBal_PRMX is not "Select":
+            PRMX_PnL = load_sheet(uploaded_PRMX, sheet_PnL_PRMX)
+            col_options_PRMX = PRMX_PnL.columns.tolist()
+            col_options_PRMX.insert(0, "Select")
+            col1_PRMX, col2_PRMX, col3_PRMX =st.columns([0.2, 0.2, 0.6])
+            with col1_PRMX:
+                col_desc_PRMX = st.selectbox("Select columns which contains PRMX P&L Description", col_options_PRMX)
+                               
+            with col2_PRMX:
+                col_balance_PRMX = st.selectbox("Select columns which contains PRMX P&L Balance", col_options_PRMX)
+                
+            if col_desc_PRMX is not "Select" and col_balance_PRMX is not "Select":
+                PRMX_PnL.rename(columns={col_desc_PRMX: "Description", col_balance_PRMX: "Balance"}, inplace=True)
+                PRMX_PnL = PRMX_PnL[['Description', 'Balance']]
+                PRMX_PnL["Income Rows"] = ''
+                PRMX_PnL['Balance'] = pd.to_numeric(PRMX_PnL['Balance'], errors='coerce')
+                PRMX_PnL['Balance'] = PRMX_PnL['Balance'].astype(float)
+                edited_PRMX = st.data_editor(PRMX_PnL, column_config={
+                            "Income Rows": st.column_config.CheckboxColumn(default=False)
+                        }, disabled=["Description", "Balance"], hide_index=True)
+        
+                
+                PRMX_PnL = edited_PRMX
+                PRMX_PnL = PRMX_PnL[PRMX_PnL['Income Rows'] == "True"]
+                PRMX_Clasificacion = PRMX_PnL['Description'].unique()
+    
+                Total_Income = PRMX_PnL["Balance"].sum()
+                Total_Income = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income)
+        
+                
+                st.dataframe(PRMX_PnL)
+            else:
+                st.dataframe(PRMX_PnL)
+            
+
+    with subtab2_PRMX:
+        if uploaded_PRMX and sheet_PnL_PRMX is not "Select":
+            PRMX_Balances = load_sheet(uploaded_PRMX, sheet_AccBal_PRMX)
+            cols_acc_bal_PRMX = PRMX_Balances.columns.tolist()
+            cols_acc_bal_PRMX.insert(0, "Select")
+            
+            col1_PRMX, col2_PRMX, col3_PRMX, col4_PRMX = st.columns(4)
+            with col1_PRMX:
+                col_cuenta_PRMX = st.selectbox("Select the column which contains PRMX - Cuenta", cols_acc_bal_PRMX)
+            with col2_PRMX:
+                col_clasificacion_PRMX = st.selectbox("Select the column which contains PRMX - Clasificacion", cols_acc_bal_PRMX)
+            with col3_PRMX:
+                col_rubro_PRMX = st.selectbox("Select the column which contains PRMX - Rubro", cols_acc_bal_PRMX)
+            with col4_PRMX:
+                col_saldo_PRMX = st.selectbox("Select the column which contains PRMX - Saldo", cols_acc_bal_PRMX)
+            
+            if (col_cuenta_PRMX is not "Select") and (col_clasificacion_PRMX is not "Select") and (col_rubro_PRMX is not "Select") and (col_saldo_PRMX is not "Select"):
+                PRMX_Balances.rename(columns={col_cuenta_PRMX: "Cuenta", col_clasificacion_PRMX: "Clasificacion", col_rubro_PRMX: "Rubro", col_saldo_PRMX: "Saldo"}, inplace=True)
+                PRMX_Balances = PRMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
+                PRMX_Balances = PRMX_Balances[(PRMX_Balances['Clasificacion'].isin(PRMX_Clasificacion)) & (PRMX_Balances['Saldo'] != 0)]
+                
+                
+                Total_Income_Balance = PRMX_Balances["Saldo"].sum()
+                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
+                st.metric(label="Total Income", value=Total_Income_Balance)
+                
+                st.dataframe(PRMX_Balances)
+            else:
+                st.dataframe(PRMX_Balances)
+            
