@@ -134,7 +134,7 @@ with tab1:
 
     with subtab2:
         if uploaded_GIMX and sheet_PnL_GIMX is not "Select":
-            sheet_AccBal_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
+            sheet_AccBal_GIMX = st.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
             # GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
             # st.dataframe(GIMX_Balances)            
             
