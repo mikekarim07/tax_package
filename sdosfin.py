@@ -190,7 +190,7 @@ with tab2:
             selected_columns = st.multiselect("Selecciona las columnas que quieres usar", col_options)
             if selected_columns:
             # Filtrar las columnas seleccionadas
-            GSMX_PnL = GSMX_PnL[selected_columns]
+                GSMX_PnL = GSMX_PnL[selected_columns]
             st.dataframe(GSMX_PnL)
     #         col1, col2, col3 =st.columns([0.2, 0.2, 0.6])
     #         with col1:
