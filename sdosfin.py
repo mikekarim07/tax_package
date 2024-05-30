@@ -99,6 +99,12 @@ if uploaded_PRMX is not None:
     sheet_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX P&L", sheet_names_PRMX)
 st.sidebar.divider()
 
+tab1, tab2, tab3, tab4, tab5 = = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
+
+with tab1:
+    if uploaded_GIMX and sheet_GIMX is not "Select":
+        GIMX_PnL = load_sheet(uploaded_GIMX, sheet_GIMX)
+        st.dataframe(GIMX_PnL)
 
 
 
@@ -111,22 +117,14 @@ st.sidebar.divider()
 
 
 
-# tab1, tab2, tab3, tab4, tab5 = = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
 
-# with tab1:
-#     col1_gimx, col2_gimx, col3_gimx, col4_gimx, col5_gimx = st.columns(5)
-#         with col1_gimx:
-#             uploaded_GIMX = st.file_uploader("Upload Balances Reporte de Pagos", type=["xlsx"])
-#             st.divider()
-            
-    
-    
-    
-#     uploaded_GIMX = st.sidebar.file_uploader("Carga el Reporte de Pagos", type=["xlsx"])
-#     if uploaded_RepPagos is not None:
-#         # Obtener nombres de las hojas del archivo
-#         sheet_names_pagos = get_sheet_names(uploaded_RepPagos)
-        
-#         # Seleccionar la hoja de Excel
-#         sheet_Rep_pagos = st.sidebar.selectbox("Seleccionar hoja del reporte de pagos que contiene los datos para procesar", sheet_names_pagos)
-#     st.sidebar.divider()
+
+
+
+
+
+
+
+
+
+
