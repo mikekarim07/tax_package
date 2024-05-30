@@ -125,6 +125,8 @@ with tab1:
             
             GIMX_PnL = edited_GIMX
             GIMX_PnL = GIMX_PnL[GIMX_PnL['Income Rows'] == "True"]
+            GIMX_Clasificacion = GIMX_PnL['Description'].unique()
+
             Total_Income = GIMX_PnL["Balance"].sum()
             Total_Income = "{:,.2f}".format(Total_Income)
             st.metric(label="Total Income", value=Total_Income)
@@ -137,6 +139,10 @@ with tab1:
             sheet_AccBal_GIMX = st.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
             GIMX_Balances = load_sheet(uploaded_GIMX, sheet_AccBal_GIMX)
             GIMX_Balances = GIMX_Balances.iloc[3:]
+            GIMX_Balances.columns = GIMX_Balances.iloc[0]
+            GIMX_Balances = GIMX_Balances[1:].reset_index(drop=True)
+
+            GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
 
             st.dataframe(GIMX_Balances)            
             
