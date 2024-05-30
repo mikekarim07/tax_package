@@ -304,6 +304,7 @@ with tab3:
 
     with subtab2_KCMX:
         if uploaded_KCMX and sheet_PnL_KCMX is not "Select":
+            st.write(KCMX_Clasificacion)
             KCMX_Balances = load_sheet(uploaded_KCMX, sheet_AccBal_KCMX)
             cols_acc_bal_KCMX = KCMX_Balances.columns.tolist()
             cols_acc_bal_KCMX.insert(0, "Select")
