@@ -538,6 +538,7 @@ with tab6:
     Saldos_Financieros = pd.concat([Saldos_Financieros,ctas_impuestos])
 
     Saldos_Financieros['Concat'] = Saldos_Financieros['Co_Cd'] + Saldos_Financieros['Debit Account']
+    Saldos_Financieros['Currency'] = "MXN"
     Saldos_Financieros = Saldos_Financieros[['Concat', 'Co_Cd', 'Debit Account', 'Account Name', 'Type', 'Balance']]
     Saldos_Financieros = Saldos_Financieros.sort_values(by=['Co_Cd', 'Debit Account'], ascending=[True, True])    
     
