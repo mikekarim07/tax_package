@@ -496,6 +496,8 @@ with tab5:
 with tab6:
     Saldos_Financieros = pd.concat([GIMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances])
     Saldos_Financieros['Debit Account'] = Saldos_Financieros['Cuenta'].str[:10]
+    Saldos_Financieros.rename(columns={"Cuenta": "Account Name", col_saldo_PRMX: "Balance"}, inplace=True)
+    Saldos_Financieros['Type'] = "Cuenta de Ingresos"
     st.dataframe(Saldos_Financieros)
     # Co_Cd	Debit Account	Account Name	Type	 Balance 	Currency	 Balance DIC 2022 	cuentas utilizadas 2021
 
