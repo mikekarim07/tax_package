@@ -593,7 +593,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     excel_buffer_fbl3n = BytesIO()
     with pd.ExcelWriter(excel_buffer_fbl3n, engine='xlsxwriter') as writer:
         FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N')
-        ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT_LA')
+        ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT_Grouped')
     
     # Descargar el archivo Excel en Streamlit
     st.download_button(
