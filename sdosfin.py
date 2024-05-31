@@ -498,6 +498,8 @@ with tab6:
     Saldos_Financieros['Debit Account'] = Saldos_Financieros['Cuenta'].str[:10]
     Saldos_Financieros.rename(columns={"Cuenta": "Account Name", col_saldo_PRMX: "Balance"}, inplace=True)
     Saldos_Financieros['Type'] = "Cuenta de Ingresos"
+    Saldos_Financieros['Concat'] = Saldos_Financieros['Co_Cd'] + Saldos_Financieros['Debit Account']
+    Saldos_Financieros = Saldos_Financieros[['Concat', 'Co_Cd', 'Debit Account', 'Account Name', 'Type', 'Balance']]
     st.dataframe(Saldos_Financieros)
     # Co_Cd	Debit Account	Account Name	Type	 Balance 	Currency	 Balance DIC 2022 	cuentas utilizadas 2021
 
