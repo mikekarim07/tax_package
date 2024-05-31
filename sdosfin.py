@@ -537,22 +537,9 @@ with tab6:
 
     Saldos_Financieros = pd.concat([Saldos_Financieros,ctas_impuestos])
 
-
-    
     Saldos_Financieros['Concat'] = Saldos_Financieros['Co_Cd'] + Saldos_Financieros['Debit Account']
     Saldos_Financieros = Saldos_Financieros[['Concat', 'Co_Cd', 'Debit Account', 'Account Name', 'Type', 'Balance']]
-    
-    
-
-
-
-
-
-
-
-
-
-
+    Saldos_Financieros = Saldos_Financieros.sort_values(by=['Co_Cd', 'Debit Account'], ascending=[True, True])    
     
     st.dataframe(Saldos_Financieros)
     # Co_Cd	Debit Account	Account Name	Type	 Balance 	Currency	 Balance DIC 2022 	cuentas utilizadas 2021
