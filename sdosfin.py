@@ -104,7 +104,7 @@ if uploaded_PRMX is not None:
     sheet_AccBal_PRMX = st.sidebar.selectbox("Select the sheet which contains PRMX Account Balances", sheet_names_PRMX)
 st.sidebar.divider()
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["GIMX", "GSMX", "KCMX", "KLMX", "PRMX", "All CoCodes"])
 
 with tab1:
     subtab1_GIMX, subtab2_GIMX = st.tabs(['PnL','Accounts'])    
@@ -167,7 +167,7 @@ with tab1:
                 GIMX_Balances = GIMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 GIMX_Balances['Clasificacion'] = GIMX_Balances['Clasificacion'].str.lower()
                 GIMX_Balances = GIMX_Balances[(GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)) & (GIMX_Balances['Saldo'] != 0)]
-                
+                GIMX_Balances['Co_Cd'] = "GIMX"
                 
                 Total_Income_Balance = GIMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
@@ -248,7 +248,7 @@ with tab2:
                 GSMX_Balances = GSMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 GSMX_Balances['Clasificacion'] = GSMX_Balances['Clasificacion'].str.lower()
                 GSMX_Balances = GSMX_Balances[(GSMX_Balances['Clasificacion'].isin(GSMX_Clasificacion)) & (GSMX_Balances['Saldo'] != 0)]
-                
+                GSMX_Balances['Co_Cd'] = "GSMX"
                 
                 Total_Income_Balance = GSMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
@@ -328,7 +328,7 @@ with tab3:
                 KCMX_Balances = KCMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 KCMX_Balances['Clasificacion'] = KCMX_Balances['Clasificacion'].str.lower()
                 KCMX_Balances = KCMX_Balances[(KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)) & (KCMX_Balances['Saldo'] != 0)]
-                
+                KCMX_Balances['Co_Cd'] = "KCMX"
                 
                 Total_Income_Balance = KCMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
@@ -406,7 +406,7 @@ with tab4:
                 KLMX_Balances = KLMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 KLMX_Balances['Clasificacion'] = KLMX_Balances['Clasificacion'].str.lower()
                 KLMX_Balances = KLMX_Balances[(KLMX_Balances['Clasificacion'].isin(KLMX_Clasificacion)) & (KLMX_Balances['Saldo'] != 0)]
-                
+                KLMX_Balances['Co_Cd'] = "KLMX"
                 
                 Total_Income_Balance = KLMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
@@ -483,7 +483,7 @@ with tab5:
                 PRMX_Balances = PRMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 PRMX_Balances['Clasificacion'] = PRMX_Balances['Clasificacion'].str.lower()
                 PRMX_Balances = PRMX_Balances[(PRMX_Balances['Clasificacion'].isin(PRMX_Clasificacion)) & (PRMX_Balances['Saldo'] != 0)]
-                
+                PRMX_Balances['Co_Cd'] = "PRMX"
                 
                 Total_Income_Balance = PRMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
@@ -493,3 +493,7 @@ with tab5:
             else:
                 st.dataframe(PRMX_Balances)
             
+with tab6:
+    Saldos_Financieros = pd.concat([GIMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances])
+    # Co_Cd	Debit Account	Account Name	Type	 Balance 	Currency	 Balance DIC 2022 	cuentas utilizadas 2021
+
