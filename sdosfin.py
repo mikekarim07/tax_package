@@ -495,5 +495,6 @@ with tab5:
             
 with tab6:
     Saldos_Financieros = pd.concat([GIMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances])
+    st.dataframe(Saldos_Financieros)
     # Co_Cd	Debit Account	Account Name	Type	 Balance 	Currency	 Balance DIC 2022 	cuentas utilizadas 2021
 
