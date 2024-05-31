@@ -542,5 +542,17 @@ with tab6:
     Saldos_Financieros = Saldos_Financieros.sort_values(by=['Co_Cd', 'Debit Account'], ascending=[True, True])    
     
     st.dataframe(Saldos_Financieros)
-    # Co_Cd	Debit Account	Account Name	Type	 Balance 	Currency	 Balance DIC 2022 	cuentas utilizadas 2021
-
+    
+    # Crear y guardar el archivo FBL3N
+    excel_buffer_sdos_fin = BytesIO()
+    with pd.ExcelWriter(excel_buffer_sdos_fin, engine='xlsxwriter') as writer:
+        Saldos_Financieros.to_excel(writer, index=False, sheet_name='SaldosFin_MX')
+        
+    # Descargar el archivo Excel en Streamlit
+    st.download_button(
+        label="Download Saldos Financieros",
+        data=excel_buffer_sdos_fin.getvalue(),
+        file_name="SaldosFinancierosMX.xlsx",
+        key='download_button_SdosFin'
+    )
+    
