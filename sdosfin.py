@@ -498,9 +498,7 @@ with tab6:
     Saldos_Financieros['Debit Account'] = Saldos_Financieros['Cuenta'].str[:10]
     Saldos_Financieros.rename(columns={"Cuenta": "Account Name", "Saldo": "Balance"}, inplace=True)
     Saldos_Financieros['Type'] = "Cuenta de Ingresos"
-    Saldos_Financieros['Concat'] = Saldos_Financieros['Co_Cd'] + Saldos_Financieros['Debit Account']
-    Saldos_Financieros = Saldos_Financieros[['Concat', 'Co_Cd', 'Debit Account', 'Account Name', 'Type', 'Balance']]
-    
+
     data_imp = {
         'Debit Account': [
             '1118116399', '1118116223', '1767221222', '1118116250', '1767221350',
@@ -533,6 +531,13 @@ with tab6:
     ctas_impuestos = pd.concat(df_list, ignore_index=True)
 
     Saldos_Financieros = pd.concat([Saldos_Financieros,ctas_impuestos])
+
+
+    
+    Saldos_Financieros['Concat'] = Saldos_Financieros['Co_Cd'] + Saldos_Financieros['Debit Account']
+    Saldos_Financieros = Saldos_Financieros[['Concat', 'Co_Cd', 'Debit Account', 'Account Name', 'Type', 'Balance']]
+    
+    
 
 
 
