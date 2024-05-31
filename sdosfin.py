@@ -511,6 +511,11 @@ with tab6:
             '16% VAT Intercompany - Fiscal', '16% INPUT TAX - INT V0', 'Vat Industria y Comercio', 
             '16% Services Fiscal', 'WH Income Tax - External payments w/o taxable agre',
             '8% output Manual IE'
+        ],
+        'Type': [
+            'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos',
+            'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos',
+            'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos'
         ]
     }
     
