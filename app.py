@@ -96,6 +96,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     #----- Step 4: Create a new column "Subcode_td", which contains the Subcode that has been assigned previously in order to use it later
     FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str)) + FBL3N_full['Document Type'] + (FBL3N_full['Posting period'].astype(str)) + (FBL3N_full['Amount in doc. curr.'].astype(str))
+    cols_fb03_previous = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2']
+    FBL3N_full = FBL3N_full.drop(columns=[col for col in cols_fb03_previous if col in FBL3N_full.columns])
+
 
     #----- Step 4a: This code is for showing on screen the FBL3N dataset that is going to be used to train the model
     # st.divider()
@@ -155,6 +158,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #----- Step 1: Fill "NaN" cell as empty ('') at specified columns
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
+    cols_previous_fbl3n = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2']
+    FBL3N_new = FBL3N_new.drop(columns=[col for col in cols_previous_fbl3n if col in FBL3N_new.columns])
+    
 
     #----- Step 2: Create a new column "ML"
     FBL3N_new['CONCAT_01'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str))
