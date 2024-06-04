@@ -96,30 +96,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     #----- Step 4: Create a new column "Subcode_td", which contains the Subcode that has been assigned previously in order to use it later
     FBL3N_full['Subcode_td'] = FBL3N_full['Company Code'] + (FBL3N_full['Document Number'].astype(str)) + FBL3N_full['Document Type'] + (FBL3N_full['Posting period'].astype(str)) + (FBL3N_full['Amount in doc. curr.'].astype(str))
-    cols_fb03_previous = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2']
-    FBL3N_full = FBL3N_full.drop(columns=[col for col in cols_fb03_previous if col in FBL3N_full.columns])
-
-
-    #----- Step 4a: This code is for showing on screen the FBL3N dataset that is going to be used to train the model
-    # st.divider()
-    # st.caption('ML FBL3N train dataset')
-    # # Revisión de los subcodigos asignados para poder mostrar el texto no estandarizado
-    # # subcodes_unique = FBL3N_full['Subcode'].unique()
-    # # subcodes_options = st.multiselect('Selecciona la clasificación para filtar el dataframe', subcodes_unique, subcodes_unique)
-    # # FBL3N_filtered = FBL3N_full[FBL3N_full['Subcode'].isin(subcodes_options)]
-    # # st.dataframe(FBL3N_filtered)
-    # # Mostrar el dataframe sin filtrar
-    # st.dataframe(FBL3N_full)
-    # st.divider()
-
-    #----- Step 5: Use FBL3N_full dataset to create a new one, with the Subcode previously assigned (this step applies in case that exists a FBL3N dataset already coded for previous periods and not to loose the work already done)
-    FBL3N_previous_subcode = FBL3N_full[['Subcode_td', 'Subcode']].drop_duplicates()
-    FBL3N_previous_subcode["conteo"] = FBL3N_previous_subcode.groupby('Subcode_td')['Subcode_td'].transform("size")
-    FBL3N_previous_subcode.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
-    #----- Step 5a: Shows unique records of previously assigned subcoded dataset
-    # st.caption('Registros unicos')
-    # st.dataframe(FBL3N_previous_subcode)
     
+        
     #----- Step 6: Delete duplicated values of ML column in order to train the model (test dataset is setup to 20%, this can be adjusted)
     FBL3N_train = FBL3N_full[['ML', 'Subcode']].drop_duplicates()
     X = FBL3N_train['ML']
@@ -161,7 +139,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     cols_previous_fbl3n = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2']
     FBL3N_new = FBL3N_new.drop(columns=[col for col in cols_previous_fbl3n if col in FBL3N_new.columns])
     
-
     #----- Step 2: Create a new column "ML"
     FBL3N_new['CONCAT_01'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str))
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Reference'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
@@ -192,10 +169,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
     NA_Fill_CoCd = ['CoCd']
     FBL3N_new[NA_Fill_CoCd] = FBL3N_new[NA_Fill_CoCd].fillna('')
-    #----- Evaluar si quitar el cruzar la tabla con Subcodes (creo que no la estoy usando para nada, y al final las elimino)
-    # FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode_ML", right_on='Code', how='left')
-    
-    
+       
     
     #---------------FB03-------------
     fb03_NA_Fill_Columns = ['Reversal']
@@ -211,7 +185,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     FBL3N_new = FBL3N_new.merge(fb03_merged, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
-    st.dataframe(fb03_merged)
+    
 
     #---------------Funciones para subcodes fijas-------------------
     
@@ -220,13 +194,15 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return "121"
         else:
             return ''
-
+    FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121, axis=1)
+    
     def sc_221(row):
         if (row['Reference'].startswith("117") and row['Document Type'].startswith("RN")) or (row['Document Number'].startswith("5") and ((row['Document Type'].startswith("RN") or row['Document Type'].startswith("RE")))
                                                                                               and (not (row['Text'].startswith("220") or row['User Name'].startswith("WF-BATCH"))) and (not (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472") or row['Account'].startswith("1556250440")))) or (row['Text'].startswith("221")) or (row['Document Header Text'].startswith("Interim")) or (row['User Name'].startswith("WF-BATCH") and row['Document Type'].startswith("RE") and (not (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472") or row['Account'].startswith("1556250440")))):
             return "221"
         else:
             return ''
+    FBL3N_new['SC_2'] = FBL3N_new.apply(sc_221, axis=1)
     
     def sc_150(row):
     # Verificar las condiciones
@@ -235,6 +211,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return "150"
         else:
             return ''
+    FBL3N_new['SC_3'] = FBL3N_new.apply(sc_150, axis=1)
 
     def sc_250(row):
     # Verificar las condiciones
@@ -242,6 +219,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return "250"
         else:
             return ''
+    FBL3N_new['SC_4'] = FBL3N_new.apply(sc_250, axis=1)
 
     def sc_300(row):
     # Verificar las condiciones
@@ -249,98 +227,91 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return "300"
         else:
             return ''
+    FBL3N_new['SC_5'] = FBL3N_new.apply(sc_300, axis=1)
 
     def sc_301(row):
         if ("valuation" in str(row['Text']).lower() or ("revaluacion" in str(row['Text']).lower())):
             return "301"
         else:
             return ''
-
+    FBL3N_new['SC_6'] = FBL3N_new.apply(sc_301, axis=1)
+    
     def sc_214(row):
         if (row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300"))):
             return "214"
         else:
             return ''
+    FBL3N_new['SC_7'] = FBL3N_new.apply(sc_214, axis=1)
 
     def sc_114(row):
         if ((row['Account'].startswith("1556260000") and row['Text'].startswith("110"))) and (not (row['Text'].startswith("300"))):
             return "114"
         else:
             return ''
+    FBL3N_new['SC_17'] = FBL3N_new.apply(sc_114, axis=1)
 
     def sc_601(row):
         if (row['Document Header Text'].startswith("601") or row['Text'].startswith("601")) and (row['Reference'].startswith(str(row['Company Code']))):
             return "601"
         else:
             return ''
+    FBL3N_new['SC_8'] = FBL3N_new.apply(sc_601, axis=1)
 
     def sc_610(row):
         if (row['Document Header Text'].startswith("610") or row['Text'].startswith("610")) and (not (row['Reference'].startswith(str(row['Company Code'])))):
             return "610"
         else:
             return ''
-
+    FBL3N_new['SC_9'] = FBL3N_new.apply(sc_610, axis=1)
+    
     def sc_620(row):
         if (row['Document Header Text'].startswith("620") or row['Text'].startswith("620")) and (not (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472") or row['Account'].startswith("1556250440"))):
             return "620"
         else:
             return ''
-
+    FBL3N_new['SC_10'] = FBL3N_new.apply(sc_620, axis=1)
+    
     def sc_120(row):
         if (row['Document Header Text'].startswith("120") or row['Text'].startswith("120")) and (not (row['Document Header Text'].startswith("620"))):
             return "120"
         else:
             return ''
+    FBL3N_new['SC_11'] = FBL3N_new.apply(sc_120, axis=1)
 
     def sc_220(row):
         if (row['Document Header Text'].startswith("220") or row['Text'].startswith("220")) and (not (row['Document Header Text'].startswith("620"))):
             return "220"
         else:
             return ''
+    FBL3N_new['SC_12'] = FBL3N_new.apply(sc_220, axis=1)
 
     def sc_110(row):
         if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and not ("loan int" in str(row['Document Header Text']).lower()) and not ((row['Document Header Text'].startswith("620"))) and not (("valuation" in str(row['Text']).lower()) or ("revaluacion" in str(row['Text']).lower())) and not (("guts" in str(row['Reference']).lower()))) or (row['Company Code'].startswith("KPRS") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
             return "110"
         else:
             return ''
+    FBL3N_new['SC_13'] = FBL3N_new.apply(sc_110, axis=1)
 
     def sc_210(row):
         if ((row['Text'].startswith("210") or row['Text'].startswith("211")) and (not (row['Account'].startswith("1556160000") or row['Account'].startswith("1556260000") or ("loan int" in str(row['Document Header Text']).lower())))) or (row['Company Code'].startswith("KCAR") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
             return "210"
         else:
             return ''
+    FBL3N_new['SC_14'] = FBL3N_new.apply(sc_210, axis=1)
 
     def sc_400(row):
         if (row['Text'].startswith("400")):
             return "400"
         else:
             return ''
+    FBL3N_new['SC_15'] = FBL3N_new.apply(sc_400, axis=1)
 
     def sc_0(row):
         if (row['Account'].startswith("1556250212") or row['Account'].startswith("1556250302") or row['Account'].startswith("1556250392") or row['Account'].startswith("1556250472")) or (row['Account'].startswith("1556250440") and (row['Document Type'].startswith("RE") or row['Document Type'].startswith("RN") or row['Document Type'].startswith("KG") or row['Document Type'].startswith("KR"))):
             return "0"
         else:
             return ''
-
-    
-    
-    FBL3N_new['SC_1'] = FBL3N_new.apply(sc_121, axis=1)
-    FBL3N_new['SC_2'] = FBL3N_new.apply(sc_221, axis=1)
-    FBL3N_new['SC_3'] = FBL3N_new.apply(sc_150, axis=1)
-    FBL3N_new['SC_4'] = FBL3N_new.apply(sc_250, axis=1)
-    FBL3N_new['SC_5'] = FBL3N_new.apply(sc_300, axis=1)
-    FBL3N_new['SC_6'] = FBL3N_new.apply(sc_301, axis=1)
-    FBL3N_new['SC_7'] = FBL3N_new.apply(sc_214, axis=1)
-    FBL3N_new['SC_8'] = FBL3N_new.apply(sc_601, axis=1)
-    FBL3N_new['SC_9'] = FBL3N_new.apply(sc_610, axis=1)
-    FBL3N_new['SC_10'] = FBL3N_new.apply(sc_620, axis=1)
-    FBL3N_new['SC_11'] = FBL3N_new.apply(sc_120, axis=1)
-    FBL3N_new['SC_12'] = FBL3N_new.apply(sc_220, axis=1)
-    FBL3N_new['SC_13'] = FBL3N_new.apply(sc_110, axis=1)
-    FBL3N_new['SC_14'] = FBL3N_new.apply(sc_210, axis=1)
-    FBL3N_new['SC_15'] = FBL3N_new.apply(sc_400, axis=1)
     FBL3N_new['SC_16'] = FBL3N_new.apply(sc_0, axis=1)
-    FBL3N_new['SC_17'] = FBL3N_new.apply(sc_114, axis=1)
     
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16'] + FBL3N_new['SC_17']
 
@@ -366,10 +337,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         else:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
-
-    #----- Contar el numero total de registros (evaluar si la dejo o no)
-    # reg_clas = len(FBL3N_new[FBL3N_new['SC_concat'] != ''])
-    # st.write(reg_clas)
     
     tab1, tab2 = st.tabs(["Resumen", "Detalle"])
     
@@ -392,17 +359,19 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         # st.write(FBL3N_summary.columns)
 
     with tab2:
+        FBL3N_new.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
+        
         def remove_CONCAT(FBL3N_new):
             if "CONCAT" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
             return FBL3N_new
         FBL3N_new = remove_CONCAT(FBL3N_new)
         
-        def remove_Subcode(FBL3N_new):
-            if "Subcode" in FBL3N_new.columns:
-                FBL3N_new = FBL3N_new.drop("Subcode", axis=1)
-            return FBL3N_new
-        FBL3N_new = remove_Subcode(FBL3N_new)
+        # def remove_Subcode(FBL3N_new):
+        #     if "Subcode" in FBL3N_new.columns:
+        #         FBL3N_new = FBL3N_new.drop("Subcode", axis=1)
+        #     return FBL3N_new
+        # FBL3N_new = remove_Subcode(FBL3N_new)
 
         def remove_RelatedParty(FBL3N_new):
             if "Related Party" in FBL3N_new.columns:
@@ -410,9 +379,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             return FBL3N_new
         FBL3N_new = remove_RelatedParty(FBL3N_new)
 
-        
-        # FBL3N_new = FBL3N_new.drop(['CONCAT', 'Subcode', 'Subcode 2', 'Related Party'], axis=1)
-        FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
+        # FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
         FBL3N_new['Subcode_assigned'] = FBL3N_new['Subcode_assigned'].fillna('')
         def Subcode(row):
         # Verificar las condiciones
@@ -421,8 +388,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             else:
                 return row['SC_Fix']
         FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
-        
-            
+                    
         # columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 
         #                         'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
         #                        'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
