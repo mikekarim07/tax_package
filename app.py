@@ -217,13 +217,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     # st.write(fb03_shape)
     fb03['Key_Concat'] = fb03['CoCd'] + fb03['DocumentNo']
     fb03['Key_Reversal'] = fb03['CoCd'] + fb03['Reversal']
+    
     fb03_cols_elim = ['User', 'CoCd', 'Doc.Header Text', 'DocumentNo', 'Year', 'Reference', 'Type',
                                 'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 
                                'Time', 'LCurr', 'Crcy']
     st.dataframe(fb03)
     fb03 = fb03.drop(columns=fb03_cols_elim)
+    fb03.drop_duplicates(subset=['Key_Concat', 'Key_Reversal'], keep=False)
     st.dataframe(fb03)
     fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', suffixes=('', '_Rev'))
+    
     # fb03_merged_shape = fb03_merged.shape()
     # st.write(fb03_merged_shape)
     st.dataframe(fb03_merged)
