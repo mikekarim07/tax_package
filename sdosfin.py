@@ -494,10 +494,11 @@ with tab5:
                 st.dataframe(PRMX_Balances)
             
 with tab6:
-    Saldos_Financieros = pd.concat([GIMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances,PRMX_Balances])
+    
+    Saldos_Financieros = pd.concat([GIMX_Balances,GSMX_Balances,KCMX_Balances,KLMX_Balances,PRMX_Balances])
     Saldos_Financieros['Debit Account'] = Saldos_Financieros['Cuenta'].str[:10]
     Saldos_Financieros.rename(columns={"Cuenta": "Account Name", "Saldo": "Balance"}, inplace=True)
-    Saldos_Financieros['Type'] = "Cuenta de Ingresos"
+    Saldos_Financieros['Type'] = "Cuentas de Ingresos"
 
     data_imp = {
         'Debit Account': [
