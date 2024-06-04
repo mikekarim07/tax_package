@@ -134,6 +134,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     #----- Stage 2: Work with new FBL3N dataset, Masters (GL_Accounts and Subcodes), ZLAAUDIT and Saldos Financieros
     #----- Step 1: Fill "NaN" cell as empty ('') at specified columns
+    fbl3n_shape = FBL3N_new.shape()
+    st.write(fbl3n_shape)
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
     cols_previous_fbl3n = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2']
@@ -174,14 +176,20 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #---------------FB03-------------
     fb03_NA_Fill_Columns = ['Reversal']
     fb03 = fb03.dropna(subset=fb03_NA_Fill_Columns)
+    fb03_shape = fb03.shape()
+    st.write(fb03_shape)
     fb03['Key_Concat'] = fb03['CoCd'] + fb03['DocumentNo']
     fb03['Key_Reversal'] = fb03['CoCd'] + fb03['Reversal']
     fb03_cols_elim = ['User', 'CoCd', 'Doc.Header Text', 'DocumentNo', 'Year', 'Reference', 'Type',
                                 'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 
                                'Time', 'LCurr', 'Crcy']
+    st.daaframe(fb03)
     fb03 = fb03.drop(columns=fb03_cols_elim)
+    st.dataframe(fb03)
     fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', suffixes=('', '_Rev'))
-
+    fb03_merged_shape = fb03_merged.shape()
+    st.write(fb03_merged_shape)
+    st.dataframe(fb03_merged)
     
     FBL3N_new = FBL3N_new.merge(fb03_merged, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
