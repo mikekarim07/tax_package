@@ -34,6 +34,51 @@ st.image("https://www.kellanovaus.com/content/dam/NorthAmerica/kellanova-us/imag
 # st.header('Machine Learnig Model')
 st.subheader('Tax Package - Related Party Operations Category Classification Machine Learning Model')
 
+
+@st.cache_data
+def get_sheet_names(file):
+    # Leer todas las hojas del archivo y devolver sus nombres
+    excel_file = pd.ExcelFile(file, engine='openpyxl')
+    return excel_file.sheet_names
+
+@st.cache_data
+def load_sheet(file, sheet_name):
+    # Leer una hoja específica del archivo de Excel
+    return pd.read_excel(file, engine='openpyxl', sheet_name=sheet_name, header=None)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # st.divider()
 
 start_time01 = time.time()
@@ -183,7 +228,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     fb03_cols_elim = ['User', 'CoCd', 'Doc.Header Text', 'DocumentNo', 'Year', 'Reference', 'Type',
                                 'TCode', 'Reversal flag', 'Reversal', 'Ref. proc.', 'Tran', 'Ref.key 1', 'Reason', 'Act', 
                                'Time', 'LCurr', 'Crcy']
-    st.daaframe(fb03)
+    st.dataframe(fb03)
     fb03 = fb03.drop(columns=fb03_cols_elim)
     st.dataframe(fb03)
     fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', suffixes=('', '_Rev'))
