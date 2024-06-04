@@ -42,41 +42,24 @@ def get_sheet_names(file):
     return excel_file.sheet_names
 
 @st.cache_data
-def load_sheet(file, sheet_name):
+def load_sheet(file, sheet_name, dtype):
     # Leer una hoja específica del archivo de Excel
-    return pd.read_excel(file, engine='openpyxl', sheet_name=sheet_name, header=None)
+    return pd.read_excel(file, engine='openpyxl', sheet_name=sheet_name, dtype=dtype)
 
 
+dtype_FBL3N_full = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Document Number': str, 'Account': str, 'Text': str, 'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,}
 
+dtype_FBL3N_new = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Document Number': str, 'Text': str, 'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,}
 
+dtype_ZLAAUDIT = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document Number': str, 'Business Area': str, 'Document type': str, 'Tax Code': str, 'Line item': str, 'Posting Key': str, 'Account': str, 'Assignment': str, 'User Name': str, 'Reference': str, 'Document Header Text': str, 'Currency': str, 'Local Currency': str,}
 
+dtype_accounts = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str}
 
+dtype_subcodes = {'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str, 'Code_RP': str, 'Code_Desc_RP': str,}
 
+dtype_sdosfin = {'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str, 'Type': str, 'Balance': str,}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+dtype_fb03 = {'CoCd': str, 'DocumentNo': str, 'Reversal': str, 'Key_Doc': str, 'Key_Rev': str, 'Doc. Date': str,}
 
 
 # st.divider()
@@ -97,32 +80,41 @@ st.sidebar.subheader('Masters')
 uploaded_masters = st.sidebar.file_uploader("Upload masters file which contains the Chart of Accounts and Subcodes", key="masters", type=["xlsx"], accept_multiple_files=False)
 st.sidebar.divider()
 if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded_SdosFin: #and uploaded_ZLAAUDIT:
-    FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
-                               dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Document Number': str, 'Account': str, 'Text': str,
-                                        'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
-    FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
-                dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Document Number': str,
-                        'Text': str, 'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
+    FBL3N_full = load_sheet(uploaded_FBL3N_train, 'FBL3N', dtype_FBL3N_full)
+    FBL3N_new = load_sheet(uploaded_new_FBL3N, 'FBL3N', dtype_FBL3N_new)
+    ZLAAUDIT = load_sheet(uploaded_ZLAAUDIT, 'ZLAAUDIT', dtype_ZLAAUDIT)
+    accounts = load_sheet(uploaded_masters, 'GL_Accounts', dtype_accounts)
+    subcodes = load_sheet(uploaded_masters, 'Subcodes', dtype_subcodes)
+    saldos_financieros = load_sheet(uploaded_SdosFin, 'SaldosFin_MX', dtype_sdosfin)
+    fb03 = load_sheet(uploaded_FB03, 'Sheet1', dtype_fb03)
 
-    ZLAAUDIT = pd.read_excel(uploaded_ZLAAUDIT, engine='openpyxl', sheet_name='ZLAAUDIT',
-                dtype = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document Number': str, 'Business Area': str,
-                        'Document type': str, 'Tax Code': str, 'Line item': str, 'Posting Key': str, 'Account': str, 'Assignment': str,
-                        'User Name': str, 'Reference': str, 'Document Header Text': str, 'Currency': str, 'Local Currency': str,})
-
-    accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
-                dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
-
-    subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
-                  dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
-                         'Code_RP': str, 'Code_Desc_RP': str,})
-
-    saldos_financieros = pd.read_excel(uploaded_SdosFin, engine='openpyxl', sheet_name='SaldosFin_MX',
-                  dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
-                         'Type': str, 'Balance': str,})
     
-    fb03 = pd.read_excel(uploaded_FB03, engine='openpyxl', sheet_name='Sheet1',
-                  dtype={'CoCd': str, 'DocumentNo': str, 'Reversal': str, 'Key_Doc': str,
-                         'Key_Rev': str, 'Doc. Date': str,})
+    # FBL3N_full = pd.read_excel(uploaded_FBL3N_train, engine='openpyxl', sheet_name='FBL3N', 
+    #                            dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Document Number': str, 'Account': str, 'Text': str,
+    #                                     'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
+    # FBL3N_new = pd.read_excel(uploaded_new_FBL3N, engine='openpyxl', sheet_name='FBL3N',
+    #             dtype = {'Subcode': str, 'Company Code': str, 'Document Type': str, 'Account': str, 'Document Number': str,
+    #                     'Text': str, 'Reference': str, 'Document Header Text': str, 'User Name': str, 'Tax Code': str,})
+
+    # ZLAAUDIT = pd.read_excel(uploaded_ZLAAUDIT, engine='openpyxl', sheet_name='ZLAAUDIT',
+    #             dtype = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document Number': str, 'Business Area': str,
+    #                     'Document type': str, 'Tax Code': str, 'Line item': str, 'Posting Key': str, 'Account': str, 'Assignment': str,
+    #                     'User Name': str, 'Reference': str, 'Document Header Text': str, 'Currency': str, 'Local Currency': str,})
+
+    # accounts = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='GL_Accounts',
+    #             dtype = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str})
+
+    # subcodes = pd.read_excel(uploaded_masters, engine='openpyxl', sheet_name='Subcodes',
+    #               dtype={'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str,
+    #                      'Code_RP': str, 'Code_Desc_RP': str,})
+
+    # saldos_financieros = pd.read_excel(uploaded_SdosFin, engine='openpyxl', sheet_name='SaldosFin_MX',
+    #               dtype={'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str,
+    #                      'Type': str, 'Balance': str,})
+    
+    # fb03 = pd.read_excel(uploaded_FB03, engine='openpyxl', sheet_name='Sheet1',
+    #               dtype={'CoCd': str, 'DocumentNo': str, 'Reversal': str, 'Key_Doc': str,
+    #                      'Key_Rev': str, 'Doc. Date': str,})
 
     ######----------MACHINE LEARNING MODEL----------######
     #-----Stage 1: Clean dataset, to get unique records and avoid NA, to have a clean Dataset to run the Machine Learning Model
