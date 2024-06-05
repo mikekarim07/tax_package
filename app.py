@@ -288,14 +288,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_6'] = FBL3N_new.apply(sc_301, axis=1)
     
     def sc_214(row):
-        if (row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300"))):
+        # if (row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300"))):
+        if ((row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300")))) or (row['ZLAAUDIT_Acc'].startswith("7736000019")):
             return "214"
         else:
             return ''
     FBL3N_new['SC_7'] = FBL3N_new.apply(sc_214, axis=1)
 
     def sc_114(row):
-        if ((row['Account'].startswith("1556260000") and row['Text'].startswith("110"))) and (not (row['Text'].startswith("300"))):
+        # if ((row['Account'].startswith("1556260000") and row['Text'].startswith("110"))) and (not (row['Text'].startswith("300"))):
+        if (((row['Account'].startswith("1556260000") and row['Text'].startswith("110"))) and (not (row['Text'].startswith("300")))) or (row['ZLAAUDIT_Acc'].startswith("7736000018")):
             return "114"
         else:
             return ''
@@ -337,14 +339,14 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_12'] = FBL3N_new.apply(sc_220, axis=1)
 
     def sc_110(row):
-        if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and not ("loan int" in str(row['Document Header Text']).lower()) and not ((row['Document Header Text'].startswith("620"))) and not (("valuation" in str(row['Text']).lower()) or ("revaluacion" in str(row['Text']).lower())) and not (("guts" in str(row['Reference']).lower()))) or (row['Company Code'].startswith("KPRS") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
+        if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and not ("loan int" in str(row['Document Header Text']).lower()) and not ((row['Document Header Text'].startswith("620"))) and not (("valuation" in str(row['Text']).lower()) or ("revaluacion" in str(row['Text']).lower())) and not (("guts" in str(row['Reference']).lower())) and not (row['ZLAAUDIT_Acc'].startswith("7736000018"))) or (row['Company Code'].startswith("KPRS") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
             return "110"
         else:
             return ''
     FBL3N_new['SC_13'] = FBL3N_new.apply(sc_110, axis=1)
 
     def sc_210(row):
-        if ((row['Text'].startswith("210") or row['Text'].startswith("211")) and (not (row['Account'].startswith("1556160000") or row['Account'].startswith("1556260000") or ("loan int" in str(row['Document Header Text']).lower())))) or (row['Company Code'].startswith("KCAR") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
+        if ((row['Text'].startswith("210") or row['Text'].startswith("211")) and (not (row['Account'].startswith("1556160000") or row['Account'].startswith("1556260000") or ("loan int" in str(row['Document Header Text']).lower())))) or (row['Company Code'].startswith("KCAR") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")) or (not (row['ZLAAUDIT_Acc'].startswith("7736000019"))):
             return "210"
         else:
             return ''
