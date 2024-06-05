@@ -236,7 +236,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     st.dataframe(hedge_accnts)
 
     FBL3N_new = FBL3N_new.merge(hedge_accnts, left_on="CONCAT_01", right_on='Key_ZLAAUDIT', how='left')
-
+    st.dataframe(FBL3N_new)
     
     #---------------Funciones para subcodes fijas-------------------
     
