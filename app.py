@@ -228,7 +228,14 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new = FBL3N_new.merge(fb03_merged, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
     
+    #----- ZLAAUDIT filter by account 7736000018 & 19 (Hedge) -----#
+    hedge_accnts = ZLAAUDIT[(ZLAAUDIT['Account']== '7736000018') | (ZLAAUDIT['Account']== '7736000018')]
+    hedge_accnts = ZLAAUDIT[['CONCAT', 'Account']]
+    st.dataframe(hedge_accnts)
 
+
+
+    
     #---------------Funciones para subcodes fijas-------------------
     
     def sc_121(row):
