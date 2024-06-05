@@ -262,6 +262,8 @@ with tab2:
                 st.dataframe(GSMX_Balances)
             else:
                 st.dataframe(GSMX_Balances)
+        else:
+            GSMX_Balances = pd.DataFrame()
             
 
 
@@ -342,6 +344,8 @@ with tab3:
                 st.dataframe(KCMX_Balances)
             else:
                 st.dataframe(KCMX_Balances)
+        else:
+            KCMX_Balances = pd.DataFrame()
             
 
 
@@ -420,6 +424,8 @@ with tab4:
                 st.dataframe(KLMX_Balances)
             else:
                 st.dataframe(KLMX_Balances)
+        else:
+            KLMX_Balances = pd.DataFrame()
             
 
 
@@ -497,6 +503,8 @@ with tab5:
                 st.dataframe(PRMX_Balances)
             else:
                 st.dataframe(PRMX_Balances)
+        else:
+            PRMX_Balances = pd.DataFrame()
             
 with tab6:
     
