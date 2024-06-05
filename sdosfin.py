@@ -58,6 +58,8 @@ if uploaded_GIMX is not None:
     sheet_names_GIMX.insert(0, "Select")
     sheet_PnL_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX P&L", sheet_names_GIMX)
     sheet_AccBal_GIMX = st.sidebar.selectbox("Select the sheet which contains GIMX Account Balances", sheet_names_GIMX)
+# else
+#     df_vacio = pd.DataFrame()
 st.sidebar.divider()
 
 uploaded_GSMX = st.sidebar.file_uploader("Upload GSMX Financial Statements", type=["xlsx"])
@@ -144,6 +146,8 @@ with tab1:
                 st.dataframe(GIMX_PnL)
             else:
                 st.dataframe(GIMX_PnL)
+        else:
+            GIMX_PnL = pd.DataFrame()
             
 
     with subtab2_GIMX:
