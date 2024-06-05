@@ -146,8 +146,7 @@ with tab1:
                 st.dataframe(GIMX_PnL)
             else:
                 st.dataframe(GIMX_PnL)
-        else:
-            GIMX_PnL = pd.DataFrame()
+       
             
 
     with subtab2_GIMX:
@@ -180,6 +179,8 @@ with tab1:
                 st.dataframe(GIMX_Balances)
             else:
                 st.dataframe(GIMX_Balances)
+        else:
+            GIMX_Balances = pd.DataFrame()
             
 
 
