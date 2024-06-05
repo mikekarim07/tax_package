@@ -507,67 +507,67 @@ with tab5:
             PRMX_Balances = pd.DataFrame()
             
 with tab6:
+    if st.checkbox("Check box to append all CoCodes Balances in one file"):
+        Saldos_Financieros = pd.concat([GIMX_Balances,GSMX_Balances,KCMX_Balances,KLMX_Balances,PRMX_Balances])
+        Saldos_Financieros['Debit Account'] = Saldos_Financieros['Cuenta'].str[:10]
+        Saldos_Financieros.rename(columns={"Cuenta": "Account Name", "Saldo": "Balance"}, inplace=True)
+        Saldos_Financieros['Type'] = "Cuentas de Ingresos"
     
-    Saldos_Financieros = pd.concat([GIMX_Balances,GSMX_Balances,KCMX_Balances,KLMX_Balances,PRMX_Balances])
-    Saldos_Financieros['Debit Account'] = Saldos_Financieros['Cuenta'].str[:10]
-    Saldos_Financieros.rename(columns={"Cuenta": "Account Name", "Saldo": "Balance"}, inplace=True)
-    Saldos_Financieros['Type'] = "Cuentas de Ingresos"
-
-    data_imp = {
-        'Debit Account': [
-            '1118116399', '1118116223', '1767221222', '1118116250', '1767221350',
-            '1767221227', '1767221223', '1767221399', '1118116399', '1767221099',
-            '1767221299', '1769226100', '1767221599'
-        ],
-        'Account Name': [
-            '16% Input Tax', '16% Input Tax', 'VAT Payable ITCO', '8% Input IEPS Tax', 
-            '8% Output IEPS Tax', '8% Output Manual IEPS', 'VAT Payable ITCO',
-            '16% VAT Intercompany - Fiscal', '16% INPUT TAX - INT V0', 'Vat Industria y Comercio', 
-            '16% Services Fiscal', 'WH Income Tax - External payments w/o taxable agre',
-            '8% output Manual IE'
-        ],
-        'Type': [
-            'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos',
-            'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos',
-            'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos'
-        ]
-    }
-    
-    # Crear el DataFrame inicial
-    ctas_impuestos = pd.DataFrame(data_imp)
-    
-    # Lista de valores para la columna Co_Cd
-    co_cd_values = ['GIMX', 'GSMX', 'KCMX', 'KLMX', 'PRMX']
-    
-    # Crear un nuevo DataFrame con la columna Co_Cd
-    df_list = []
-    for co_cd in co_cd_values:
-        df_temp = ctas_impuestos.copy()
-        df_temp['Co_Cd'] = co_cd
-        df_list.append(df_temp)
-    
-    # Concatenar todos los DataFrames
-    ctas_impuestos = pd.concat(df_list, ignore_index=True)
-
-    Saldos_Financieros = pd.concat([Saldos_Financieros,ctas_impuestos])
-
-    Saldos_Financieros['Concat'] = Saldos_Financieros['Co_Cd'] + Saldos_Financieros['Debit Account']
-    Saldos_Financieros['Currency'] = "MXN"
-    Saldos_Financieros = Saldos_Financieros[['Concat', 'Co_Cd', 'Debit Account', 'Account Name', 'Type', 'Balance', 'Currency']]
-    Saldos_Financieros = Saldos_Financieros.sort_values(by=['Co_Cd', 'Debit Account'], ascending=[True, True])    
-    
-    st.dataframe(Saldos_Financieros)
-    
-    # Crear y guardar el archivo FBL3N
-    excel_buffer_sdos_fin = BytesIO()
-    with pd.ExcelWriter(excel_buffer_sdos_fin, engine='xlsxwriter') as writer:
-        Saldos_Financieros.to_excel(writer, index=False, sheet_name='SaldosFin_MX')
+        data_imp = {
+            'Debit Account': [
+                '1118116399', '1118116223', '1767221222', '1118116250', '1767221350',
+                '1767221227', '1767221223', '1767221399', '1118116399', '1767221099',
+                '1767221299', '1769226100', '1767221599'
+            ],
+            'Account Name': [
+                '16% Input Tax', '16% Input Tax', 'VAT Payable ITCO', '8% Input IEPS Tax', 
+                '8% Output IEPS Tax', '8% Output Manual IEPS', 'VAT Payable ITCO',
+                '16% VAT Intercompany - Fiscal', '16% INPUT TAX - INT V0', 'Vat Industria y Comercio', 
+                '16% Services Fiscal', 'WH Income Tax - External payments w/o taxable agre',
+                '8% output Manual IE'
+            ],
+            'Type': [
+                'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos',
+                'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos',
+                'Cuentas de Impuestos', 'Cuentas de Impuestos', 'Cuentas de Impuestos'
+            ]
+        }
         
-    # Descargar el archivo Excel en Streamlit
-    st.download_button(
-        label="Download Saldos Financieros",
-        data=excel_buffer_sdos_fin.getvalue(),
-        file_name="SaldosFinancierosMX.xlsx",
-        key='download_button_SdosFin'
-    )
+        # Crear el DataFrame inicial
+        ctas_impuestos = pd.DataFrame(data_imp)
+        
+        # Lista de valores para la columna Co_Cd
+        co_cd_values = ['GIMX', 'GSMX', 'KCMX', 'KLMX', 'PRMX']
+        
+        # Crear un nuevo DataFrame con la columna Co_Cd
+        df_list = []
+        for co_cd in co_cd_values:
+            df_temp = ctas_impuestos.copy()
+            df_temp['Co_Cd'] = co_cd
+            df_list.append(df_temp)
+        
+        # Concatenar todos los DataFrames
+        ctas_impuestos = pd.concat(df_list, ignore_index=True)
+    
+        Saldos_Financieros = pd.concat([Saldos_Financieros,ctas_impuestos])
+    
+        Saldos_Financieros['Concat'] = Saldos_Financieros['Co_Cd'] + Saldos_Financieros['Debit Account']
+        Saldos_Financieros['Currency'] = "MXN"
+        Saldos_Financieros = Saldos_Financieros[['Concat', 'Co_Cd', 'Debit Account', 'Account Name', 'Type', 'Balance', 'Currency']]
+        Saldos_Financieros = Saldos_Financieros.sort_values(by=['Co_Cd', 'Debit Account'], ascending=[True, True])    
+        
+        st.dataframe(Saldos_Financieros)
+        
+        # Crear y guardar el archivo FBL3N
+        excel_buffer_sdos_fin = BytesIO()
+        with pd.ExcelWriter(excel_buffer_sdos_fin, engine='xlsxwriter') as writer:
+            Saldos_Financieros.to_excel(writer, index=False, sheet_name='SaldosFin_MX')
+            
+        # Descargar el archivo Excel en Streamlit
+        st.download_button(
+            label="Download Saldos Financieros",
+            data=excel_buffer_sdos_fin.getvalue(),
+            file_name="SaldosFinancierosMX.xlsx",
+            key='download_button_SdosFin'
+        )
     
