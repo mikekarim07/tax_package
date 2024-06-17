@@ -526,6 +526,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     ZLAAUDIT_notPnL['segmento'] = ZLAAUDIT_notPnL.apply(PnL_notPnL, axis=1)
     ZLAAUDIT_notPnL = ZLAAUDIT_notPnL[(~ZLAAUDIT_notPnL['CONCAT_2'].isin(Sdos_Fin_Accounts)) & (ZLAAUDIT_notPnL['segmento'] == "NotPnL")]
     ZLAAUDIT_grouped_notPnL = ZLAAUDIT_notPnL.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
+    ZLAAUDIT_grouped_notPnL = ZLAAUDIT_grouped_notPnL[ZLAAUDIT_grouped_notPnL['Debit/credit amount'] != 0]
 
 
     #Cuentas unicas de Impuestos en Saldos Financieros
