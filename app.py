@@ -514,6 +514,17 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     ZLAAUDIT_filtrado = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)]
     ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
 
+    ZLAAUDIT_notPnL = ZLAAUDIT.copy()
+        def PnL_notPnL(row):
+    # Verificar las condiciones
+        if (row['Account'].startswith("2") or row['Account'].startswith("3") or row['Account'].startswith("4") or row['Account'].startswith("5") or row['Account'].startswith("6") or row['Account'].startswith("7") or row['Account'].startswith("8") or row['Account'].startswith("9")):
+            return "NotPnL"
+        else:
+            return ''
+    ZLAAUDIT_notPnL['segmento'] = ZLAAUDIT_notPnL.apply(PnL_notPnL, axis=1)
+    ZLAAUDIT_notPnL = ZLAAUDIT_notPnL[(~ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)) & (ZLAAUDIT_notPnL['segmento']=="NotPnL")]
+    ZLAAUDIT_grouped_notPnL = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
+
 
     #Cuentas unicas de Impuestos en Saldos Financieros
     Sdos_Fin_Accounts_tax = saldos_financieros[['Concat', 'Type']].drop_duplicates()
@@ -620,6 +631,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     with pd.ExcelWriter(excel_buffer_fbl3n, engine='xlsxwriter') as writer:
         FBL3N_new.to_excel(writer, index=False, sheet_name='FBL3N')
         ZLAAUDIT_grouped.to_excel(writer, index=False, sheet_name='ZLAAUDIT_Grouped')
+        ZLAAUDIT_grouped_notPnL.to_excel(writer, index=False, sheet_name='ZLAAUDIT_Grouped_NotPnL')
     
     # Descargar el archivo Excel en Streamlit
     st.download_button(
