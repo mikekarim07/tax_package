@@ -515,15 +515,17 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     ZLAAUDIT_grouped = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
 
     ZLAAUDIT_notPnL = ZLAAUDIT.copy()
-        def PnL_notPnL(row):
-    # Verificar las condiciones
-        if (row['Account'].startswith("2") or row['Account'].startswith("3") or row['Account'].startswith("4") or row['Account'].startswith("5") or row['Account'].startswith("6") or row['Account'].startswith("7") or row['Account'].startswith("8") or row['Account'].startswith("9")):
+       
+    def PnL_notPnL(row):
+        # Verificar las condiciones para 'NotPnL'
+        if row['Account'].startswith(("2", "3", "4", "5", "6", "7", "8", "9")):
             return "NotPnL"
         else:
             return ''
+    
     ZLAAUDIT_notPnL['segmento'] = ZLAAUDIT_notPnL.apply(PnL_notPnL, axis=1)
-    ZLAAUDIT_notPnL = ZLAAUDIT_notPnL[(~ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts)) & (ZLAAUDIT_notPnL['segmento']=="NotPnL")]
-    ZLAAUDIT_grouped_notPnL = ZLAAUDIT_filtrado.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
+    ZLAAUDIT_notPnL = ZLAAUDIT_notPnL[(~ZLAAUDIT_notPnL['CONCAT_2'].isin(Sdos_Fin_Accounts)) & (ZLAAUDIT_notPnL['segmento'] == "NotPnL")]
+    ZLAAUDIT_grouped_notPnL = ZLAAUDIT_notPnL.groupby(by=['CONCAT', 'Account', 'Local Currency'], as_index=False).agg({'Debit/credit amount': 'sum'})
 
 
     #Cuentas unicas de Impuestos en Saldos Financieros
