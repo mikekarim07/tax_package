@@ -518,7 +518,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
        
     def PnL_notPnL(row):
         # Verificar las condiciones para 'NotPnL'
-        if row['Account'].startswith(("2", "3", "4", "5", "6", "7", "8", "9")):
+        if (row['Account'].startswith(("2", "3", "4", "5", "6", "7", "8", "9")) and len(row['Account']) == 10):
             return "NotPnL"
         else:
             return ''
