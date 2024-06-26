@@ -414,7 +414,7 @@ with tab4:
                 KLMX_Balances.rename(columns={col_cuenta_KLMX: "Cuenta", col_clasificacion_KLMX: "Clasificacion", col_rubro_KLMX: "Rubro", col_saldo_KLMX: "Saldo"}, inplace=True)
                 KLMX_Balances = KLMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 KLMX_Balances['Clasificacion'] = KLMX_Balances['Clasificacion'].str.lower()
-                KLMX_Balances = KLMX_Balances[(KLMX_Balances['Clasificacion'].isin(KLMX_Clasificacion)) & (KLMX_Balances['Saldo'] != 0)]
+                KLMX_Balances = KLMX_Balances[KLMX_Balances['Clasificacion'].isin(KLMX_Clasificacion)]
                 KLMX_Balances['Co_Cd'] = "KLMX"
                 
                 Total_Income_Balance = KLMX_Balances["Saldo"].sum()
