@@ -169,7 +169,7 @@ with tab1:
                 GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
                 GIMX_Balances = GIMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 GIMX_Balances['Clasificacion'] = GIMX_Balances['Clasificacion'].str.lower()
-                GIMX_Balances = GIMX_Balances[(GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)) & (GIMX_Balances['Saldo'] != 0)]
+                GIMX_Balances = GIMX_Balances[GIMX_Balances['Clasificacion'].isin(GIMX_Clasificacion)]
                 GIMX_Balances['Co_Cd'] = "GIMX"
                 
                 Total_Income_Balance = GIMX_Balances["Saldo"].sum()
@@ -252,7 +252,7 @@ with tab2:
                 GSMX_Balances.rename(columns={col_cuenta_GSMX: "Cuenta", col_clasificacion_GSMX: "Clasificacion", col_rubro_GSMX: "Rubro", col_saldo_GSMX: "Saldo"}, inplace=True)
                 GSMX_Balances = GSMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 GSMX_Balances['Clasificacion'] = GSMX_Balances['Clasificacion'].str.lower()
-                GSMX_Balances = GSMX_Balances[(GSMX_Balances['Clasificacion'].isin(GSMX_Clasificacion)) & (GSMX_Balances['Saldo'] != 0)]
+                GSMX_Balances = GSMX_Balances[GSMX_Balances['Clasificacion'].isin(GSMX_Clasificacion)]
                 GSMX_Balances['Co_Cd'] = "GSMX"
                 
                 Total_Income_Balance = GSMX_Balances["Saldo"].sum()
@@ -334,7 +334,7 @@ with tab3:
                 KCMX_Balances.rename(columns={col_cuenta_KCMX: "Cuenta", col_clasificacion_KCMX: "Clasificacion", col_rubro_KCMX: "Rubro", col_saldo_KCMX: "Saldo"}, inplace=True)
                 KCMX_Balances = KCMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 KCMX_Balances['Clasificacion'] = KCMX_Balances['Clasificacion'].str.lower()
-                KCMX_Balances = KCMX_Balances[(KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)) & (KCMX_Balances['Saldo'] != 0)]
+                KCMX_Balances = KCMX_Balances[KCMX_Balances['Clasificacion'].isin(KCMX_Clasificacion)]
                 KCMX_Balances['Co_Cd'] = "KCMX"
                 
                 Total_Income_Balance = KCMX_Balances["Saldo"].sum()
@@ -493,7 +493,7 @@ with tab5:
                 PRMX_Balances.rename(columns={col_cuenta_PRMX: "Cuenta", col_clasificacion_PRMX: "Clasificacion", col_rubro_PRMX: "Rubro", col_saldo_PRMX: "Saldo"}, inplace=True)
                 PRMX_Balances = PRMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
                 PRMX_Balances['Clasificacion'] = PRMX_Balances['Clasificacion'].str.lower()
-                PRMX_Balances = PRMX_Balances[(PRMX_Balances['Clasificacion'].isin(PRMX_Clasificacion)) & (PRMX_Balances['Saldo'] != 0)]
+                PRMX_Balances = PRMX_Balances[PRMX_Balances['Clasificacion'].isin(PRMX_Clasificacion)]
                 PRMX_Balances['Co_Cd'] = "PRMX"
                 
                 Total_Income_Balance = PRMX_Balances["Saldo"].sum()
