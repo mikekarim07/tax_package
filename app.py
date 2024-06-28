@@ -305,14 +305,14 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_17'] = FBL3N_new.apply(sc_114, axis=1)
 
     def sc_601(row):
-        if (row['Document Header Text'].startswith("601") or row['Text'].startswith("601")) and (row['Reference'].startswith(str(row['Company Code']))):
+        if (row['Document Header Text'].startswith("610") or row['Text'].startswith("610") or row['Document Header Text'].startswith("601") or row['Text'].startswith("601")) and (row['Reference'].startswith(str(row['Company Code']))):
             return "601"
         else:
             return ''
     FBL3N_new['SC_8'] = FBL3N_new.apply(sc_601, axis=1)
 
     def sc_610(row):
-        if (row['Document Header Text'].startswith("610") or row['Text'].startswith("610")) and (not (row['Reference'].startswith(str(row['Company Code'])))):
+        if (row['Document Header Text'].startswith("610") or row['Text'].startswith("610") or row['Document Header Text'].startswith("601") or row['Text'].startswith("601")) and (not (row['Reference'].startswith(str(row['Company Code'])))):
             return "610"
         else:
             return ''
