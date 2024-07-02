@@ -174,7 +174,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
-    cols_previous_fbl3n = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2']
+    cols_previous_fbl3n = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2', 'Taxes']
     FBL3N_new = FBL3N_new.drop(columns=[col for col in cols_previous_fbl3n if col in FBL3N_new.columns])
     
     #----- Step 2: Create a new column "ML"
@@ -532,9 +532,17 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #Cuentas unicas de Impuestos en Saldos Financieros
     Sdos_Fin_Accounts_tax = saldos_financieros[['Concat', 'Type']].drop_duplicates()
     Sdos_Fin_Accounts_tax = Sdos_Fin_Accounts_tax[Sdos_Fin_Accounts_tax ['Type'] == 'Cuentas de Impuestos']
+    st.write('cuentas de impuestos')
+    st.dataframe(Sdos_Fin_Accounts_tax)
     ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts_tax['Concat'])]
     ZLAAUDIT_filtrado_tax = ZLAAUDIT_filtrado_tax.merge(Sdos_Fin_Accounts_tax, left_on="CONCAT_2", right_on='Concat', how='left')
+    st.write('cuentas de impuestos')
+    st.dataframe(ZLAAUDIT_filtrado_tax)
     ZLAAUDIT_grouped_tax = ZLAAUDIT_filtrado_tax.groupby(by=['CONCAT', 'Account', 'Local Currency', 'Type'], as_index=False).agg({'Debit/credit amount': 'sum'})
+    st.write('cuentas de impuestos')
+    st.dataframe(ZLAAUDIT_grouped_tax)
+
+    
     FBL3N_new = FBL3N_new.merge(ZLAAUDIT_grouped_tax, left_on="CONCAT", right_on='CONCAT', how='left', suffixes=('', '_taxes'))
     delete_colsfromzla = ['Account_taxes', 'Local Currency_taxes', 'Type']
     FBL3N_new = FBL3N_new.drop(columns=delete_colsfromzla)
