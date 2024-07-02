@@ -423,7 +423,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     with tab2:
         FBL3N_new.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
-        
+        st.write(''que es esto')
+        st.dataframe(FBL3N_new)
         def remove_CONCAT(FBL3N_new):
             if "CONCAT" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
