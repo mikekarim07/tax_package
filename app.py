@@ -347,7 +347,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_12'] = FBL3N_new.apply(sc_220, axis=1)
 
     def sc_110(row):
-        if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and not ("loan int" in str(row['Document Header Text']).lower()) and not ((row['Document Header Text'].startswith("620"))) and not (("valuation" in str(row['Text']).lower()) or ("revaluacion" in str(row['Text']).lower())) and not (("guts" in str(row['Reference']).lower()))) or (row['Company Code'].startswith("KPRS") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
+        if ((row['Text'].startswith("110") or row['Text'].startswith("111")) and not ("loan int" in str(row['Document Header Text']).lower()) and not ((row['Document Header Text'].startswith("620"))) and not (("valuation" in str(row['Text']).lower()) or ("revaluacion" in str(row['Text']).lower())) and not (("guts" in str(row['Reference']).lower())) and not ("7736000018" in str(row['ZLAAUDIT_Acc']).lower())) or (row['Company Code'].startswith("KPRS") and row['Account'].startswith("1556250440") and row['Document Type'].startswith("SA") and row['Document Header Text'].startswith("Alloc ROC")):
             return "110"
         else:
             return ''
