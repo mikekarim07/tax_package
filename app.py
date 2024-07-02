@@ -535,7 +535,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #Cuentas unicas de Impuestos en Saldos Financieros
     tax_accounts = saldos_financieros[['Debit Account']].drop_duplicates()
     st.write('new cuentas impuestos')
-    st.dataframe('tax_accounts')
+    st.dataframe(tax_accounts)
     ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['Account'].isin(tax_accounts['Debit Account'])]
     ZLAAUDIT_grouped_tax = ZLAAUDIT_filtrado_tax.groupby(by=['CONCAT', 'Account', 'Local Currency', 'Type'], as_index=False).agg({'Debit/credit amount': 'sum'})
 
