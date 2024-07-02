@@ -189,6 +189,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_previous_subcodes = FBL3N_new.copy()
     st.write('previous subcodes')
     st.dataframe(FBL3N_previous_subcodes)
+    st.write(FBL3N_previous_subcodes.columns)
     
     #----- Step 4: Assign the Subcode to the new FBL3N dataset uploades, according to the ML model
     X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_new['ML'])
