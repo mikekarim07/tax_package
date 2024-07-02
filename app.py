@@ -291,8 +291,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_6'] = FBL3N_new.apply(sc_301, axis=1)
     
     def sc_214(row):
-        if (row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300"))):
-        # if ((row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300")))) or (row['ZLAAUDIT_Acc'].startswith("7736000019")):
+        # if (row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300"))):
+        if ((row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300")))) or ("7736000019" in str(row['ZLAAUDIT_Acc']).lower()):
             return "214"
         else:
             return ''
