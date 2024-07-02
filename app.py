@@ -188,9 +188,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['Subcode_td_1'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str)) + FBL3N_new['Document Type'] + (FBL3N_new['Posting period'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
     FBL3N_previous_subcodes = FBL3N_new.copy()
     FBL3N_previous_subcodes = FBL3N_previous_subcodes[['CONCAT', 'Subcode']]
-    st.write('previous subcodes')
-    st.dataframe(FBL3N_previous_subcodes)
-    st.write(FBL3N_previous_subcodes.columns)
+    # st.write('previous subcodes')
+    # st.dataframe(FBL3N_previous_subcodes)
+    # st.write(FBL3N_previous_subcodes.columns)
     
     #----- Step 4: Assign the Subcode to the new FBL3N dataset uploades, according to the ML model
     X_new_data_tfidf = tfidf_vectorizer.transform(FBL3N_new['ML'])
@@ -376,6 +376,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16'] + FBL3N_new['SC_17']
 
+    st.write('fbl3n categorizado con reglas')
+    st.dataframe(FBL3N_new)
     #-----
     
     # def fix_01(reference, FBL3N_new):
