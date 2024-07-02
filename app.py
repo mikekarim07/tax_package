@@ -406,8 +406,31 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             else:
                 return row['SC_Fix']
     FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
+    FBL3N_new.rename(columns={'Subcode': 'Previous_subcode', 'New Subcode': 'Subcode'}, inplace=True)
 
+    def remove_CONCAT(FBL3N_new):
+            if "CONCAT" in FBL3N_new.columns:
+                FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
+            return FBL3N_new
+    FBL3N_new = remove_CONCAT(FBL3N_new)
 
+    def remove_RelatedParty(FBL3N_new):
+            if "Related Party" in FBL3N_new.columns:
+                FBL3N_new = FBL3N_new.drop("Related Party", axis=1)
+            return FBL3N_new
+    FBL3N_new = remove_RelatedParty(FBL3N_new)
+    
+    columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
+    FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
+    
+    FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
+                               'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
+                               'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
+    date_columns = ['Document Date', 'Posting Date', 'Doc. Date', 'Entered', 'Pstng Date']
+    # Convert to datetime and then extract the date
+    FBL3N_new[date_columns] = FBL3N_new[date_columns].apply(pd.to_datetime).apply(lambda x: x.dt.date)
+    
+    
     
     st.write('fbl3n categorizado con reglas')
     st.dataframe(FBL3N_new)
@@ -434,71 +457,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         # st.write(FBL3N_summary.columns)
 
     with tab2:
-        FBL3N_new.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
-        st.write('que es esto')
-        st.dataframe(FBL3N_new)
-
-
-
-
-
-
-
-
-        
-        def remove_CONCAT(FBL3N_new):
-            if "CONCAT" in FBL3N_new.columns:
-                FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
-            return FBL3N_new
-        FBL3N_new = remove_CONCAT(FBL3N_new)
-        
-        # def remove_Subcode(FBL3N_new):
-        #     if "Subcode" in FBL3N_new.columns:
-        #         FBL3N_new = FBL3N_new.drop("Subcode", axis=1)
-        #     return FBL3N_new
-        # FBL3N_new = remove_Subcode(FBL3N_new)
-
-        def remove_RelatedParty(FBL3N_new):
-            if "Related Party" in FBL3N_new.columns:
-                FBL3N_new = FBL3N_new.drop("Related Party", axis=1)
-            return FBL3N_new
-        FBL3N_new = remove_RelatedParty(FBL3N_new)
-
-        # FBL3N_new = FBL3N_new.merge(FBL3N_previous_subcode, left_on="Subcode_td_1", right_on='Subcode_td', how='left')
-        FBL3N_new['Subcode_assigned'] = FBL3N_new['Subcode_assigned'].fillna('')
-        def Subcode(row):
-        # Verificar las condiciones
-            if row['Subcode_assigned'] != '':
-                return row['Subcode_assigned']
-            else:
-                return row['SC_Fix']
-        FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
-
-        columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
-        FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
-        
-        def create_subcode2(FBL3N_new):
-            if "Subcode 2" not in FBL3N_new.columns:
-                FBL3N_new["Subcode 2"] = ""
-            return FBL3N_new
-        FBL3N_new = create_subcode2(FBL3N_new)
-        
-        
-        
-        # FBL3N_new['Subcode 2'] = ''
-        # st.write(FBL3N_new.columns)
-        
-        # FBL3N_new = FBL3N_new[['CONCAT', 'Subcode',  'Subcode 2', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
-        #                        'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
-        #                       'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_9', 'SC_10', 'SC_11', 'SC_12', 'SC_13', 'SC_14', 'SC_15', 'SC_16', 'SC_17', 'SC_concat',
-        #                        'SC_Fix', 'Subcode_ML', 'Subcode_td', 'Subcode_assigned', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev']]
-        FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
-                               'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
-                               'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
-        date_columns = ['Document Date', 'Posting Date', 'Doc. Date', 'Entered', 'Pstng Date']
-        # Convert to datetime and then extract the date
-        FBL3N_new[date_columns] = FBL3N_new[date_columns].apply(pd.to_datetime).apply(lambda x: x.dt.date)
-
         #-------- Para volver a cruzar el dataframe con el Subcode ajustado con el catalogo de cuentas y los subcodigos
         # FBL3N_new = FBL3N_new.merge(accounts, left_on="Account", right_on='GL_Account', how='left')
         # FBL3N_new = FBL3N_new.merge(subcodes, left_on="Subcode", right_on='Code', how='left')
