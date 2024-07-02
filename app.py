@@ -55,6 +55,8 @@ dtype_ZLAAUDIT = {'CONCAT': str, 'CONCAT_2': str, 'Company Code': str, 'Document
 
 dtype_accounts = {'GL_Account': str, 'Description': str, 'Country': str, 'CoCd': str}
 
+dtype_tax_accounts = {'Co_Cd': str, 'Debit Account': str, 'Account Name': str, 'CoCd': str}
+
 dtype_subcodes = {'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP': str, 'Code_RP': str, 'Code_Desc_RP': str,}
 
 dtype_sdosfin = {'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str, 'Type': str, 'Balance': str,}
@@ -85,6 +87,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     ZLAAUDIT = load_sheet(uploaded_ZLAAUDIT, 'ZLAAUDIT', dtype_ZLAAUDIT)
     accounts = load_sheet(uploaded_masters, 'GL_Accounts', dtype_accounts)
     subcodes = load_sheet(uploaded_masters, 'Subcodes', dtype_subcodes)
+    tax_accounts = load_sheet(uploaded_masters, 'Cuentas Taxes', dtype_tax_accounts)
     saldos_financieros = load_sheet(uploaded_SdosFin, 'SaldosFin_MX', dtype_sdosfin)
     fb03 = load_sheet(uploaded_FB03, 'Sheet1', dtype_fb03)
 
@@ -530,17 +533,26 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
 
     #Cuentas unicas de Impuestos en Saldos Financieros
-    Sdos_Fin_Accounts_tax = saldos_financieros[['Concat', 'Type']].drop_duplicates()
-    Sdos_Fin_Accounts_tax = Sdos_Fin_Accounts_tax[Sdos_Fin_Accounts_tax ['Type'] == 'Cuentas de Impuestos']
-    st.write('cuentas de impuestos')
-    st.dataframe(Sdos_Fin_Accounts_tax)
-    ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts_tax['Concat'])]
-    ZLAAUDIT_filtrado_tax = ZLAAUDIT_filtrado_tax.merge(Sdos_Fin_Accounts_tax, left_on="CONCAT_2", right_on='Concat', how='left')
-    st.write('cuentas de impuestos')
-    st.dataframe(ZLAAUDIT_filtrado_tax)
+    tax_accounts = saldos_financieros[['Debit Account']].drop_duplicates()
+    st.write('new cuentas impuestos')
+    st.dataframe('tax_accounts')
+    ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['Account'].isin(tax_accounts['Debit Account'])]
     ZLAAUDIT_grouped_tax = ZLAAUDIT_filtrado_tax.groupby(by=['CONCAT', 'Account', 'Local Currency', 'Type'], as_index=False).agg({'Debit/credit amount': 'sum'})
-    st.write('cuentas de impuestos')
-    st.dataframe(ZLAAUDIT_grouped_tax)
+
+
+
+    
+    # Sdos_Fin_Accounts_tax = saldos_financieros[['Concat', 'Type']].drop_duplicates()
+    # Sdos_Fin_Accounts_tax = Sdos_Fin_Accounts_tax[Sdos_Fin_Accounts_tax ['Type'] == 'Cuentas de Impuestos']
+    # st.write('cuentas de impuestos')
+    # st.dataframe(Sdos_Fin_Accounts_tax)
+    # ZLAAUDIT_filtrado_tax = ZLAAUDIT[ZLAAUDIT['CONCAT_2'].isin(Sdos_Fin_Accounts_tax['Concat'])]
+    # ZLAAUDIT_filtrado_tax = ZLAAUDIT_filtrado_tax.merge(Sdos_Fin_Accounts_tax, left_on="CONCAT_2", right_on='Concat', how='left')
+    # st.write('cuentas de impuestos')
+    # st.dataframe(ZLAAUDIT_filtrado_tax)
+    # ZLAAUDIT_grouped_tax = ZLAAUDIT_filtrado_tax.groupby(by=['CONCAT', 'Account', 'Local Currency', 'Type'], as_index=False).agg({'Debit/credit amount': 'sum'})
+    # st.write('cuentas de impuestos')
+    # st.dataframe(ZLAAUDIT_grouped_tax)
 
     
     FBL3N_new = FBL3N_new.merge(ZLAAUDIT_grouped_tax, left_on="CONCAT", right_on='CONCAT', how='left', suffixes=('', '_taxes'))
