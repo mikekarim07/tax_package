@@ -183,8 +183,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #----- Step 2: Create a new column "ML"
     FBL3N_new['CONCAT_01'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str))
     FBL3N_new['ML'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + FBL3N_new['Account'] + ' ' + FBL3N_new['Text'] + ' ' + FBL3N_new['Reference'] + ' ' + FBL3N_new['Document Header Text'] + ' ' + FBL3N_new['User Name'] + ' ' + FBL3N_new['Tax Code']
-    # FBL3N_new['Id'] = FBL3N_new['Company Code'] + ' ' + FBL3N_new['Document Type'] + ' ' + (FBL3N_new['Document Number'].astype(str)) + ' ' + (FBL3N_new['Amount in doc. curr.'].astype(str)) + ' ' + (FBL3N_new['Posting Date'].astype(str))
-
+    
     #----- Step 3: Create a new column for comparing FBL3N (Original and New) to get the previously assigned subcode
     FBL3N_new['Subcode_td_1'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str)) + FBL3N_new['Document Type'] + (FBL3N_new['Posting period'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
 
@@ -196,13 +195,13 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #### Testing
     #----- Codigo para crear una nueva columna que contenga el porcentaje de certeza en la prediccion, vamos a ver si funciona
     # Assuming 'modelo' is your trained model
-    probability_matrix = modelo.predict_proba(X_new_data_tfidf)
+    # probability_matrix = modelo.predict_proba(X_new_data_tfidf)
     
     # Extract the probabilities for the predicted class
-    certainty_percentages = [max(probabilities) * 100 for probabilities in probability_matrix]
+    # certainty_percentages = [max(probabilities) * 100 for probabilities in probability_matrix]
     
     # Create a new column 'Certainty_Percentage' in your DataFrame
-    FBL3N_new['Certainty_Percentage'] = certainty_percentages
+    # FBL3N_new['Certainty_Percentage'] = certainty_percentages
     
     # Now, FBL3N_new contains a column with the certainty percentage for each prediction
     #### Testing ends
@@ -235,12 +234,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     hedge_accnts = ZLAAUDIT[ZLAAUDIT['Account'].isin(['7736000018', '7736000019'])]
     hedge_accnts = hedge_accnts[['CONCAT', 'Account']]
     hedge_accnts.rename(columns={'CONCAT': 'Key_ZLAAUDIT', 'Account': 'ZLAAUDIT_Acc'}, inplace=True)
-    # st.write('Hedge Accounts')
-    # st.dataframe(hedge_accnts)
+    st.write('Hedge Accounts')
+    st.dataframe(hedge_accnts)
 
     FBL3N_new = FBL3N_new.merge(hedge_accnts, left_on="CONCAT_01", right_on='Key_ZLAAUDIT', how='left')
-    # st.dataframe(FBL3N_new)
-    # st.write(FBL3N_new.columns)
+    st.dataframe(FBL3N_new)
+    st.write(FBL3N_new.columns)
     
     #---------------Funciones para subcodes fijas-------------------
     
