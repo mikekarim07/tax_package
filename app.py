@@ -376,8 +376,6 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16'] + FBL3N_new['SC_17']
 
-    st.write('fbl3n categorizado con reglas')
-    st.dataframe(FBL3N_new)
     #-----
     
     # def fix_01(reference, FBL3N_new):
@@ -400,6 +398,20 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         else:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
+
+    def Subcode(row):
+        # Verificar las condiciones
+            if row['Subcode_assigned'] != '':
+                return row['Subcode_assigned']
+            else:
+                return row['SC_Fix']
+    FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
+
+
+    
+    st.write('fbl3n categorizado con reglas')
+    st.dataframe(FBL3N_new)
+
     
     tab1, tab2 = st.tabs(["Resumen", "Detalle"])
     
@@ -425,6 +437,15 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         FBL3N_new.rename(columns={'Subcode': 'Subcode_assigned'}, inplace=True)
         st.write('que es esto')
         st.dataframe(FBL3N_new)
+
+
+
+
+
+
+
+
+        
         def remove_CONCAT(FBL3N_new):
             if "CONCAT" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
@@ -452,11 +473,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
             else:
                 return row['SC_Fix']
         FBL3N_new['Subcode'] = FBL3N_new.apply(Subcode, axis=1)
-                    
-        # columns_to_eliminate = ['ML', 'Subcode_td_1', 'Subcode_ML', 'GL_Account', 'Description', 'Country', 
-        #                         'SC_1', 'SC_2', 'SC_3', 'SC_4', 'SC_5', 'SC_6', 'SC_7', 'SC_8', 'SC_concat',
-        #                        'SC_Fix', 'Subcode_td', 'Subcode_assigned', 'conteo']
-        # FBL3N_new = FBL3N_new.drop(columns=columns_to_eliminate)
+
         columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
         FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
         
