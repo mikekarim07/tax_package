@@ -174,7 +174,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     #----- Stage 2: Work with new FBL3N dataset, Masters (GL_Accounts and Subcodes), ZLAAUDIT and Saldos Financieros
     #----- Step 1: Fill "NaN" cell as empty ('') at specified columns
-    
+    st.write(FBL3N_new.shape)
     columnas_rellenar_real = ['Company Code', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 'User Name', 'Tax Code']
     FBL3N_new[columnas_rellenar_real] = FBL3N_new[columnas_rellenar_real].fillna('')
     cols_previous_fbl3n = ['Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev', 'Key_1', 'Key_2', 'Taxes']
