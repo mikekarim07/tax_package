@@ -187,6 +187,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #----- Step 3: Create a new column for comparing FBL3N (Original and New) to get the previously assigned subcode
     FBL3N_new['Subcode_td_1'] = FBL3N_new['Company Code'] + (FBL3N_new['Document Number'].astype(str)) + FBL3N_new['Document Type'] + (FBL3N_new['Posting period'].astype(str)) + (FBL3N_new['Amount in doc. curr.'].astype(str))
     FBL3N_previous_subcodes = FBL3N_new.copy()
+    FBL3N_previous_subcodes = FBL3N_previous_subcodes[['CONCAT', 'Subcode']]
     st.write('previous subcodes')
     st.dataframe(FBL3N_previous_subcodes)
     st.write(FBL3N_previous_subcodes.columns)
