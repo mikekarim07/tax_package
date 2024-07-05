@@ -245,7 +245,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     
     #----- ZLAAUDIT filter by account 7736000018 & 19 (Hedge) -----#
-    hedge_accnts = ZLAAUDIT[ZLAAUDIT['Account'].isin(['7736000018', '7736000019'])]
+    hedge_accnts = ZLAAUDIT[ZLAAUDIT['Account'].isin(['7736000018', '7736000019', '2901300000'])]
     hedge_accnts = hedge_accnts[['CONCAT', 'Account']]
     hedge_accnts.rename(columns={'CONCAT': 'Key_ZLAAUDIT', 'Account': 'ZLAAUDIT_Acc'}, inplace=True)
     # st.write('Hedge Accounts')
@@ -306,7 +306,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     def sc_214(row):
         # if (row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300"))):
-        if ((row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300")))) or ("7736000019" in str(row['ZLAAUDIT_Acc']).lower()):
+        if ((row['Account'].startswith("1556160000") or (row['Account'].startswith("1556260000") and row['Text'].startswith("210"))) and (not (row['Text'].startswith("300")))) or ("7736000019" in str(row['ZLAAUDIT_Acc']).lower()) or ("2901300000" in str(row['ZLAAUDIT_Acc']).lower()):
             return "214"
         else:
             return ''
