@@ -233,7 +233,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', suffixes=('', '_Rev'))
     st.write("fb03_1")
-    st.dataframe(fb03)
+    st.dataframe(fb03_merged)
         
     FBL3N_new = FBL3N_new.merge(fb03_merged, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
