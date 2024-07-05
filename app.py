@@ -403,7 +403,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         # Verificar las condiciones
         if row['Subcode'] != '' and (len(row['Key_Concat']) == 0):
             return row['Subcode']
-        elif: len(row['Key_Concat']) > 1:
+        elif len(row['Key_Concat']) > 1:
             return "0"
         else:
             return row['SC_Fix']
