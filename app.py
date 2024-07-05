@@ -385,6 +385,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16'] + FBL3N_new['SC_17']
 
+    st.write('Visualización posterior a la asignación de todas las reglas')
+    st.dataframe(FBL3N_new)
+    
     #-----
     
     # def fix_01(reference, FBL3N_new):
