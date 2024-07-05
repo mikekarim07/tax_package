@@ -219,8 +219,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #---------------FB03-------------
     fb03_NA_Fill_Columns = ['Reversal']
     fb03 = fb03.dropna(subset=fb03_NA_Fill_Columns)
-    # st.write("fb03")
-    # st.dataframe(fb03)
+    st.write("fb03")
+    st.dataframe(fb03)
     fb03['Key_Concat'] = fb03['CoCd'] + fb03['DocumentNo']
     fb03['Key_Reversal'] = fb03['CoCd'] + fb03['Reversal']
     
