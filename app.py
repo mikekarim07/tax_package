@@ -229,9 +229,10 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                                'Time', 'LCurr', 'Crcy']
     
     fb03 = fb03.drop(columns=fb03_cols_elim)
-    fb03 = fb03.drop_duplicates(subset=['Key_Concat', 'Key_Reversal'], keep=False)
     st.write("fb03_x")
     st.dataframe(fb03)
+
+    fb03 = fb03.drop_duplicates(subset=['Key_Concat', 'Key_Reversal'], keep=False)
     fb03_left = fb03.copy()
     fb03_right = fb03.copy()    
     # fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', how='left', suffixes=('', '_Rev'))
