@@ -394,7 +394,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     def Subcode_Correction(row):
     # Verificar las condiciones
         # if row['SC_concat'] != '' and (row['SC_concat'] != row['Subcode_ML'] ):
-        if row['SC_concat'] != '' and (row['SC_concat'] != row['Subcode_ML']) and (not (pd.notna(row['Key_Concat']))):
+        if row['SC_concat'] != '' and (row['SC_concat'] != row['Subcode_ML']) and (pd.isna(row['Key_Concat'])):
             return row['SC_concat']
         elif pd.notna(row['Key_Concat']):
             return '0'
