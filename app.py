@@ -349,7 +349,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new['SC_11'] = FBL3N_new.apply(sc_120, axis=1)
 
     def sc_220(row):
-        if (row['Document Header Text'].startswith("220") or row['Text'].startswith("220")) and (not (row['Document Header Text'].startswith("620"))):
+        if ((row['Document Header Text'].startswith("220") or row['Text'].startswith("220")) and (not (row['Document Header Text'].startswith("620")))) and not ("2901300000" in str(row['ZLAAUDIT_Acc']).lower()):
             return "220"
         else:
             return ''
