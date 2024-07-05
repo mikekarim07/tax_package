@@ -401,10 +401,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
 
     def Subcode(row):
         # Verificar las condiciones
-            if row['Subcode'] != '':
-                return row['Subcode']
-            else:
-                return row['SC_Fix']
+        if row['Subcode'] != '' and len(row['Key_Concat']) == 0):
+            return row['Subcode']
+        elif: len(row['Key_Concat']) > 1):
+            return "0"
+        else:
+            return row['SC_Fix']
     FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
     FBL3N_new.rename(columns={'Subcode': 'Previous_subcode', 'New Subcode': 'Subcode'}, inplace=True)
 
