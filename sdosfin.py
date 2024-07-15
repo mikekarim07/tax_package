@@ -176,7 +176,7 @@ with tab1:
                 
                 Total_Income_Balance = GIMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income", value=Total_Income_Balance)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
                 
                 st.dataframe(GIMX_Balances)
             else:
@@ -249,7 +249,7 @@ with tab2:
                 col_rubro_GSMX = st.selectbox("Select the column which contains GSMX - Rubro", cols_acc_bal_GSMX)
             with col4_GSMX:
                 col_saldo_GSMX = st.selectbox("Select the column which contains GSMX - Saldo", cols_acc_bal_GSMX)
-            
+            st.metric(label="Total Income @Pnl", value=Total_Income)
             if (col_cuenta_GSMX is not "Select") and (col_clasificacion_GSMX is not "Select") and (col_rubro_GSMX is not "Select") and (col_saldo_GSMX is not "Select"):
                 GSMX_Balances.rename(columns={col_cuenta_GSMX: "Cuenta", col_clasificacion_GSMX: "Clasificacion", col_rubro_GSMX: "Rubro", col_saldo_GSMX: "Saldo"}, inplace=True)
                 GSMX_Balances = GSMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -259,7 +259,7 @@ with tab2:
                 
                 Total_Income_Balance = GSMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income", value=Total_Income_Balance)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
                 
                 st.dataframe(GSMX_Balances)
             else:
@@ -331,7 +331,7 @@ with tab3:
                 col_rubro_KCMX = st.selectbox("Select the column which contains KCMX - Rubro", cols_acc_bal_KCMX)
             with col4_KCMX:
                 col_saldo_KCMX = st.selectbox("Select the column which contains KCMX - Saldo", cols_acc_bal_KCMX)
-            
+            st.metric(label="Total Income @Pnl", value=Total_Income)
             if (col_cuenta_KCMX is not "Select") and (col_clasificacion_KCMX is not "Select") and (col_rubro_KCMX is not "Select") and (col_saldo_KCMX is not "Select"):
                 KCMX_Balances.rename(columns={col_cuenta_KCMX: "Cuenta", col_clasificacion_KCMX: "Clasificacion", col_rubro_KCMX: "Rubro", col_saldo_KCMX: "Saldo"}, inplace=True)
                 KCMX_Balances = KCMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -341,7 +341,7 @@ with tab3:
                 
                 Total_Income_Balance = KCMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income", value=Total_Income_Balance)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
                 
                 st.dataframe(KCMX_Balances)
             else:
@@ -411,7 +411,7 @@ with tab4:
                 col_rubro_KLMX = st.selectbox("Select the column which contains KLMX - Rubro", cols_acc_bal_KLMX)
             with col4_KLMX:
                 col_saldo_KLMX = st.selectbox("Select the column which contains KLMX - Saldo", cols_acc_bal_KLMX)
-            
+            st.metric(label="Total Income @PnL", value=Total_Income)
             if (col_cuenta_KLMX is not "Select") and (col_clasificacion_KLMX is not "Select") and (col_rubro_KLMX is not "Select") and (col_saldo_KLMX is not "Select"):
                 KLMX_Balances.rename(columns={col_cuenta_KLMX: "Cuenta", col_clasificacion_KLMX: "Clasificacion", col_rubro_KLMX: "Rubro", col_saldo_KLMX: "Saldo"}, inplace=True)
                 KLMX_Balances = KLMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -421,7 +421,7 @@ with tab4:
                 
                 Total_Income_Balance = KLMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income", value=Total_Income_Balance)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
                 
                 st.dataframe(KLMX_Balances)
             else:
@@ -490,7 +490,7 @@ with tab5:
                 col_rubro_PRMX = st.selectbox("Select the column which contains PRMX - Rubro", cols_acc_bal_PRMX)
             with col4_PRMX:
                 col_saldo_PRMX = st.selectbox("Select the column which contains PRMX - Saldo", cols_acc_bal_PRMX)
-            
+            st.metric(label="Total Income @PnL", value=Total_Income)
             if (col_cuenta_PRMX is not "Select") and (col_clasificacion_PRMX is not "Select") and (col_rubro_PRMX is not "Select") and (col_saldo_PRMX is not "Select"):
                 PRMX_Balances.rename(columns={col_cuenta_PRMX: "Cuenta", col_clasificacion_PRMX: "Clasificacion", col_rubro_PRMX: "Rubro", col_saldo_PRMX: "Saldo"}, inplace=True)
                 PRMX_Balances = PRMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -500,7 +500,7 @@ with tab5:
                 
                 Total_Income_Balance = PRMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income", value=Total_Income_Balance)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
                 
                 st.dataframe(PRMX_Balances)
             else:
