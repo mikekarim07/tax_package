@@ -61,7 +61,7 @@ dtype_subcodes = {'Code_Type': str, 'Code': str, 'Code_Desc': str, 'Code_Type_RP
 
 dtype_sdosfin = {'Concat': str, 'Co_Cd': str, 'Debit Account': str, 'Account Name': str, 'Type': str, 'Balance': str,}
 
-dtype_fb03 = {'CoCd': str, 'DocumentNo': str, 'Reversal': str, 'Doc. Date': int, 'Entered': int, 'Pstng Date': int}
+dtype_fb03 = {'CoCd': str, 'DocumentNo': str, 'Reversal': str, 'Doc. Date': str, 'Entered': str, 'Pstng Date': str}
 
 
 # st.divider()
