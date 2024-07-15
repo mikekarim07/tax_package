@@ -165,6 +165,8 @@ with tab1:
             with col4_GIMX:
                 col_saldo_GIMX = st.selectbox("Select the column which contains GIMX - Saldo", cols_acc_bal_GIMX)
             
+            st.metric(label="Total Income @Pnl", value=Total_Income)
+            
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
                 GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
                 GIMX_Balances = GIMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
