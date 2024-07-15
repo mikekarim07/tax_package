@@ -139,8 +139,8 @@ with tab1:
                 GIMX_Clasificacion = GIMX_PnL['Description'].unique()
     
                 Total_Income = GIMX_PnL["Balance"].sum()
-                Total_Income = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income)
+                Total_Income_GIMX = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income_GIMX)
         
                 
                 st.dataframe(GIMX_PnL)
@@ -175,9 +175,10 @@ with tab1:
                 GIMX_Balances['Co_Cd'] = "GIMX"
                 
                 Total_Income_Balance = GIMX_Balances["Saldo"].sum()
-                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
+                Total_Income_Balance_GIMX = "{:,.2f}".format(Total_Income_Balance)
                 delta_income = Total_Income + Total_Income_Balance
-                st.metric(label="Total Income @Accounts", value=Total_Income_Balance, delta=delta_income)
+                delta_income = "{:,.2f}".format(delta_income)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance_GIMX, delta=delta_income)
                 
                 st.dataframe(GIMX_Balances)
             else:
