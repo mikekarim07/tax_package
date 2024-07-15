@@ -140,7 +140,7 @@ with tab1:
     
                 Total_Income = GIMX_PnL["Balance"].sum()
                 Total_Income_GIMX = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income_GIMX)
+                st.metric(label="Total Income GIMX", value=Total_Income_GIMX)
         
                 
                 st.dataframe(GIMX_PnL)
@@ -227,8 +227,8 @@ with tab2:
                 GSMX_Clasificacion = GSMX_PnL['Description'].unique()
     
                 Total_Income = GSMX_PnL["Balance"].sum()
-                Total_Income = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income)
+                Total_Income_GSMX = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income_GSMX)
         
                 
                 st.dataframe(GSMX_PnL)
@@ -260,8 +260,10 @@ with tab2:
                 GSMX_Balances['Co_Cd'] = "GSMX"
                 
                 Total_Income_Balance = GSMX_Balances["Saldo"].sum()
-                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
+                Total_Income_Balance_GSMX = "{:,.2f}".format(Total_Income_Balance)
+                delta_income = Total_Income + Total_Income_Balance
+                delta_income = "{:,.2f}".format(delta_income)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance_GSMX, delta=delta_income)
                 
                 st.dataframe(GSMX_Balances)
             else:
@@ -309,8 +311,8 @@ with tab3:
                 KCMX_Clasificacion = KCMX_PnL['Description'].unique()
                     
                 Total_Income = KCMX_PnL["Balance"].sum()
-                Total_Income = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income)
+                Total_Income_KCMX = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income_KCMX)
         
                 
                 st.dataframe(KCMX_PnL)
@@ -342,8 +344,10 @@ with tab3:
                 KCMX_Balances['Co_Cd'] = "KCMX"
                 
                 Total_Income_Balance = KCMX_Balances["Saldo"].sum()
-                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
+                Total_Income_Balance_KCMX = "{:,.2f}".format(Total_Income_Balance)
+                delta_income = Total_Income + Total_Income_Balance
+                delta_income = "{:,.2f}".format(delta_income)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance_KCMX, delta=delta_income)
                 
                 st.dataframe(KCMX_Balances)
             else:
@@ -389,8 +393,8 @@ with tab4:
                 KLMX_Clasificacion = KLMX_PnL['Description'].unique()
     
                 Total_Income = KLMX_PnL["Balance"].sum()
-                Total_Income = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income)
+                Total_Income_KLMX = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income_KLMX)
         
                 
                 st.dataframe(KLMX_PnL)
@@ -422,8 +426,10 @@ with tab4:
                 KLMX_Balances['Co_Cd'] = "KLMX"
                 
                 Total_Income_Balance = KLMX_Balances["Saldo"].sum()
-                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
+                Total_Income_Balance_KLMX = "{:,.2f}".format(Total_Income_Balance)
+                delta_income = Total_Income + Total_Income_Balance
+                delta_income = "{:,.2f}".format(delta_income)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance_KLMX, delta=delta_income)
                 
                 st.dataframe(KLMX_Balances)
             else:
@@ -468,8 +474,8 @@ with tab5:
                 PRMX_Clasificacion = PRMX_PnL['Description'].unique()
     
                 Total_Income = PRMX_PnL["Balance"].sum()
-                Total_Income = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income)
+                Total_Income_PRMX = "{:,.2f}".format(Total_Income)
+                st.metric(label="Total Income", value=Total_Income_PRMX)
         
                 
                 st.dataframe(PRMX_PnL)
@@ -501,8 +507,10 @@ with tab5:
                 PRMX_Balances['Co_Cd'] = "PRMX"
                 
                 Total_Income_Balance = PRMX_Balances["Saldo"].sum()
-                Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
+                Total_Income_Balance_PRMX = "{:,.2f}".format(Total_Income_Balance)
+                delta_income = Total_Income + Total_Income_Balance
+                delta_income = "{:,.2f}".format(delta_income)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance_PRMX, delta=delta_incom)
                 
                 st.dataframe(PRMX_Balances)
             else:
