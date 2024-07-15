@@ -510,7 +510,7 @@ with tab5:
                 Total_Income_Balance_PRMX = "{:,.2f}".format(Total_Income_Balance)
                 delta_income = Total_Income + Total_Income_Balance
                 delta_income = "{:,.2f}".format(delta_income)
-                st.metric(label="Total Income @Accounts", value=Total_Income_Balance_PRMX, delta=delta_incom)
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance_PRMX, delta=delta_income)
                 
                 st.dataframe(PRMX_Balances)
             else:
