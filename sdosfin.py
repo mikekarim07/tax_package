@@ -176,7 +176,8 @@ with tab1:
                 
                 Total_Income_Balance = GIMX_Balances["Saldo"].sum()
                 Total_Income_Balance = "{:,.2f}".format(Total_Income_Balance)
-                st.metric(label="Total Income @Accounts", value=Total_Income_Balance)
+                delta_income = Total_Income + Total_Income_Balance
+                st.metric(label="Total Income @Accounts", value=Total_Income_Balance, delta=delta_income)
                 
                 st.dataframe(GIMX_Balances)
             else:
