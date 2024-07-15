@@ -165,7 +165,7 @@ with tab1:
             with col4_GIMX:
                 col_saldo_GIMX = st.selectbox("Select the column which contains GIMX - Saldo", cols_acc_bal_GIMX)
             
-            st.metric(label="Total Income @Pnl", value=Total_Income)
+            st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
             
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
                 GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
@@ -251,7 +251,7 @@ with tab2:
                 col_rubro_GSMX = st.selectbox("Select the column which contains GSMX - Rubro", cols_acc_bal_GSMX)
             with col4_GSMX:
                 col_saldo_GSMX = st.selectbox("Select the column which contains GSMX - Saldo", cols_acc_bal_GSMX)
-            st.metric(label="Total Income @Pnl", value=Total_Income)
+            st.metric(label="Total Income @Pnl", value=Total_Income_GSMX)
             if (col_cuenta_GSMX is not "Select") and (col_clasificacion_GSMX is not "Select") and (col_rubro_GSMX is not "Select") and (col_saldo_GSMX is not "Select"):
                 GSMX_Balances.rename(columns={col_cuenta_GSMX: "Cuenta", col_clasificacion_GSMX: "Clasificacion", col_rubro_GSMX: "Rubro", col_saldo_GSMX: "Saldo"}, inplace=True)
                 GSMX_Balances = GSMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -335,7 +335,7 @@ with tab3:
                 col_rubro_KCMX = st.selectbox("Select the column which contains KCMX - Rubro", cols_acc_bal_KCMX)
             with col4_KCMX:
                 col_saldo_KCMX = st.selectbox("Select the column which contains KCMX - Saldo", cols_acc_bal_KCMX)
-            st.metric(label="Total Income @Pnl", value=Total_Income)
+            st.metric(label="Total Income @Pnl", value=Total_Income_KCMX)
             if (col_cuenta_KCMX is not "Select") and (col_clasificacion_KCMX is not "Select") and (col_rubro_KCMX is not "Select") and (col_saldo_KCMX is not "Select"):
                 KCMX_Balances.rename(columns={col_cuenta_KCMX: "Cuenta", col_clasificacion_KCMX: "Clasificacion", col_rubro_KCMX: "Rubro", col_saldo_KCMX: "Saldo"}, inplace=True)
                 KCMX_Balances = KCMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -417,7 +417,7 @@ with tab4:
                 col_rubro_KLMX = st.selectbox("Select the column which contains KLMX - Rubro", cols_acc_bal_KLMX)
             with col4_KLMX:
                 col_saldo_KLMX = st.selectbox("Select the column which contains KLMX - Saldo", cols_acc_bal_KLMX)
-            st.metric(label="Total Income @PnL", value=Total_Income)
+            st.metric(label="Total Income @PnL", value=Total_Income_KLMX)
             if (col_cuenta_KLMX is not "Select") and (col_clasificacion_KLMX is not "Select") and (col_rubro_KLMX is not "Select") and (col_saldo_KLMX is not "Select"):
                 KLMX_Balances.rename(columns={col_cuenta_KLMX: "Cuenta", col_clasificacion_KLMX: "Clasificacion", col_rubro_KLMX: "Rubro", col_saldo_KLMX: "Saldo"}, inplace=True)
                 KLMX_Balances = KLMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -498,7 +498,7 @@ with tab5:
                 col_rubro_PRMX = st.selectbox("Select the column which contains PRMX - Rubro", cols_acc_bal_PRMX)
             with col4_PRMX:
                 col_saldo_PRMX = st.selectbox("Select the column which contains PRMX - Saldo", cols_acc_bal_PRMX)
-            st.metric(label="Total Income @PnL", value=Total_Income)
+            st.metric(label="Total Income @PnL", value=Total_Income_PRMX)
             if (col_cuenta_PRMX is not "Select") and (col_clasificacion_PRMX is not "Select") and (col_rubro_PRMX is not "Select") and (col_saldo_PRMX is not "Select"):
                 PRMX_Balances.rename(columns={col_cuenta_PRMX: "Cuenta", col_clasificacion_PRMX: "Clasificacion", col_rubro_PRMX: "Rubro", col_saldo_PRMX: "Saldo"}, inplace=True)
                 PRMX_Balances = PRMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
