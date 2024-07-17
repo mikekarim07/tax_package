@@ -413,7 +413,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         else:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
-
+    st.write('after subcode correction')
+    st.dataframe(FBL3N_new)
+    
     def Subcode(row):
         # Verificar las condiciones
         # if row['Subcode'] != '':
@@ -424,23 +426,32 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         else:
             return row['SC_Fix']
     FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
+    st.write('after subcode')
+    st.dataframe(FBL3N_new)
+    
     FBL3N_new.rename(columns={'Subcode': 'Previous_subcode', 'New Subcode': 'Subcode'}, inplace=True)
+    st.write('after rename columns')
+    st.dataframe(FBL3N_new)
 
     def remove_CONCAT(FBL3N_new):
             if "CONCAT" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
             return FBL3N_new
     FBL3N_new = remove_CONCAT(FBL3N_new)
+    st.write('after remove concat')
+    st.dataframe(FBL3N_new)
 
     def remove_RelatedParty(FBL3N_new):
             if "Related Party" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("Related Party", axis=1)
             return FBL3N_new
     FBL3N_new = remove_RelatedParty(FBL3N_new)
+    st.write('after remove related party')
+    st.dataframe(FBL3N_new)
     
     columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
     FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
-    st.dataframe(FBL3N_new)
+    # st.dataframe(FBL3N_new)
     
     FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
                                'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
