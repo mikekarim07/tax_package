@@ -220,8 +220,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     fb03_NA_Fill_Columns = ['Reversal']
     fb03 = fb03.dropna(subset=fb03_NA_Fill_Columns)
     fb03 = fb03.drop_duplicates()
-    # st.write("fb03")
-    # st.dataframe(fb03)
+    st.write("fb03")
+    st.dataframe(fb03)
     fb03['Key_Concat'] = fb03['CoCd'] + fb03['DocumentNo']
     fb03['Key_Reversal'] = fb03['CoCd'] + fb03['Reversal']
     
@@ -230,16 +230,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                                'Time', 'LCurr', 'Crcy']
     
     fb03 = fb03.drop(columns=fb03_cols_elim)
-    # st.write("fb03_x")
-    # st.dataframe(fb03)
+    st.write("fb03_x")
+    st.dataframe(fb03)
 
     # fb03 = fb03.drop_duplicates(subset=['Key_Concat', 'Key_Reversal'], keep='first')
     fb03_left = fb03.copy()
     fb03_right = fb03.copy()    
     # fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', how='left', suffixes=('', '_Rev'))
     fb03_merged = fb03_left.merge(fb03_right, left_on="Key_Concat", right_on='Key_Reversal', how='left', suffixes=('', '_Rev'))
-    # st.write("fb03_1")
-    # st.dataframe(fb03_merged)
+    st.write("fb03_1")
+    st.dataframe(fb03_merged)
         
     FBL3N_new = FBL3N_new.merge(fb03_merged, left_on="CONCAT_01", right_on='Key_Concat', how='left')
     
