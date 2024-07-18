@@ -417,12 +417,12 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     st.dataframe(FBL3N_new)
     
     def Subcode(row):
-        if  pd.isna(row['Subcode']):
-            return "None"
-        elif pd.notna(row['Subcode']):
-            return "Not None"
+        if  pd.notna(row['Subcode']) and pd.isna(row['Key_Concat']):
+            return row['Subcode']
+        elif pd.notna(row['Key_Concat']):
+            return '0'
         else:
-            return "no"
+            return row['SC_Fix']
         # # Verificar las condiciones
         # # if row['Subcode'] != '':
         # if row['Subcode'] != '' and (pd.isna(row['Key_Concat'])):
