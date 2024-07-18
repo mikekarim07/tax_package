@@ -217,13 +217,16 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
        
     
     #---------------FB03-------------
-    st.write("original fb03")
-    st.dataframe(fb03)
+    with st.expander("FB03 Original"):
+        # st.write("FB03 Original")
+        st.dataframe(fb03)
     fb03_NA_Fill_Columns = ['Reversal']
     fb03 = fb03.dropna(subset=fb03_NA_Fill_Columns)
     fb03 = fb03.drop_duplicates()
-    st.write("fb03")
-    st.dataframe(fb03)
+    with st.expander('''FB03 - Clean (Remove Duplicates and Drop NA's in Reversal Columns)'''):
+        st.dataframe(fb03)
+    # st.write("fb03")
+    # st.dataframe(fb03)
     fb03['Key_Concat'] = fb03['CoCd'] + fb03['DocumentNo']
     fb03['Key_Reversal'] = fb03['CoCd'] + fb03['Reversal']
     
@@ -232,19 +235,21 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
                                'Time', 'LCurr', 'Crcy']
     
     fb03 = fb03.drop(columns=fb03_cols_elim)
-    st.write("fb03_x")
-    st.dataframe(fb03)
+    with st.expander('''FB03 Prior to cross tables'''):
+        st.dataframe(fb03)
+        
 
     # fb03 = fb03.drop_duplicates(subset=['Key_Concat', 'Key_Reversal'], keep='first')
     fb03_left = fb03.copy()
     fb03_right = fb03.copy()    
     # fb03_merged = pd.merge(fb03, fb03, left_on='Key_Concat', right_on='Key_Reversal', how='left', suffixes=('', '_Rev'))
     fb03_merged = fb03_left.merge(fb03_right, left_on="Key_Concat", right_on='Key_Reversal', how='left', suffixes=('', '_Rev'))
-    st.write("fb03_1")
-    st.dataframe(fb03_merged)
+    with st.expander('''FB03 Merged'''):
+        st.dataframe(fb03_merged)
         
     FBL3N_new = FBL3N_new.merge(fb03_merged, left_on="CONCAT_01", right_on='Key_Concat', how='left')
-    
+    with st.expander('''FBL3N Merged with FB03'''):
+        st.dataframe(FBL3N_new)
     
     #----- ZLAAUDIT filter by account 7736000018 & 19 (Hedge) -----#
     hedge_accnts = ZLAAUDIT[ZLAAUDIT['Account'].isin(['7736000018', '7736000019', '2901300000'])]
@@ -387,8 +392,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     FBL3N_new['SC_concat'] = FBL3N_new['SC_1'] + FBL3N_new['SC_2'] + FBL3N_new['SC_3'] + FBL3N_new['SC_4'] + FBL3N_new['SC_5'] + FBL3N_new['SC_6'] + FBL3N_new['SC_7'] + FBL3N_new['SC_8'] + FBL3N_new['SC_9'] + FBL3N_new['SC_10'] + FBL3N_new['SC_11'] + FBL3N_new['SC_12'] + FBL3N_new['SC_13'] + FBL3N_new['SC_14'] + FBL3N_new['SC_15'] + FBL3N_new['SC_16'] + FBL3N_new['SC_17']
 
-    st.write('Visualización posterior a la asignación de todas las reglas')
-    st.dataframe(FBL3N_new)
+    with st.expander('''FBL3N classified with all subcodes columns'''):
+        st.dataframe(FBL3N_new)
+    
     
     #-----
     
@@ -434,28 +440,28 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         # else:
         #     return row['SC_Fix']
     FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
-    st.write('after subcode')
-    st.dataframe(FBL3N_new)
+    with st.expander('''FBL3N subcode fix columns'''):
+        st.dataframe(FBL3N_new)
     
     FBL3N_new.rename(columns={'Subcode': 'Previous_subcode', 'New Subcode': 'Subcode'}, inplace=True)
-    st.write('after rename columns')
-    st.dataframe(FBL3N_new)
+    # st.write('after rename columns')
+    # st.dataframe(FBL3N_new)
 
     def remove_CONCAT(FBL3N_new):
             if "CONCAT" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
             return FBL3N_new
     FBL3N_new = remove_CONCAT(FBL3N_new)
-    st.write('after remove concat')
-    st.dataframe(FBL3N_new)
+    # st.write('after remove concat')
+    # st.dataframe(FBL3N_new)
 
     def remove_RelatedParty(FBL3N_new):
             if "Related Party" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("Related Party", axis=1)
             return FBL3N_new
     FBL3N_new = remove_RelatedParty(FBL3N_new)
-    st.write('after remove related party')
-    st.dataframe(FBL3N_new)
+    # st.write('after remove related party')
+    # st.dataframe(FBL3N_new)
     
     columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
     FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
