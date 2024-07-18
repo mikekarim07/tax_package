@@ -417,14 +417,18 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     st.dataframe(FBL3N_new)
     
     def Subcode(row):
-        # Verificar las condiciones
-        # if row['Subcode'] != '':
-        if row['Subcode'] != '' and (pd.isna(row['Key_Concat'])):
-            return row['Subcode']
-        elif pd.notna(row['Key_Concat']):
-            return '0'
-        else:
-            return row['SC_Fix']
+        if  pd.isna(row['Subcode']):
+            return "ok"
+        else
+            return "no"
+        # # Verificar las condiciones
+        # # if row['Subcode'] != '':
+        # if row['Subcode'] != '' and (pd.isna(row['Key_Concat'])):
+        #     return row['Subcode']
+        # elif pd.notna(row['Key_Concat']):
+        #     return '0'
+        # else:
+        #     return row['SC_Fix']
     FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
     st.write('after subcode')
     st.dataframe(FBL3N_new)
