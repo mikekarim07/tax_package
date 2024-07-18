@@ -421,8 +421,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         else:
             return row['Subcode_ML']
     FBL3N_new['SC_Fix'] = FBL3N_new.apply(Subcode_Correction, axis=1)
-    st.write('after subcode correction')
-    st.dataframe(FBL3N_new)
+    # st.write('after subcode correction')
+    # st.dataframe(FBL3N_new)
     
     def Subcode(row):
         if  pd.notna(row['Subcode']) and pd.isna(row['Key_Concat']):
