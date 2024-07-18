@@ -419,7 +419,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     def Subcode(row):
         if  pd.isna(row['Subcode']):
             return "ok"
-        else
+        else:
             return "no"
         # # Verificar las condiciones
         # # if row['Subcode'] != '':
