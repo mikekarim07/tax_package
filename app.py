@@ -87,7 +87,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     ZLAAUDIT = load_sheet(uploaded_ZLAAUDIT, 'ZLAAUDIT', dtype_ZLAAUDIT)
     accounts = load_sheet(uploaded_masters, 'GL_Accounts', dtype_accounts)
     subcodes = load_sheet(uploaded_masters, 'Subcodes', dtype_subcodes)
-    tax_accounts = load_sheet(uploaded_masters, 'Cuentas Taxes', dtype_tax_accounts)
+    # tax_accounts = load_sheet(uploaded_masters, 'Cuentas Taxes', dtype_tax_accounts)
     saldos_financieros = load_sheet(uploaded_SdosFin, 'SaldosFin_MX', dtype_sdosfin)
     fb03 = load_sheet(uploaded_FB03, 'Sheet1', dtype_fb03)
 
