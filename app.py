@@ -219,11 +219,11 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #---------------FB03-------------
     with st.expander("FB03 Original"):
         # st.write("FB03 Original")
-        fb03['Reversal'] = fb03['Reversal'].fillna('')
-        fb03['doc date year'] = fb03['Doc. Date'].str[:4]
-        fb03['clave01'] = fb03['CoCd'] + fb03['DocumentNo'] + fb03['Doc. Date'].str[:4]
-        fb03['clave02'] = fb03['CoCd'] + fb03['Reversal'] + fb03['Doc. Date'].str[:4]
-        fb03_fix = pd.merge(fb03, fb03, left_on='clave01', right_on='clave02', how='left', suffixes=('', '_fix'))
+        # fb03['Reversal'] = fb03['Reversal'].fillna('')
+        # fb03['doc date year'] = fb03['Doc. Date'].str[:4]
+        # fb03['clave01'] = fb03['CoCd'] + fb03['DocumentNo'] + fb03['Doc. Date'].str[:4]
+        # fb03['clave02'] = fb03['CoCd'] + fb03['Reversal'] + fb03['Doc. Date'].str[:4]
+        # fb03_fix = pd.merge(fb03, fb03, left_on='clave01', right_on='clave02', how='left', suffixes=('', '_fix'))
         st.dataframe(fb03_fix)
     fb03_NA_Fill_Columns = ['Reversal']
     fb03 = fb03.dropna(subset=fb03_NA_Fill_Columns)
