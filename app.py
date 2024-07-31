@@ -219,7 +219,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #---------------FB03-------------
     with st.expander("FB03 Original"):
         # st.write("FB03 Original")
-        # fb03['Doc. Date'] = pd.to_datetime(fb03['Doc. Date'])
+        fb03['reversal'] = fb03['Reversal'].fillna('')
         fb03['doc date year'] = fb03['Doc. Date'].str[:4]
         fb03['clave01'] = fb03['CoCd'] + fb03['DocumentNo'] + fb03['Doc. Date'].str[:4]
         fb03['clave02'] = fb03['CoCd'] + fb03['Reversal'] + fb03['Doc. Date'].str[:4]
