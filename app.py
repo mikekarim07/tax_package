@@ -219,6 +219,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #---------------FB03-------------
     with st.expander("FB03 Original"):
         # st.write("FB03 Original")
+        fb03['doc date year'] = fb03['Doc. Date'].dt.year
         st.dataframe(fb03)
     fb03_NA_Fill_Columns = ['Reversal']
     fb03 = fb03.dropna(subset=fb03_NA_Fill_Columns)
