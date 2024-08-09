@@ -168,7 +168,7 @@ with tab1:
             with col4_GIMX:
                 col_saldo_GIMX = st.selectbox("Select the column which contains GIMX - Saldo", cols_acc_bal_GIMX)
             
-            st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
+            #st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
             if 'Total_Income_GIMX' in locals():
                     st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
             else:
