@@ -171,7 +171,7 @@ with tab1:
             st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
             if 'Total_Income_GIMX' in locals():
                     st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
-                else:
+            else:
                     st.warning("Total Income GSMX no está definido.")
                 
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
