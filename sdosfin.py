@@ -140,8 +140,11 @@ with tab1:
     
                 Total_Income = GIMX_PnL["Balance"].sum()
                 Total_Income_GIMX = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income GIMX", value=Total_Income_GIMX)
-        
+                #st.metric(label="Total Income GIMX", value=Total_Income_GIMX)
+                if 'Total_Income_GIMX' in locals():
+                    st.metric(label="Total Income GIMX", value=Total_Income_GIMX)
+                else:
+                    st.warning("Total Income GSMX no está definido.")
                 
                 st.dataframe(GIMX_PnL)
             else:
@@ -166,7 +169,11 @@ with tab1:
                 col_saldo_GIMX = st.selectbox("Select the column which contains GIMX - Saldo", cols_acc_bal_GIMX)
             
             st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
-            
+            if 'Total_Income_GIMX' in locals():
+                    st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
+                else:
+                    st.warning("Total Income GSMX no está definido.")
+                
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
                 GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
                 GIMX_Balances = GIMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
