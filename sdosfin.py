@@ -144,7 +144,7 @@ with tab1:
                 if 'Total_Income_GIMX' in locals():
                     st.metric(label="Total Income GIMX", value=Total_Income_GIMX)
                 else:
-                    st.warning("Total Income GSMX no está definido.")
+                    st.warning("Total Income GIMX no está definido.")
                 
                 st.dataframe(GIMX_PnL)
             else:
@@ -172,7 +172,7 @@ with tab1:
             if 'Total_Income_GIMX' in locals():
                     st.metric(label="Total Income @Pnl", value=Total_Income_GIMX)
             else:
-                    st.warning("Total Income GSMX no está definido.")
+                    st.warning("Total Income GIMX no está definido.")
                 
             if (col_cuenta_GIMX is not "Select") and (col_clasificacion_GIMX is not "Select") and (col_rubro_GIMX is not "Select") and (col_saldo_GIMX is not "Select"):
                 GIMX_Balances.rename(columns={col_cuenta_GIMX: "Cuenta", col_clasificacion_GIMX: "Clasificacion", col_rubro_GIMX: "Rubro", col_saldo_GIMX: "Saldo"}, inplace=True)
@@ -235,8 +235,11 @@ with tab2:
     
                 Total_Income = GSMX_PnL["Balance"].sum()
                 Total_Income_GSMX = "{:,.2f}".format(Total_Income)
-                st.metric(label="Total Income", value=Total_Income_GSMX)
-        
+                #st.metric(label="Total Income", value=Total_Income_GSMX)
+                if 'Total_Income_GSMX' in locals():
+                    st.metric(label="Total Income", value=Total_Income_GSMX)
+                else:
+                    st.warning("Total Income GSMX no está definido.")
                 
                 st.dataframe(GSMX_PnL)
             else:
@@ -258,7 +261,14 @@ with tab2:
                 col_rubro_GSMX = st.selectbox("Select the column which contains GSMX - Rubro", cols_acc_bal_GSMX)
             with col4_GSMX:
                 col_saldo_GSMX = st.selectbox("Select the column which contains GSMX - Saldo", cols_acc_bal_GSMX)
-            st.metric(label="Total Income @Pnl", value=Total_Income_GSMX)
+            #st.metric(label="Total Income @Pnl", value=Total_Income_GSMX)
+            if 'Total_Income_GSMX' in locals():
+                st.metric(label="Total Income @Pnl", value=Total_Income_GSMX)
+            else:
+                st.warning("Total Income GSMX no está definido.")
+                
+            
+            
             if (col_cuenta_GSMX is not "Select") and (col_clasificacion_GSMX is not "Select") and (col_rubro_GSMX is not "Select") and (col_saldo_GSMX is not "Select"):
                 GSMX_Balances.rename(columns={col_cuenta_GSMX: "Cuenta", col_clasificacion_GSMX: "Clasificacion", col_rubro_GSMX: "Rubro", col_saldo_GSMX: "Saldo"}, inplace=True)
                 GSMX_Balances = GSMX_Balances[['Cuenta', 'Clasificacion', 'Rubro', 'Saldo']]
@@ -271,6 +281,8 @@ with tab2:
                 delta_income = Total_Income + Total_Income_Balance
                 delta_income = "{:,.2f}".format(delta_income)
                 st.metric(label="Total Income @Accounts", value=Total_Income_Balance_GSMX, delta=delta_income)
+
+
                 
                 st.dataframe(GSMX_Balances)
             else:
