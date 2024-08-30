@@ -259,6 +259,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #----- ZLAAUDIT filter by account 7736000018 & 19 (Hedge) -----#
     hedge_accnts = ZLAAUDIT[ZLAAUDIT['Account'].isin(['7736000018', '7736000019', '2901300000'])]
     hedge_accnts = hedge_accnts[['CONCAT', 'Account']]
+    hedge_accnts = hedge_accnts[['CONCAT', 'Account']].drop_duplicates()
     hedge_accnts.rename(columns={'CONCAT': 'Key_ZLAAUDIT', 'Account': 'ZLAAUDIT_Acc'}, inplace=True)
     # st.write('Hedge Accounts')
     # st.dataframe(hedge_accnts)
