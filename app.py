@@ -453,9 +453,9 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     def Subcode_alternative(row):
     # Ejemplo: Devuelve 'Alt' si 'Subcode' es NaN
         if row['Subcode'] != '':
-            return row['SC_Fix']
-        else:
             return row['Subcode']
+        else:
+            return row['SC_Fix']
 
     # Checkbox en Streamlit
     use_alternative = st.checkbox('It-s a re-run, apply previously assigned subcodes')
