@@ -445,7 +445,28 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         #     return '0'
         # else:
         #     return row['SC_Fix']
-    FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
+    
+    
+    
+    
+    # Codigo para aplicar la opcion de que corra con el checkbox
+    def Subcode_alternative(row):
+    # Ejemplo: Devuelve 'Alt' si 'Subcode' es NaN
+        if row['Subcode'] != '':
+            return row['SC_Fix']
+        else:
+            return row['Subcode']
+
+    # Checkbox en Streamlit
+    use_alternative = st.checkbox('It-s a re-run, apply previously assigned subcodes')
+    
+    # Aplicar la función según el estado del checkbox
+    if use_alternative:
+        FBL3N_new['New Subcode']  = FBL3N_new.apply(Subcode_alternative, axis=1)
+    else:
+        FBL3N_new['New Subcode']  = FBL3N_new.apply(Subcode, axis=1)
+    
+    #FBL3N_new['New Subcode'] = FBL3N_new.apply(Subcode, axis=1)
     with st.expander('''FBL3N subcode fix columns'''):
         st.dataframe(FBL3N_new)
     
