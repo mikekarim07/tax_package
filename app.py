@@ -615,7 +615,8 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     FBL3N_new = FBL3N_new.merge(ZLAAUDIT_grouped_tax, left_on="CONCAT", right_on='CONCAT', how='left', suffixes=('', '_taxes'))
     # st.write('fbl3n merged with taxes')
     # st.dataframe(FBL3N_new)
-    delete_colsfromzla = ['Account_taxes', 'Local Currency_taxes']
+    # delete_colsfromzla = ['Account_taxes', 'Local Currency_taxes']
+    delete_colsfromzla = ['Local Currency_taxes']
     FBL3N_new = FBL3N_new.drop(columns=delete_colsfromzla)
     FBL3N_new.rename(columns={'Debit/credit amount': 'Taxes'}, inplace=True)
 
