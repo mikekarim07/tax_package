@@ -449,7 +449,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     
     
     
-    st.write("Available columns in FBL3N_new at this point 01:", list(FBL3N_new.columns))
+    # st.write("Available columns in FBL3N_new at this point 01:", list(FBL3N_new.columns))
     # Codigo para aplicar la opcion de que corra con el checkbox
     def Subcode_alternative(row):
     # Ejemplo: Devuelve 'Alt' si 'Subcode' es NaN
@@ -472,34 +472,29 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
         st.dataframe(FBL3N_new)
     
     FBL3N_new.rename(columns={'Subcode': 'Previous_subcode', 'New Subcode': 'Subcode'}, inplace=True)
-    st.write('after rename columns')
-    st.dataframe(FBL3N_new)
+    # st.write('after rename columns')
+    # st.dataframe(FBL3N_new)
 
     def remove_CONCAT(FBL3N_new):
             if "CONCAT" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("CONCAT", axis=1)
             return FBL3N_new
     FBL3N_new = remove_CONCAT(FBL3N_new)
-    st.write('after remove concat')
-    st.dataframe(FBL3N_new)
+    # st.write('after remove concat')
+    # st.dataframe(FBL3N_new)
 
     def remove_RelatedParty(FBL3N_new):
             if "Related Party" in FBL3N_new.columns:
                 FBL3N_new = FBL3N_new.drop("Related Party", axis=1)
             return FBL3N_new
     FBL3N_new = remove_RelatedParty(FBL3N_new)
-    st.write('after remove related party')
-    st.dataframe(FBL3N_new)
+    # st.write('after remove related party')
+    # st.dataframe(FBL3N_new)
     
     columns_to_rename = {'CoCd': 'Related Party', 'CONCAT_01': 'CONCAT'}
     FBL3N_new = FBL3N_new.rename(columns=columns_to_rename)
     st.dataframe(FBL3N_new)
 
-    # FBL3N_new = FBL3N_new[['Subcode', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
-    #                            'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
-    #                            'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
-
-    st.write("Available columns in FBL3N_new:", list(FBL3N_new.columns))
     FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
                                'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
                                'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
