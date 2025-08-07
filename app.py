@@ -499,7 +499,7 @@ if uploaded_FBL3N_train and uploaded_new_FBL3N and uploaded_masters and uploaded
     #                            'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
     #                            'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
 
-    
+    st.write("Available columns in FBL3N_new:", list(FBL3N_new.columns))
     FBL3N_new = FBL3N_new[['CONCAT', 'Subcode', 'Related Party', 'Company Code', 'Document Number', 'Document Type', 'Account', 'Text', 'Reference', 'Document Header Text', 
                                'User Name', 'Posting period', 'Tax Code', 'Document Date', 'Amount in local currency', 'Local Currency', 'Amount in doc. curr.', 'Document currency', 'Posting Date',
                                'Period', 'Doc. Date', 'Entered', 'Pstng Date', 'Key_Concat', 'Key_Reversal', 'Period_Rev', 'Doc. Date_Rev', 'Entered_Rev', 'Pstng Date_Rev',]]
